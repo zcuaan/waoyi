@@ -421,6 +421,49 @@
             margin-right: auto;
         }
 
+        /* --- 5.5 SUMMER TABLE SCHEDULE --- */
+        .summer-schedule {
+            padding: 80px 0;
+            background-color: var(--poke-grey);
+            border-top: 2px solid var(--poke-black);
+            border-bottom: 2px solid var(--poke-black);
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.05rem;
+            background-color: var(--poke-white);
+        }
+
+        .schedule-table th, .schedule-table td {
+            padding: 16px;
+            text-align: left;
+            color: var(--poke-black);
+        }
+
+        .schedule-table th {
+            background-color: var(--poke-yellow);
+            font-family: var(--font-main);
+            font-weight: 800;
+            border-bottom: 3px solid var(--poke-black);
+        }
+
+        .schedule-table td {
+            border-bottom: 2px solid var(--poke-grey);
+            font-weight: 600;
+        }
+
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Ensures the table is scrollable on small screens */
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
         /* --- 6. SAMPLE REPORT PREVIEW (TEAL) --- */
         .report-preview {
             padding: 80px 0;
@@ -537,69 +580,6 @@
             color: var(--poke-blue);
         }
 
-        /* --- 8. PRICING (YELLOW/ORANGE) --- */
-        .pricing {
-            padding: 80px 0;
-            background: linear-gradient(135deg, var(--poke-yellow) 0%, var(--poke-orange) 100%);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .price-inner {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .badge-wrapper {
-            position: relative;
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--poke-blue);
-            color: var(--poke-white);
-            padding: 6px 20px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-        }
-
-        .price-inner h3 {
-            font-size: 1.5rem;
-            color: var(--poke-black);
-            margin-bottom: 16px;
-            text-align: center;
-        }
-
-        .price-features {
-            list-style: none;
-            flex-grow: 1;
-            margin-top: 16px;
-        }
-
-        .price-features li {
-            font-size: 1.05rem;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            color: var(--poke-black);
-            font-weight: 600;
-        }
-
-        .price-features li::before {
-            content: "✦";
-            color: var(--poke-blue);
-        }
-
         /* --- 9. PARENT TRUST (WHITE) --- */
         .benefits {
             padding: 80px 0;
@@ -689,7 +669,6 @@
 </head>
 <body>
 
-    <!-- 1. Top navigation -->
     <nav class="top-nav">
         <div class="container nav-content">
             <div class="nav-brand">
@@ -704,12 +683,10 @@
         </div>
     </nav>
 
-    <!-- 2. Announcement bar -->
     <div class="announcement-bar">
         Registration is open. This weekend’s test window opens Friday at 4:00 PM.
     </div>
 
-    <!-- 3. Hero section -->
     <section class="hero">
         <div class="container hero-grid">
             <div class="hero-text">
@@ -724,7 +701,6 @@
                 </ul>
             </div>
 
-            <!-- Angled wrapper outside, regular square form inputs inside -->
             <div class="angled-wrapper" id="register">
                 <div class="angled-inner registration-card">
                     <h2>Enter this weekend's mock</h2>
@@ -747,269 +723,4 @@
                                     <option value="6">June</option>
                                     <option value="7">July</option>
                                     <option value="8">August</option>
-                                    <option value="9">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
-                                <select class="form-control" id="birth-year" required>
-                                    <option value="" disabled selected>Year</option>
-                                    <!-- Options will be auto-generated here by JavaScript -->
-                                </select>
-                            </div>
-                            <span class="helper-text">Used only for estimated age standardisation.</span>
-                        </div>
-
-                        <div class="consent-group">
-                            <input type="checkbox" required>
-                            <label>I consent to receiving email notifications when the weekend league opens, closes, and when results are released.</label>
-                        </div>
-
-                        <div class="hook-text">⚡ Get your FREE SCORE immediately</div>
-
-                        <button type="submit" class="btn-dynamic btn-submit">
-                            Register free
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. How it works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2>How it works</h2>
-            </div>
-            <div class="steps-grid">
-                <div class="angled-wrapper">
-                    <div class="angled-inner step-inner">
-                        <div class="step-marker">1</div>
-                        <h3>Register</h3>
-                        <p>Create your parent account and sign up for the weekend.</p>
-                    </div>
-                </div>
-                <div class="angled-wrapper">
-                    <div class="angled-inner step-inner">
-                        <div class="step-marker">2</div>
-                        <h3>Sit the mock</h3>
-                        <p>Your child takes the 25-minute test during the open window.</p>
-                    </div>
-                </div>
-                <div class="angled-wrapper">
-                    <div class="angled-inner step-inner">
-                        <div class="step-marker">3</div>
-                        <h3>Get results</h3>
-                        <p>Receive your detailed benchmark report on Sunday night.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Weekend schedule -->
-    <section class="schedule">
-        <div class="container">
-            <div class="section-header dark">
-                <h2>Weekend schedule</h2>
-            </div>
-            
-            <div class="angled-wrapper" style="max-width: 900px; margin: 0 auto;">
-                <div class="angled-inner" style="padding: 0;">
-                    <div class="schedule-grid">
-                        <div class="schedule-cell" style="padding: 30px;">
-                            <div class="icon">⏱️</div>
-                            <strong>Friday 4:00 PM</strong>
-                            <span>Test window opens</span>
-                        </div>
-                        <div class="schedule-cell" style="padding: 30px; border-left: 2px solid var(--poke-grey); border-right: 2px solid var(--poke-grey);">
-                            <div class="icon">🔒</div>
-                            <strong>Sunday 10:00 PM</strong>
-                            <span>Submissions close</span>
-                        </div>
-                        <div class="schedule-cell" style="padding: 30px;">
-                            <div class="icon">📊</div>
-                            <strong>Sunday 11:00 PM</strong>
-                            <span>Results released</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="schedule-footer">
-                Everyone sits the same paper in the same window, so rankings are fair.
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Sample report preview -->
-    <section class="report-preview">
-        <div class="container">
-            <div class="section-header">
-                <h2 style="color: var(--poke-white); text-shadow: 2px 2px 0px var(--poke-black);">What you'll see after the mock</h2>
-            </div>
-
-            <div class="dashboard-ui">
-                <div class="angled-wrapper">
-                    <div class="angled-inner dash-inner">
-                        <h4>Free (automatically included)</h4>
-                        <div class="dash-league-title">Summer League — Week 4</div>
-                        <div class="dash-metric">
-                            <span>Raw Score</span>
-                            <strong>14 / 20</strong>
-                        </div>
-                        <div class="dash-metric">
-                            <span>Accuracy</span>
-                            <strong>70%</strong>
-                        </div>
-                        <div class="dash-metric" style="margin-bottom:0;">
-                            <span>Completed</span>
-                            <strong>20 / 20</strong>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="angled-wrapper">
-                    <div class="angled-inner dash-inner" style="background-color: var(--poke-yellow);">
-                        <h4 style="color: var(--poke-black); border-bottom-color: var(--poke-black);">League Rank (£1.99)</h4>
-                        <div class="dash-league-title" style="color: var(--poke-black);">Summer League — Week 4</div>
-                        <div class="dash-metric">
-                            <span style="color: var(--poke-black);">Raw Score</span>
-                            <strong>14 / 20</strong>
-                        </div>
-                        <div class="dash-metric">
-                            <span style="color: var(--poke-black);">Accuracy</span>
-                            <strong>70%</strong>
-                        </div>
-                        <div class="dash-metric">
-                            <span style="color: var(--poke-black);">Completed</span>
-                            <strong>20 / 20</strong>
-                        </div>
-                        <div class="dash-metric" style="border-top: 2px dashed var(--poke-black); padding-top: 16px;">
-                            <span style="color: var(--poke-black);">Rank</span>
-                            <strong>184 / 512</strong>
-                        </div>
-                        <div class="dash-metric">
-                            <span style="color: var(--poke-black);">Percentile</span>
-                            <strong class="highlight" style="color: var(--poke-blue);">Top 36%</strong>
-                        </div>
-                        <div class="dash-metric">
-                            <span style="color: var(--poke-black);">Cohort Average</span>
-                            <strong>61%</strong>
-                        </div>
-                        <div class="dash-metric" style="margin-bottom:0;">
-                            <span style="color: var(--poke-black);">Top Score</span>
-                            <strong>95%</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="angled-wrapper">
-                    <div class="angled-inner dash-inner">
-                        <h4>Review Pack (£6.99)</h4>
-                        <div class="dash-league-title">Summer League — Week 4</div>
-                        <ul class="tag-list">
-                            <li>Full paper access</li>
-                            <li>Mark scheme</li>
-                        </ul>
-                        <div class="dash-metric" style="margin-bottom:0; margin-top: auto; display: block; text-align: left;">
-                            <span style="display: block; margin-bottom: 5px;">Main Focus Area</span>
-                            <strong style="font-size: 1.4rem; color: var(--poke-orange); display: block;">Verbal Reasoning</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Trust Strip -->
-    <section class="trust-strip">
-        <div class="container">
-            <h2 class="trust-heading">Same paper. Same weekend window. Fairer rankings.</h2>
-            <div class="trust-grid">
-                <div class="trust-item">Designed by experienced 11+ tutors</div>
-                <div class="trust-item">Short, low-pressure weekly format</div>
-                <div class="trust-item">Useful for Bexley, Kent, Sutton and independent school preparation</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. Why parents use it -->
-    <section class="benefits">
-        <div class="container">
-            <div class="section-header dark">
-                <h2>Why parents use it</h2>
-            </div>
-            <div class="benefits-grid">
-                <div class="angled-wrapper">
-                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
-                        <h4>Know where they stand</h4>
-                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">See how your child compares with the weekly cohort.</p>
-                    </div>
-                </div>
-                <div class="angled-wrapper">
-                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
-                        <h4>Keep practice low-pressure</h4>
-                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">One short paper each weekend, not endless worksheets.</p>
-                    </div>
-                </div>
-                <div class="angled-wrapper">
-                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
-                        <h4>Spot patterns early</h4>
-                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">See which skills keep causing mistakes.</p>
-                    </div>
-                </div>
-                <div class="angled-wrapper">
-                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
-                        <h4>Choose your level of detail</h4>
-                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">Free score first, rankings and review only if needed.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 10. SEO Footer -->
-    <footer class="footer">
-        <div class="container footer-content">
-            <div>
-                <div class="footer-brand">
-                    <img src="Asset 2.png" alt="Shiba Mascot">
-                    The 11+ Weekend League
-                </div>
-                <div class="footer-sub">&copy; 2026 The 11+ Weekend League</div>
-            </div>
-            <div class="footer-links">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">FAQs</a>
-                <a href="#">11+ School Advice</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Dynamic Birth Year Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const yearSelect = document.getElementById("birth-year");
-            const currentYear = new Date().getFullYear();
-            
-            // Age range
-            const minAge = 8;
-            const maxAge = 11;
-            
-            // Calculate corresponding birth years
-            const maxBirthYear = currentYear - minAge;
-            const minBirthYear = currentYear - maxAge;
-
-            // Generate options from the most recent year down to the oldest
-            for (let year = maxBirthYear; year >= minBirthYear; year--) {
-                const option = document.createElement("option");
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            }
-        });
-    </script>
-</body>
-</html>
+                                    <option value="9">September
