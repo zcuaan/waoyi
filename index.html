@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 11+ Weekend League | Mock Exam Registration</title>
+    <style>
+        :root {
+            /* Dynamic 'League' Palette */
+            --poke-yellow: #ffcb05;
+            --poke-orange: #f78c1e;
+            --poke-teal: #16a085;
+            --poke-teal-dark: #12826c;
+            --poke-blue: #0065b3;
+            --poke-blue-hover: #004b87;
+            --poke-black: #1f2227;
+            --poke-white: #ffffff;
+            --poke-grey: #f2f2f2;
+            
+            /* Clean System Typography */
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--poke-white);
+            color: var(--poke-black);
+            line-height: 1.6;
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, .font-heavy {
+            font-family: var(--font-main);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* --- DYNAMIC ANGLED CORNERS UTILITY --- */
+        .angled-wrapper {
+            background-color: var(--poke-black);
+            padding: 4px; /* Border thickness */
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+        
+        .angled-inner {
+            background-color: var(--poke-white);
+            height: 100%;
+            padding: 30px;
+            clip-path: polygon(17px 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%, 0 17px);
+        }
+
+        .btn-dynamic {
+            background-color: var(--poke-blue);
+            color: var(--poke-white);
+            padding: 14px 28px;
+            border: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            transition: background-color 0.2s;
+        }
+
+        .btn-dynamic:hover {
+            background-color: var(--poke-blue-hover);
+        }
+
+        /* --- 1. TOP NAVIGATION --- */
+        .top-nav {
+            background-color: var(--poke-white);
+            border-bottom: 2px solid var(--poke-grey);
+            padding: 12px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--poke-black);
+        }
+
+        .nav-brand img {
+            height: 35px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--poke-black);
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--poke-blue);
+        }
+
+        /* --- 2. ANNOUNCEMENT BAR --- */
+        .announcement-bar {
+            background-color: var(--poke-yellow);
+            text-align: center;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--poke-black);
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            padding: 70px 0 90px;
+            background: linear-gradient(135deg, var(--poke-yellow) 0%, var(--poke-orange) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            text-align: center;
+        }
+
+        .hero-logo-large {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));
+        }
+
+        .hero-headline {
+            font-size: 2.2rem;
+            color: var(--poke-black);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero-text .subheading {
+            font-size: 1.15rem;
+            color: var(--poke-black);
+            font-weight: 600;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .hero-bullets {
+            list-style: none;
+            text-align: left;
+            background-color: var(--poke-white);
+            padding: 24px;
+            border: var(--stroke-thick);
+            border-radius: 8px;
+            box-shadow: var(--shadow-hard);
+            display: inline-block;
+        }
+
+        .hero-bullets li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            color: var(--poke-black);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .hero-bullets li:last-child {
+            margin-bottom: 0;
+        }
+
+        .hero-bullets li::before {
+            content: "⚡";
+            font-size: 1.2rem;
+        }
+
+        /* --- REGISTRATION CARD --- */
+        .registration-card h2 {
+            font-size: 1.5rem;
+            color: var(--poke-black);
+            margin-bottom: 24px;
+            text-align: center;
+            border-bottom: 3px solid var(--poke-grey);
+            padding-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--poke-black);
+        }
+
+        /* Proper squares for inputs, no clip-path here */
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--poke-black);
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: var(--poke-white);
+            color: var(--poke-black);
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            background-color: var(--poke-yellow);
+        }
+
+        .dob-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .helper-text {
+            display: block;
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Proper squares for consent box */
+        .consent-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 24px 0;
+            background-color: var(--poke-grey);
+            padding: 16px;
+            border-radius: 4px;
+        }
+
+        .consent-group input[type="checkbox"] {
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--poke-blue);
+        }
+
+        .consent-group label {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--poke-black);
+            font-weight: 600;
+        }
+        
+        .hook-text {
+            text-align: center;
+            font-weight: 800;
+            color: var(--poke-blue);
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 16px;
+        }
+
+        /* --- SECTION HEADERS --- */
+        .section-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--poke-white);
+            text-shadow: 2px 2px 0px var(--poke-black);
+        }
+
+        .section-header.dark h2 {
+            color: var(--poke-black);
+            text-shadow: 2px 2px 0px var(--poke-yellow);
+        }
+
+        /* --- 4. HOW IT WORKS (TEAL BACKGROUND) --- */
+        .how-it-works {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--poke-teal) 0%, var(--poke-teal-dark) 100%);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .step-marker {
+            width: 50px;
+            height: 50px;
+            background-color: var(--poke-yellow);
+            color: var(--poke-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+        }
+
+        .step-inner h3 {
+            font-size: 1.25rem;
+            color: var(--poke-black);
+        }
+
+        .step-inner p {
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* --- 5. WEEKEND SCHEDULE (WHITE) --- */
+        .schedule {
+            padding: 80px 0;
+            background-color: var(--poke-white);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .schedule-cell {
+            text-align: center;
+        }
+
+        .schedule-cell .icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .schedule-cell strong {
+            display: block;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--poke-blue);
+            margin-bottom: 8px;
+        }
+
+        .schedule-cell span {
+            font-size: 1.2rem;
+            color: var(--poke-black);
+            font-weight: 800;
+        }
+
+        .schedule-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--poke-black);
+            font-weight: 700;
+            background-color: var(--poke-yellow);
+            padding: 15px;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- 6. SAMPLE REPORT PREVIEW (TEAL) --- */
+        .report-preview {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--poke-teal) 0%, var(--poke-teal-dark) 100%);
+        }
+
+        .dashboard-ui {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .dash-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .dash-inner h4 {
+            font-size: 1.2rem;
+            color: var(--poke-blue);
+            margin-bottom: 12px;
+            border-bottom: 3px solid var(--poke-grey);
+            padding-bottom: 10px;
+        }
+
+        .dash-league-title {
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            border-bottom: 2px solid var(--poke-black);
+            padding-bottom: 12px;
+        }
+
+        .dash-metric {
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dash-metric span {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .dash-metric strong {
+            font-size: 1.2rem;
+            color: var(--poke-black);
+            font-weight: 800;
+        }
+        
+        .dash-metric strong.highlight {
+            color: var(--poke-blue);
+        }
+
+        .tag-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .tag-list li {
+            font-size: 1.05rem;
+            color: var(--poke-black);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tag-list li::before {
+            content: "✓";
+            color: var(--poke-blue);
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        /* --- 7. TRUST STRIP --- */
+        .trust-strip {
+            background-color: var(--poke-grey);
+            border-bottom: var(--stroke-thick);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .trust-heading {
+            font-size: 1.8rem;
+            color: var(--poke-black);
+            margin-bottom: 24px;
+        }
+
+        .trust-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .trust-item {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--poke-black);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .trust-item::before {
+            content: "✦";
+            color: var(--poke-blue);
+        }
+
+        /* --- 8. PRICING (YELLOW/ORANGE) --- */
+        .pricing {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--poke-yellow) 0%, var(--poke-orange) 100%);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .price-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .badge-wrapper {
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--poke-blue);
+            color: var(--poke-white);
+            padding: 6px 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .price-inner h3 {
+            font-size: 1.5rem;
+            color: var(--poke-black);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .price-features {
+            list-style: none;
+            flex-grow: 1;
+            margin-top: 16px;
+        }
+
+        .price-features li {
+            font-size: 1.05rem;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--poke-black);
+            font-weight: 600;
+        }
+
+        .price-features li::before {
+            content: "✦";
+            color: var(--poke-blue);
+        }
+
+        /* --- 9. PARENT TRUST (WHITE) --- */
+        .benefits {
+            padding: 80px 0;
+            background-color: var(--poke-white);
+            border-top: var(--stroke-thick);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .benefit-inner {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .benefit-inner h4 {
+            font-size: 1.1rem;
+            color: var(--poke-black);
+            line-height: 1.4;
+        }
+
+        /* --- 10. FOOTER --- */
+        .footer {
+            background-color: var(--poke-black);
+            color: var(--poke-white);
+            padding: 60px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--poke-yellow);
+        }
+
+        .footer-brand img {
+            height: 30px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-sub {
+            font-size: 0.95rem;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--poke-white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--poke-yellow);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. Top navigation -->
+    <nav class="top-nav">
+        <div class="container nav-content">
+            <div class="nav-brand">
+                <img src="Asset 2.png" alt="Shiba Mascot">
+                The 11+ Weekend League
+            </div>
+            <div class="nav-links">
+                <a href="#register">Register</a>
+                <a href="#how-it-works">How it works</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Announcement bar -->
+    <div class="announcement-bar">
+        Registration is open. This weekend’s test window opens Friday at 4:00 PM.
+    </div>
+
+    <!-- 3. Hero section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <img src="PNG Logo.png" alt="The 11+ Weekend League" class="hero-logo-large">
+                <h2 class="hero-headline">See where your child stands every weekend.</h2>
+                <div class="subheading">A short 25-minute 11+ mock each weekend, with instant scores and optional cohort rankings released every Sunday.</div>
+                
+                <ul class="hero-bullets">
+                    <li>Same paper, same weekend window</li>
+                    <li>Low-pressure 25-minute format</li>
+                    <li>Optional cohort ranking and paper review</li>
+                </ul>
+            </div>
+
+            <!-- Angled wrapper outside, regular square form inputs inside -->
+            <div class="angled-wrapper" id="register">
+                <div class="angled-inner registration-card">
+                    <h2>Enter this weekend's mock</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>Parent Email Address</label>
+                            <input type="email" class="form-control" placeholder="name@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Child's Birth Month & Year</label>
+                            <div class="dob-grid">
+                                <select class="form-control" required>
+                                    <option value="" disabled selected>Month</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <select class="form-control" id="birth-year" required>
+                                    <option value="" disabled selected>Year</option>
+                                    <!-- Options will be auto-generated here by JavaScript -->
+                                </select>
+                            </div>
+                            <span class="helper-text">Used only for estimated age standardisation.</span>
+                        </div>
+
+                        <div class="consent-group">
+                            <input type="checkbox" required>
+                            <label>I consent to receiving email notifications when the weekend league opens, closes, and when results are released.</label>
+                        </div>
+
+                        <div class="hook-text">⚡ Get your FREE SCORE immediately</div>
+
+                        <button type="submit" class="btn-dynamic btn-submit">
+                            Register free
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. How it works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How it works</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="angled-wrapper">
+                    <div class="angled-inner step-inner">
+                        <div class="step-marker">1</div>
+                        <h3>Register</h3>
+                        <p>Create your parent account and sign up for the weekend.</p>
+                    </div>
+                </div>
+                <div class="angled-wrapper">
+                    <div class="angled-inner step-inner">
+                        <div class="step-marker">2</div>
+                        <h3>Sit the mock</h3>
+                        <p>Your child takes the 25-minute test during the open window.</p>
+                    </div>
+                </div>
+                <div class="angled-wrapper">
+                    <div class="angled-inner step-inner">
+                        <div class="step-marker">3</div>
+                        <h3>Get results</h3>
+                        <p>Receive your detailed benchmark report on Sunday night.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Weekend schedule -->
+    <section class="schedule">
+        <div class="container">
+            <div class="section-header dark">
+                <h2>Weekend schedule</h2>
+            </div>
+            
+            <div class="angled-wrapper" style="max-width: 900px; margin: 0 auto;">
+                <div class="angled-inner" style="padding: 0;">
+                    <div class="schedule-grid">
+                        <div class="schedule-cell" style="padding: 30px;">
+                            <div class="icon">⏱️</div>
+                            <strong>Friday 4:00 PM</strong>
+                            <span>Test window opens</span>
+                        </div>
+                        <div class="schedule-cell" style="padding: 30px; border-left: 2px solid var(--poke-grey); border-right: 2px solid var(--poke-grey);">
+                            <div class="icon">🔒</div>
+                            <strong>Sunday 10:00 PM</strong>
+                            <span>Submissions close</span>
+                        </div>
+                        <div class="schedule-cell" style="padding: 30px;">
+                            <div class="icon">📊</div>
+                            <strong>Sunday 11:00 PM</strong>
+                            <span>Results released</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="schedule-footer">
+                Everyone sits the same paper in the same window, so rankings are fair.
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Sample report preview -->
+    <section class="report-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: var(--poke-white); text-shadow: 2px 2px 0px var(--poke-black);">What you'll see after the mock</h2>
+            </div>
+
+            <div class="dashboard-ui">
+                <div class="angled-wrapper">
+                    <div class="angled-inner dash-inner">
+                        <h4>Free (automatically included)</h4>
+                        <div class="dash-league-title">Summer League — Week 4</div>
+                        <div class="dash-metric">
+                            <span>Raw Score</span>
+                            <strong>14 / 20</strong>
+                        </div>
+                        <div class="dash-metric">
+                            <span>Accuracy</span>
+                            <strong>70%</strong>
+                        </div>
+                        <div class="dash-metric" style="margin-bottom:0;">
+                            <span>Completed</span>
+                            <strong>20 / 20</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="angled-wrapper">
+                    <div class="angled-inner dash-inner" style="background-color: var(--poke-yellow);">
+                        <h4 style="color: var(--poke-black); border-bottom-color: var(--poke-black);">League Rank (£1.99)</h4>
+                        <div class="dash-league-title" style="color: var(--poke-black);">Summer League — Week 4</div>
+                        <div class="dash-metric">
+                            <span style="color: var(--poke-black);">Raw Score</span>
+                            <strong>14 / 20</strong>
+                        </div>
+                        <div class="dash-metric">
+                            <span style="color: var(--poke-black);">Accuracy</span>
+                            <strong>70%</strong>
+                        </div>
+                        <div class="dash-metric">
+                            <span style="color: var(--poke-black);">Completed</span>
+                            <strong>20 / 20</strong>
+                        </div>
+                        <div class="dash-metric" style="border-top: 2px dashed var(--poke-black); padding-top: 16px;">
+                            <span style="color: var(--poke-black);">Rank</span>
+                            <strong>184 / 512</strong>
+                        </div>
+                        <div class="dash-metric">
+                            <span style="color: var(--poke-black);">Percentile</span>
+                            <strong class="highlight" style="color: var(--poke-blue);">Top 36%</strong>
+                        </div>
+                        <div class="dash-metric">
+                            <span style="color: var(--poke-black);">Cohort Average</span>
+                            <strong>61%</strong>
+                        </div>
+                        <div class="dash-metric" style="margin-bottom:0;">
+                            <span style="color: var(--poke-black);">Top Score</span>
+                            <strong>95%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="angled-wrapper">
+                    <div class="angled-inner dash-inner">
+                        <h4>Review Pack (£6.99)</h4>
+                        <div class="dash-league-title">Summer League — Week 4</div>
+                        <ul class="tag-list">
+                            <li>Full paper access</li>
+                            <li>Mark scheme</li>
+                        </ul>
+                        <div class="dash-metric" style="margin-bottom:0; margin-top: auto; display: block; text-align: left;">
+                            <span style="display: block; margin-bottom: 5px;">Main Focus Area</span>
+                            <strong style="font-size: 1.4rem; color: var(--poke-orange); display: block;">Verbal Reasoning</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Trust Strip -->
+    <section class="trust-strip">
+        <div class="container">
+            <h2 class="trust-heading">Same paper. Same weekend window. Fairer rankings.</h2>
+            <div class="trust-grid">
+                <div class="trust-item">Designed by experienced 11+ tutors</div>
+                <div class="trust-item">Short, low-pressure weekly format</div>
+                <div class="trust-item">Useful for Bexley, Kent, Sutton and independent school preparation</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Why parents use it -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-header dark">
+                <h2>Why parents use it</h2>
+            </div>
+            <div class="benefits-grid">
+                <div class="angled-wrapper">
+                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
+                        <h4>Know where they stand</h4>
+                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">See how your child compares with the weekly cohort.</p>
+                    </div>
+                </div>
+                <div class="angled-wrapper">
+                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
+                        <h4>Keep practice low-pressure</h4>
+                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">One short paper each weekend, not endless worksheets.</p>
+                    </div>
+                </div>
+                <div class="angled-wrapper">
+                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
+                        <h4>Spot patterns early</h4>
+                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">See which skills keep causing mistakes.</p>
+                    </div>
+                </div>
+                <div class="angled-wrapper">
+                    <div class="angled-inner benefit-inner" style="flex-direction: column; gap: 8px;">
+                        <h4>Choose your level of detail</h4>
+                        <p style="font-size: 0.95rem; font-weight: 500; color: #333;">Free score first, rankings and review only if needed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. SEO Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <div class="footer-brand">
+                    <img src="Asset 2.png" alt="Shiba Mascot">
+                    The 11+ Weekend League
+                </div>
+                <div class="footer-sub">&copy; 2026 The 11+ Weekend League</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQs</a>
+                <a href="#">11+ School Advice</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dynamic Birth Year Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const yearSelect = document.getElementById("birth-year");
+            const currentYear = new Date().getFullYear();
+            
+            // Age range
+            const minAge = 8;
+            const maxAge = 11;
+            
+            // Calculate corresponding birth years
+            const maxBirthYear = currentYear - minAge;
+            const minBirthYear = currentYear - maxAge;
+
+            // Generate options from the most recent year down to the oldest
+            for (let year = maxBirthYear; year >= minBirthYear; year--) {
+                const option = document.createElement("option");
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
+        });
+    </script>
+</body>
+</html>
