@@ -1177,60 +1177,54 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-    const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-    // Test the connection!
-    console.log("Supabase connected:", supabase);
-</script>
     <script>
-    document.getElementById('registerForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
+        // Renamed to supabaseClient to prevent variable clashing
+        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // 1. Grab the data
-        const email = document.getElementById('emailInput').value; 
-        const birthMonth = document.getElementById('birthMonth').value; 
-        const birthYear = document.getElementById('birthYear').value; 
-        const consent = document.getElementById('consentCheckbox').checked;
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-        if (!consent) {
-            alert("Please tick the consent box to continue.");
-            return;
-        }
+            const email = document.getElementById('emailInput').value; 
+            const birthMonth = document.getElementById('birthMonth').value; 
+            const birthYear = document.getElementById('birthYear').value; 
+            const consent = document.getElementById('consentCheckbox').checked;
 
-        // Change button text to show it's working
-        const submitBtn = document.querySelector('.btn-submit');
-        submitBtn.innerText = "Loading...";
-        submitBtn.disabled = true;
+            if (!consent) {
+                alert("Please tick the consent box to continue.");
+                return;
+            }
 
-        // 2. Send the partial lead to Supabase immediately
-        // (Make sure your Supabase connection script is included higher up on the page!)
-        try {
-            const { data, error } = await supabase
-                .from('partial_leads')
-                .insert([
-                    { 
-                        email: email, 
-                        birth_month: birthMonth, 
-                        birth_year: parseInt(birthYear) 
-                    }
-                ]);
-            
-            if (error) console.error("Error saving lead:", error);
-        } catch (err) {
-            console.error("Supabase not connected yet or failed:", err);
-        }
+            const submitBtn = document.querySelector('.btn-submit');
+            submitBtn.innerText = "Loading...";
+            submitBtn.disabled = true;
 
-        // 3. Still put it in the backpack so Step 2 doesn't ask for their email again
-        sessionStorage.setItem('tempEmail', email);
-        sessionStorage.setItem('tempMonth', birthMonth);
-        sessionStorage.setItem('tempYear', birthYear);
+            // Send to Supabase using the new client name
+            try {
+                const { error } = await supabaseClient
+                    .from('partial_leads')
+                    .insert([
+                        { 
+                            email: email, 
+                            birth_month: birthMonth, 
+                            birth_year: parseInt(birthYear) 
+                        }
+                    ]);
+                
+                if (error) console.error("Error saving lead:", error);
+            } catch (err) {
+                console.error("Supabase failed:", err);
+            }
 
-        // 4. Shoot them over to the setup page
-        window.location.href = 'setup-profile.html';
-    });
-</script>
+            // Save data to the backpack
+            sessionStorage.setItem('tempEmail', email);
+            sessionStorage.setItem('tempMonth', birthMonth);
+            sessionStorage.setItem('tempYear', birthYear);
+
+            // Redirect
+            window.location.href = 'setup-profile.html';
+        });
+    </script>
 </body>
 </html>
