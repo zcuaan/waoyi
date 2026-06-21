@@ -17,12 +17,21 @@
             --wl-pink: #ff6b81;
             --wl-soft-pink: #ffeef0;
             
-            --wl-black: #1f2227; /* Original Homepage Black */
+            --wl-black: #1f2227; 
             --wl-text-main: #2c3e50; 
             --wl-text-muted: #64748b;
-            --wl-bg-main: #f2f2f2; /* Original Homepage Grey */
+            --wl-bg-main: #f2f2f2; 
             --wl-white: #ffffff;
             --wl-border: #e2e8f0;
+
+            /* TCG Map Inspired Palette */
+            --wl-map-green-bg: #f2f8e6;
+            --wl-map-green-border: #c1de7e;
+            --wl-map-green-text: #3a5c14;
+            
+            --wl-tcg-blue-bg: #e6f3fc;
+            --wl-tcg-blue-border: #91c9ef;
+            --wl-tcg-blue-text: #0b75ba;
             
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
@@ -42,10 +51,10 @@
 
         .container { max-width: 1050px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- DYNAMIC ANGLED CORNERS (Brought Back) --- */
+        /* --- DYNAMIC ANGLED CORNERS --- */
         .angled-wrapper {
             background-color: var(--wl-black);
-            padding: 4px; /* Border thickness */
+            padding: 4px;
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
             margin-bottom: 32px;
         }
@@ -57,9 +66,9 @@
             height: 100%;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION (Updated to White) --- */
         .dash-nav {
-            background-color: var(--wl-black);
+            background-color: var(--wl-white);
             border-bottom: 2px solid var(--wl-border);
             padding: 16px 0;
             position: sticky;
@@ -71,7 +80,7 @@
         .nav-brand { 
             font-weight: 800; 
             font-size: 1.2rem; 
-            color: var(--wl-yellow); 
+            color: var(--wl-black); 
             display: flex; 
             align-items: center; 
             gap: 12px;
@@ -80,11 +89,11 @@
             height: 35px; 
             width: auto; 
             display: block; 
-            filter: brightness(0) invert(1); /* Makes the logo white */
+            /* Filter removed so the original colors show on the white background */
         }
 
-        .nav-links a { color: var(--wl-white); text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-left: 24px; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--wl-yellow); }
+        .nav-links a { color: var(--wl-text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-left: 24px; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--wl-blue); }
 
         /* --- BUTTONS --- */
         .btn {
@@ -99,9 +108,16 @@
             border: none;
             transition: all 0.2s;
             font-family: var(--font-main);
-            /* Restored Angled Button Style */
+            /* Default Angled Button Style */
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
+        
+        /* Utility class to remove diagonals from specific buttons */
+        .btn-square {
+            clip-path: none !important;
+            border-radius: 6px;
+        }
+
         .btn-primary { background-color: var(--wl-blue); color: var(--wl-white); }
         .btn-primary:hover { background-color: #005299; transform: translateY(-1px); }
         
@@ -120,7 +136,16 @@
         .header-section { margin: 40px 0 24px; display: flex; justify-content: space-between; align-items: flex-end; }
         .header-section h1 { font-size: 2.4rem; margin-bottom: 4px; }
         .header-section p { font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; }
-        .tier-badge { background-color: var(--wl-soft-yellow); color: #b48500; border: 2px solid #fde68a; padding: 6px 14px; font-weight: 800; font-size: 0.85rem; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
+        /* Tier Badge (Diagonals removed) */
+        .tier-badge { 
+            background-color: var(--wl-soft-yellow); 
+            color: #b48500; 
+            border: 2px solid #fde68a; 
+            padding: 6px 14px; 
+            font-weight: 800; 
+            font-size: 0.85rem; 
+            border-radius: 6px; 
+        }
 
         /* --- ACTIVE WEEK CARD --- */
         .active-week-card {
@@ -153,25 +178,29 @@
         .td-rank { font-weight: 800; color: var(--wl-teal); font-size: 1.1rem; }
         .td-empty { color: #cbd5e1; font-weight: 600; }
 
-        /* --- BUNDLES & WRITING GRID --- */
+        /* --- BUNDLES & WRITING GRID (Updated Colors) --- */
         .section-title { font-size: 1.6rem; margin: 40px 0 16px; color: var(--wl-black); }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
-        .bundle-card { background-color: var(--wl-soft-yellow); }
-        .bundle-card h3 { color: #b48500; margin-bottom: 12px; }
+        .bundle-card { background-color: var(--wl-map-green-bg); border: 2px solid var(--wl-map-green-border); }
+        .bundle-card h3 { color: var(--wl-map-green-text); margin-bottom: 12px; }
         .bundle-list { list-style: none; margin-bottom: 20px; }
         .bundle-list li { font-size: 0.95rem; margin-bottom: 8px; font-weight: 600; display: flex; gap: 8px; color: var(--wl-text-main); }
-        .bundle-list li::before { content: "✓"; color: #b48500; font-weight: bold; }
+        .bundle-list li::before { content: "✓"; color: var(--wl-map-green-text); font-weight: bold; }
+        .bundle-card .btn-outline { border-color: var(--wl-map-green-text); color: var(--wl-map-green-text); }
+        .bundle-card .btn-outline:hover { background-color: rgba(58, 92, 20, 0.05); }
 
-        .writing-card { background-color: var(--wl-soft-pink); }
-        .writing-card h3 { color: #e11d48; margin-bottom: 12px; }
+        .writing-card { background-color: var(--wl-tcg-blue-bg); border: 2px solid var(--wl-tcg-blue-border); }
+        .writing-card h3 { color: var(--wl-tcg-blue-text); margin-bottom: 12px; }
         .writing-card p { font-size: 0.95rem; margin-bottom: 20px; font-weight: 600; color: var(--wl-text-main); }
-        .btn-writing { background-color: var(--wl-white); color: #e11d48; border: 2px solid #fecdd3; }
+        .btn-writing { background-color: var(--wl-white); color: var(--wl-tcg-blue-text); border: 2px solid var(--wl-tcg-blue-border); }
+        .writing-card .btn-outline { border-color: var(--wl-tcg-blue-border); color: var(--wl-tcg-blue-text); }
+        .writing-card .btn-outline:hover { background-color: rgba(11, 117, 186, 0.05); }
 
-        /* --- MODALS (Hidden by default) --- */
+        /* --- MODALS --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(31, 34, 39, 0.8); /* Darker backdrop to match theme */
+            background: rgba(31, 34, 39, 0.8);
             backdrop-filter: blur(4px);
             z-index: 100;
             display: none;
@@ -238,7 +267,7 @@
             <div class="tier-badge">Account: Free Tier</div>
         </div>
 
-        <!-- Current Week Card wrapped in Angled Borders -->
+        <!-- Current Week Card -->
         <div class="angled-wrapper">
             <div class="angled-inner active-week-card" style="padding: 32px;">
                 <div class="active-info">
@@ -248,12 +277,13 @@
                     <div class="sub-info" style="margin-top: 8px;">Closes Sunday at 10:00 PM</div>
                 </div>
                 <div>
+                    <!-- Primary action button keeps the dynamic angled look -->
                     <button class="btn btn-primary" style="padding: 16px 28px; font-size: 1.1rem;">Start this week's mock</button>
                 </div>
             </div>
         </div>
 
-        <!-- Results Table wrapped in Angled Borders -->
+        <!-- Results Table -->
         <div class="angled-wrapper">
             <div class="angled-inner" style="padding: 0; overflow: hidden;">
                 <div class="table-responsive">
@@ -269,30 +299,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Week 1: Taken, Nothing bought -->
+                            <!-- Week 1 -->
                             <tr>
                                 <td class="td-week" style="padding-left: 32px;">Week 1</td>
                                 <td class="td-test">Mixed 11+ Mock</td>
                                 <td class="td-score">28/40</td>
-                                <td><button class="btn btn-locked btn-sm">Unlock Rank £3.99</button></td>
-                                <td><button class="btn btn-locked btn-sm" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
-                                <td style="padding-right: 32px;"><button class="btn btn-locked btn-sm">Add Writing £29.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square">Unlock Rank £3.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
+                                <td style="padding-right: 32px;"><button class="btn btn-locked btn-sm btn-square">Add Writing £29.99</button></td>
                             </tr>
                             
-                            <!-- Week 2: Taken, Rank bought, Review locked -->
+                            <!-- Week 2 -->
                             <tr>
                                 <td class="td-week" style="padding-left: 32px;">Week 2</td>
                                 <td class="td-test">Mixed 11+ Mock</td>
                                 <td class="td-score">31/40</td>
                                 <td>
                                     <div class="td-rank">Top 36%</div>
+                                    <!-- View Report retains the angled look to distinguish it as an primary action -->
                                     <button class="btn btn-action btn-sm" style="margin-top: 6px;" onclick="openModal('report-modal')">View Report</button>
                                 </td>
-                                <td><button class="btn btn-locked btn-sm" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
                                 <td style="padding-right: 32px;"><span class="td-test" style="font-size: 0.9rem;">Feedback pending</span></td>
                             </tr>
 
-                            <!-- Week 3: Open / Not taken -->
+                            <!-- Week 3 -->
                             <tr>
                                 <td class="td-week" style="padding-left: 32px;">Week 3</td>
                                 <td class="td-test" style="color: var(--wl-teal); font-weight: 800;">Open</td>
@@ -320,7 +351,7 @@
                         <li><strong>Review Pass:</strong> Unlock all 6 review packs & answers</li>
                         <li><strong>Writing Pack:</strong> 3 tutor-marked writing tasks</li>
                     </ul>
-                    <button class="btn btn-outline" style="background-color: var(--wl-white); border-color: #b48500; color: #b48500;">View Bundle Options</button>
+                    <button class="btn btn-outline btn-square">View Bundle Options</button>
                 </div>
             </div>
 
@@ -330,8 +361,8 @@
                     <h3>Optional Writing Feedback</h3>
                     <p>Independent-school style writing task, tutor-marked and returned separately from the main report.</p>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <button class="btn btn-writing">Add Writing Feedback</button>
-                        <button class="btn btn-outline" style="border-color: #fecdd3; color: #e11d48;">Upload Script</button>
+                        <button class="btn btn-writing btn-square">Add Writing Feedback</button>
+                        <button class="btn btn-outline btn-square">Upload Script</button>
                     </div>
                 </div>
             </div>
@@ -341,7 +372,7 @@
     </div>
 
     <!-- =========================================
-         MODALS (Also updated with Angled Wrappers)
+         MODALS 
     ========================================== -->
 
     <!-- 1. Upgrade Review Pack Modal -->
@@ -363,8 +394,8 @@
                 </ul>
 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="btn btn-primary" style="width: 100%;">Unlock Review Pack</button>
-                    <button class="btn btn-locked" style="width: 100%; border: none; background: transparent;">View bundle options</button>
+                    <button class="btn btn-primary btn-square" style="width: 100%;">Unlock Review Pack</button>
+                    <button class="btn btn-locked btn-square" style="width: 100%; border: none; background: transparent;">View bundle options</button>
                 </div>
             </div>
         </div>
@@ -380,7 +411,7 @@
                         <p style="color: var(--wl-text-muted); font-weight: 600;">Mixed 11+ Mock</p>
                     </div>
                     <div style="display: flex; gap: 16px; align-items: center;">
-                        <button class="btn btn-outline btn-sm">Download PDF</button>
+                        <button class="btn btn-outline btn-sm btn-square">Download PDF</button>
                         <button class="modal-close" style="position: relative; top: 0; right: 0;" onclick="closeModal('report-modal')">&times;</button>
                     </div>
                 </div>
@@ -423,7 +454,7 @@
                                 <h4 style="color: #b48500; margin-bottom: 4px;">Unlock Detailed Insights</h4>
                                 <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 500;">See subject breakdowns, question-by-question reviews, and access the full paper.</p>
                             </div>
-                            <button class="btn" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;" onclick="openModal('upgrade-modal')">Unlock Review Pack</button>
+                            <button class="btn btn-square" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;" onclick="openModal('upgrade-modal')">Unlock Review Pack</button>
                         </div>
                     </div>
                 </div>
@@ -431,7 +462,6 @@
         </div>
     </div>
 
-    <!-- Simple JS to handle Modal Toggles -->
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -440,7 +470,6 @@
             document.getElementById(modalId).classList.remove('active');
         }
         
-        // Close modal when clicking outside the content
         window.onclick = function(event) {
             if (event.target.classList.contains('modal-overlay')) {
                 event.target.classList.remove('active');
