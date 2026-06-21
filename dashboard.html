@@ -144,13 +144,18 @@
 
         /* --- ACTIVE WEEK CARD --- */
         .active-week-card {
-            background: linear-gradient(135deg, #a2d9ce 0%, #e8f6f3 100%);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .active-info h2 { font-size: 1.8rem; color: var(--wl-teal-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-        .active-info .sub-info { color: var(--wl-text-main); font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
+        .active-info h2 { font-size: 1.8rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .active-info .sub-info { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
+
+        /* Button Hover Effects */
+        .btn-start-mock:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 5px 0px var(--wl-black) !important;
+        }
 
         /* --- RESULTS TABLE --- */
         .table-responsive { overflow-x: auto; }
@@ -254,7 +259,6 @@
 </head>
 <body>
 
-    <!-- Header -->
     <nav class="dash-nav">
         <div class="container nav-content">
             <div class="nav-brand">
@@ -269,36 +273,31 @@
     </nav>
 
     <div class="container">
-        <!-- Account Panel Header -->
         <div class="header-section">
             <div>
                 <h1>Leo's Dashboard</h1>
                 <p>Summer League 2026</p>
             </div>
-            <!-- Bold Homepage Style Badge -->
             <div style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 6px 14px; font-weight: 800; font-size: 0.85rem; border-radius: 4px; text-transform: uppercase;">
                 Account: Free Tier
             </div>
         </div>
 
-        <!-- Current Week Card (Turquoise Vibe) -->
         <div class="angled-wrapper" style="background-color: var(--wl-black);">
-            <div class="angled-inner active-week-card" style="background-color: var(--wl-teal); padding: 32px; border: 2px solid var(--wl-black);">
+            <div class="angled-inner active-week-card" style="background-color: var(--wl-teal); padding: 32px;">
                 <div class="active-info">
                     <h2 style="color: var(--wl-white);"><span style="color: var(--wl-yellow);">⚡</span> Week 3 11+ Mock Exam is open</h2>
                     <div class="sub-info" style="color: rgba(255, 255, 255, 0.9); margin-top: 8px;">Time: 25 minutes</div>
                     <div class="sub-info" style="color: rgba(255, 255, 255, 0.9);">Ends: This Sunday at 10:00 PM</div>
                 </div>
                 <div>
-                    <!-- Bold Homepage Style Button -->
-                    <button class="btn btn-square" style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 16px 28px; font-size: 1.1rem; font-weight: 800; transition: transform 0.1s;">
+                    <button class="btn btn-square btn-start-mock" style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 16px 28px; font-size: 1.1rem; font-weight: 800; transition: all 0.1s;">
                         Start this week's mock
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Results Table (Zebra Striped) -->
         <div class="angled-wrapper">
             <div class="angled-inner" style="padding: 0; overflow: hidden;">
                 <div class="table-responsive">
@@ -313,7 +312,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Week 1 -->
                             <tr>
                                 <td class="td-week">1</td>
                                 <td class="td-score">28/40</td>
@@ -322,7 +320,6 @@
                                 <td><span class="td-muted">Missed</span></td>
                             </tr>
                             
-                            <!-- Week 2 -->
                             <tr>
                                 <td class="td-week">2</td>
                                 <td class="td-score">31/40</td>
@@ -334,7 +331,6 @@
                                 <td><span class="td-muted">Feedback pending</span></td>
                             </tr>
 
-                            <!-- Week 3 (Current) -->
                             <tr>
                                 <td class="td-week">3</td>
                                 <td class="td-empty">—</td>
@@ -343,7 +339,6 @@
                                 <td><span class="td-muted">Not submitted</span></td>
                             </tr>
                             
-                            <!-- Week 4 -->
                             <tr>
                                 <td class="td-week">4</td>
                                 <td class="td-muted">Opens Aug 14</td>
@@ -352,7 +347,6 @@
                                 <td class="td-empty">—</td>
                             </tr>
                             
-                            <!-- Week 5 -->
                             <tr>
                                 <td class="td-week">5</td>
                                 <td class="td-muted">Opens Aug 21</td>
@@ -361,7 +355,6 @@
                                 <td class="td-empty">—</td>
                             </tr>
                             
-                            <!-- Week 6 -->
                             <tr>
                                 <td class="td-week">6</td>
                                 <td class="td-muted">Opens Aug 28</td>
@@ -375,23 +368,19 @@
             </div>
         </div>
 
-        <!-- Upgrades & Add-ons Cards -->
         <h2 class="section-title">Upgrades & Add-ons</h2>
         <div class="grid-2">
             
-            <!-- Summer League Passes -->
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3 style="margin-bottom: 24px; font-size: 1.4rem;">Summer League Passes</h3>
                     
-                    <!-- Rank Pass -->
                     <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px dashed rgba(21, 50, 91, 0.2);">
                         <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Rank Pass (£19.99)</h4>
                         <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 12px; font-weight: 500;">Unlock all 6 weekly rankings</p>
                         <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Buy</button>
                     </div>
 
-                    <!-- Review Pass -->
                     <div style="flex-grow: 1;">
                         <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Review Pass (£99.00)</h4>
                         <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 12px; font-weight: 500;">Unlock all 6 review packs & answers</p>
@@ -400,7 +389,6 @@
                 </div>
             </div>
 
-            <!-- Optional Writing Feedback -->
             <div class="angled-wrapper writing-wrapper">
                 <div class="angled-inner writing-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Optional Writing Feedback</h3>
@@ -416,11 +404,6 @@
 
     </div>
 
-    <!-- =========================================
-         MODALS 
-    ========================================== -->
-
-    <!-- 1. Upgrade Review Pack Modal -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -445,12 +428,10 @@
         </div>
     </div>
 
-    <!-- 2. In-App Report Drawer/Modal -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
                 
-                <!-- Modal Header -->
                 <div class="report-header">
                     <div>
                         <h2 style="margin-bottom: 4px;">Week 2 Results</h2>
@@ -463,7 +444,6 @@
                     </div>
                 </div>
                 
-                <!-- Modal Tabs -->
                 <div class="report-tabs">
                     <div class="tab active" onclick="switchTab('tab-summary', this)">Summary</div>
                     <div class="tab" onclick="switchTab('tab-english', this)">English</div>
@@ -472,18 +452,15 @@
                     <div class="tab" onclick="switchTab('tab-maths', this)">NVR (Locked)</div>
                 </div>
 
-                <!-- TAB 1: SUMMARY (Clean & Organized) -->
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         
-                        <!-- Top Headline Rank -->
                         <div style="text-align: center; margin-bottom: 32px;">
                             <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Overall League Rank</h3>
                             <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">184 <span style="font-size: 1.6rem; color: var(--wl-text-muted);">/ 512</span></strong>
                             <div style="color: var(--wl-teal); font-weight: 800; font-size: 1.2rem; margin-top: 4px;">Top 36% Percentile</div>
                         </div>
 
-                        <!-- 3 Column Stats -->
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
                             <div style="text-align: center;">
                                 <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span>
@@ -499,7 +476,6 @@
                             </div>
                         </div>
 
-                        <!-- Clean Subject Breakdown -->
                         <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 24px;">
                             <h3 style="margin-bottom: 16px; font-size: 1.2rem; text-align: center;">Subject Breakdown</h3>
                             <div class="subject-row"><span>English</span><strong>7 / 10</strong></div>
@@ -508,7 +484,6 @@
                             <div class="subject-row"><span>Non-Verbal Reasoning</span><strong>10 / 10</strong></div>
                         </div>
 
-                        <!-- Reverted Subtle Yellow Upgrade Prompt -->
                         <div class="angled-wrapper" style="margin-top: 40px; margin-bottom: 0;">
                             <div class="angled-inner" style="background-color: var(--wl-soft-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                                 <div>
@@ -522,7 +497,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: ENGLISH (Unlocked Preview) -->
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
                     
@@ -596,10 +570,8 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: MATHS (Locked/Blurred Preview) -->
                 <div class="report-content blur-container" id="tab-maths">
                     
-                    <!-- The Paywall Overlay -->
                     <div class="unlock-overlay">
                         <div class="angled-wrapper" style="width: 100%; max-width: 450px;">
                             <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
@@ -610,7 +582,6 @@
                         </div>
                     </div>
 
-                    <!-- The Blurred Content Behind it -->
                     <div class="blur-content">
                         <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -635,7 +606,6 @@
         </div>
     </div>
 
-    <!-- Simple JS to handle Modal & Tabs -->
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
