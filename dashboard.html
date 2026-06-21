@@ -244,7 +244,7 @@
         /* Blurred Content Overlay */
         .blur-container { position: relative; }
         .blur-content { filter: blur(6px); opacity: 0.5; pointer-events: none; user-select: none; }
-        .unlock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .Reveal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -279,7 +279,7 @@
                 <p>Summer League 2026</p>
             </div>
             <div style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 6px 14px; font-weight: 800; font-size: 0.85rem; border-radius: 4px; text-transform: uppercase;">
-                Account: Free Tier
+                Free Account
             </div>
         </div>
 
@@ -287,12 +287,12 @@
             <div class="angled-inner active-week-card" style="background-color: var(--wl-teal); padding: 32px;">
                 <div class="active-info">
                     <h2 style="color: var(--wl-white);"><span style="color: var(--wl-yellow);">⚡</span> Week 3 11+ Mock Exam is open</h2>
-                    <div class="sub-info" style="color: rgba(255, 255, 255, 0.9); margin-top: 8px;">Time: 25 minutes</div>
-                    <div class="sub-info" style="color: rgba(255, 255, 255, 0.9);">Ends: This Sunday at 10:00 PM</div>
+                    <div class="sub-info" style="color: rgba(255, 255, 255, 0.9); margin-top: 8px;">Takes 25 minutes</div>
+                    <div class="sub-info" style="color: rgba(255, 255, 255, 0.9);">Closes Sunday at 10:00 PM</div>
                 </div>
                 <div>
                     <button class="btn btn-square btn-start-mock" style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 16px 28px; font-size: 1.1rem; font-weight: 800; transition: all 0.1s;">
-                        Start this week's mock
+                        Start Week 3 Mock
                     </button>
                 </div>
             </div>
@@ -304,8 +304,8 @@
                     <table class="results-table">
                         <thead>
                             <tr>
-                                <th style="text-align: center;">Wk</th>
-                                <th>Free Score</th>
+                                <th style="text-align: center;">Week</th>
+                                <th>Score</th>
                                 <th>League Rank</th>
                                 <th>Review Pack</th>
                                 <th>Writing Feedback</th>
@@ -315,8 +315,8 @@
                             <tr>
                                 <td class="td-week">1</td>
                                 <td class="td-score">28/40</td>
-                                <td><button class="btn btn-locked btn-sm btn-square">Unlock Rank £3.99</button></td>
-                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square">Reveal Rank £3.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>
                                 <td><span class="td-muted">Missed</span></td>
                             </tr>
                             
@@ -327,7 +327,7 @@
                                     <div class="td-rank">Top 36%</div>
                                     <button class="btn btn-outline btn-sm btn-square" style="margin-top: 6px; border-color: var(--wl-black); color: var(--wl-black);" onclick="openModal('report-modal')">View Report</button>
                                 </td>
-                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>
                                 <td><span class="td-muted">Feedback pending</span></td>
                             </tr>
 
@@ -375,19 +375,41 @@
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3 style="margin-bottom: 24px; font-size: 1.4rem;">Summer League Passes</h3>
                     
-                    <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px dashed rgba(21, 50, 91, 0.2);">
-                        <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Rank Pass (£19.99)</h4>
-                        <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 12px; font-weight: 500;">Unlock all 6 weekly rankings</p>
-                        <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Buy</button>
-                    </div>
+                   <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px dashed rgba(21, 50, 91, 0.2);">
+  <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">
+    Rank Pass (£19.99)
+  </h4>
 
-                    <div style="flex-grow: 1;">
-                        <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Review Pass (£99.00)</h4>
-                        <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 12px; font-weight: 500;">Unlock all 6 review packs & answers</p>
-                        <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Buy</button>
-                    </div>
-                </div>
-            </div>
+  <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">
+    Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.
+  </p>
+
+  <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 12px;">
+    Weekly rankings can also be revealed individually for £3.99 each.
+  </p>
+
+  <button class="btn btn-outline btn-square" style="padding: 8px 24px;">
+    Upgrade to Rank Pass
+  </button>
+</div>
+
+                    <<div style="flex-grow: 1;">
+  <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">
+    Review Pass (£99)
+  </h4>
+
+  <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">
+    Get all 6 review packs, including the papers, answers and explanations.
+  </p>
+
+  <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 12px;">
+    Weekly review packs can also be bought individually for £19.99 each.
+  </p>
+
+  <button class="btn btn-outline btn-square" style="padding: 8px 24px;">
+    Upgrade to Review Pass
+  </button>
+</div>
 
             <div class="angled-wrapper writing-wrapper">
                 <div class="angled-inner writing-card" style="padding: 32px; display: flex; flex-direction: column;">
@@ -408,7 +430,7 @@
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
                 <button class="modal-close" onclick="closeModal('upgrade-modal')">&times;</button>
-                <h2>Unlock Review Pack</h2>
+                <h2>Get Review Pack</h2>
                 <div class="price">Week 2 — £19.99</div>
                 
                 <ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);">
@@ -422,7 +444,7 @@
                 </ul>
 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="btn btn-primary btn-square" style="width: 100%;">Unlock Review Pack</button>
+                    <button class="btn btn-primary btn-square" style="width: 100%;">Get Review Pack</button>
                 </div>
             </div>
         </div>
@@ -487,10 +509,10 @@
                         <div class="angled-wrapper" style="margin-top: 40px; margin-bottom: 0;">
                             <div class="angled-inner" style="background-color: var(--wl-soft-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                                 <div>
-                                    <h4 style="color: #b48500; margin-bottom: 4px;">Unlock Detailed Insights</h4>
+                                    <h4 style="color: #b48500; margin-bottom: 4px;">Reveal Detailed Insights</h4>
                                     <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 500;">See subject rankings, question-by-topic analysis, and access the full paper.</p>
                                 </div>
-                                <button class="btn btn-square" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;" onclick="openModal('upgrade-modal')">Unlock Review Pack (£19.99)</button>
+                                <button class="btn btn-square" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
                             </div>
                         </div>
 
@@ -572,12 +594,12 @@
 
                 <div class="report-content blur-container" id="tab-maths">
                     
-                    <div class="unlock-overlay">
+                    <div class="Reveal-overlay">
                         <div class="angled-wrapper" style="width: 100%; max-width: 450px;">
                             <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
                                 <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pack Locked</h3>
-                                <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Unlock to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
-                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Unlock Review Pack (£19.99)</button>
+                                <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Reveal to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
+                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
                             </div>
                         </div>
                     </div>
