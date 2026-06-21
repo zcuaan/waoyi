@@ -43,7 +43,7 @@
             margin-bottom: 32px;
         }
         .brand-header img {
-            height: 60px; /* Adjusted for typical horizontal logo proportions */
+            height: 85px; /* Increased logo size */
             width: auto;
             max-width: 100%;
             margin-bottom: 12px;
@@ -55,7 +55,7 @@
             padding: 4px;
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
             width: 100%;
-            max-width: 480px;
+            max-width: 540px; /* Widened the box to prevent squishing */
         }
         
         .angled-inner {
@@ -135,7 +135,7 @@
         /* --- GENDER SELECTOR (Pill Buttons) --- */
         .gender-options {
             display: flex;
-            gap: 12px;
+            gap: 16px; /* Slightly wider gap */
         }
         .gender-label {
             flex: 1;
@@ -151,11 +151,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 8px;
+            padding: 14px 8px; /* Slightly taller buttons */
             border: 2px solid var(--wl-border);
             border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 1rem;
             color: var(--wl-text-muted);
             background-color: var(--wl-white);
             transition: all 0.2s;
@@ -202,7 +202,7 @@
 
         @media (max-width: 600px) {
             .angled-inner { padding: 32px 24px; }
-            .gender-options { flex-direction: column; gap: 8px; }
+            .gender-options { flex-direction: column; gap: 12px; }
         }
     </style>
 </head>
@@ -210,8 +210,7 @@
 
     <div>
         <div class="brand-header">
-            <!-- Updated to use the primary logo -->
-            <img src="PNG Logo.png" alt="The 11+ Weekend League Logo">
+            <img src="Logo.png" alt="The 11+ Weekend League Logo">
         </div>
 
         <div class="angled-wrapper">
@@ -240,11 +239,6 @@
                             <label class="gender-label">
                                 <input type="radio" name="gender" value="girl">
                                 <div class="gender-box">Girl</div>
-                            </label>
-
-                            <label class="gender-label">
-                                <input type="radio" name="gender" value="prefer-not">
-                                <div class="gender-box">Prefer not to say</div>
                             </label>
                         </div>
                     </div>
