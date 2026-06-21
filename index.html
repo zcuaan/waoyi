@@ -782,16 +782,19 @@
             <div class="angled-wrapper" id="register">
                 <div class="angled-inner registration-card">
                     <h2>Enter this weekend's mock</h2>
-                    <form>
+                    <!-- Added ID to the form -->
+                    <form id="registerForm">
                         <div class="form-group">
                             <label>Parent Email Address</label>
-                            <input type="email" class="form-control" placeholder="name@example.com" required>
+                            <!-- Added ID to the email input -->
+                            <input type="email" id="emailInput" class="form-control" placeholder="name@example.com" required>
                         </div>
 
                         <div class="form-group">
                             <label>Child's Birth Month & Year</label>
                             <div class="dob-grid">
-                                <select class="form-control" required>
+                                <!-- Added ID to the month select -->
+                                <select id="birthMonth" class="form-control" required>
                                     <option value="" disabled selected>Month</option>
                                     <option value="1">January</option>
                                     <option value="2">February</option>
@@ -806,7 +809,8 @@
                                     <option value="11">November</option>
                                     <option value="12">December</option>
                                 </select>
-                                <select class="form-control" id="birth-year" required>
+                                <!-- Updated ID to camelCase for the year select -->
+                                <select class="form-control" id="birthYear" required>
                                     <option value="" disabled selected>Year</option>
                                 </select>
                             </div>
@@ -814,7 +818,8 @@
                         </div>
 
                         <div class="consent-group">
-                            <input type="checkbox" required>
+                            <!-- Added ID to the checkbox -->
+                            <input type="checkbox" id="consentCheckbox" required>
                             <label>I consent to receiving email notifications when the weekend league opens, closes, and when results are released.</label>
                         </div>
 
@@ -828,6 +833,27 @@
             </div>
         </div>
     </section>
+
+    <!-- The Javascript that acts as the "Invisible Backpack" -->
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            // 1. Stop the page from reloading
+            event.preventDefault();
+
+            // 2. Grab the data they typed in
+            const email = document.getElementById('emailInput').value; 
+            const birthMonth = document.getElementById('birthMonth').value; 
+            const birthYear = document.getElementById('birthYear').value; 
+
+            // 3. Put it in the browser's invisible backpack
+            sessionStorage.setItem('tempEmail', email);
+            sessionStorage.setItem('tempMonth', birthMonth);
+            sessionStorage.setItem('tempYear', birthYear);
+
+            // 4. Shoot them over to the setup page
+            window.location.href = 'setup-profile.html';
+        });
+    </script>
 
     <section class="seo-intro">
         <div class="container">
@@ -1158,6 +1184,53 @@
 
     // Test the connection!
     console.log("Supabase connected:", supabase);
+</script>
+    <script>
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // 1. Grab the data
+        const email = document.getElementById('emailInput').value; 
+        const birthMonth = document.getElementById('birthMonth').value; 
+        const birthYear = document.getElementById('birthYear').value; 
+        const consent = document.getElementById('consentCheckbox').checked;
+
+        if (!consent) {
+            alert("Please tick the consent box to continue.");
+            return;
+        }
+
+        // Change button text to show it's working
+        const submitBtn = document.querySelector('.btn-submit');
+        submitBtn.innerText = "Loading...";
+        submitBtn.disabled = true;
+
+        // 2. Send the partial lead to Supabase immediately
+        // (Make sure your Supabase connection script is included higher up on the page!)
+        try {
+            const { data, error } = await supabase
+                .from('partial_leads')
+                .insert([
+                    { 
+                        email: email, 
+                        birth_month: birthMonth, 
+                        birth_year: parseInt(birthYear) 
+                    }
+                ]);
+            
+            if (error) console.error("Error saving lead:", error);
+        } catch (err) {
+            console.error("Supabase not connected yet or failed:", err);
+        }
+
+        // 3. Still put it in the backpack so Step 2 doesn't ask for their email again
+        sessionStorage.setItem('tempEmail', email);
+        sessionStorage.setItem('tempMonth', birthMonth);
+        sessionStorage.setItem('tempYear', birthYear);
+
+        // 4. Shoot them over to the setup page
+        window.location.href = 'setup-profile.html';
+    });
 </script>
 </body>
 </html>
