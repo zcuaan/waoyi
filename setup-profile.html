@@ -284,80 +284,52 @@
     // Test the connection!
     console.log("Supabase connected:", supabase);
 </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        document.getElementById('profileForm').addEventListener('submit', async function(event) {
+        // Renamed to supabaseClient here too!
+        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
-            // 1. Grab Step 2 details from the form
-            const childName = document.getElementById('childName').value;
-            const password = document.getElementById('password').value;
-            
-            // Grab the selected gender radio button
-            const genderRadio = document.querySelector('input[name="gender"]:checked');
-            const childGender = genderRadio ? genderRadio.value : null;
+            const email = document.getElementById('emailInput').value; 
+            const birthMonth = document.getElementById('birthMonth').value; 
+            const birthYear = document.getElementById('birthYear').value; 
+            const consent = document.getElementById('consentCheckbox').checked;
 
-            // 2. Unpack Step 1 details from the invisible backpack
-            const email = sessionStorage.getItem('tempEmail');
-            const birthMonth = sessionStorage.getItem('tempMonth');
-            const birthYear = sessionStorage.getItem('tempYear');
-
-            if (!email) {
-                alert("Registration session expired. Please return to the homepage and enter your email again.");
-                window.location.href = 'index.html';
+            if (!consent) {
+                alert("Please tick the consent box to continue.");
                 return;
             }
 
-            // Change button state
             const submitBtn = document.querySelector('.btn-submit');
-            submitBtn.innerText = "Creating Account...";
+            submitBtn.innerText = "Loading...";
             submitBtn.disabled = true;
 
-            // 3. Create the Authenticated User in Supabase
-            const { data: authData, error: authError } = await supabase.auth.signUp({
-                email: email,
-                password: password
-            });
-
-            if (authError) {
-                alert("Error creating account: " + authError.message);
-                submitBtn.innerText = "Go to Dashboard ➔";
-                submitBtn.disabled = false;
-                return;
-            }
-
-            // 4. Save the Child's Profile Data to our 'profiles' table
-            if (authData.user) {
-                const { error: profileError } = await supabase
-                    .from('profiles')
+            // Send to Supabase using the new client name
+            try {
+                const { error } = await supabaseClient
+                    .from('partial_leads')
                     .insert([
-                        {
-                            id: authData.user.id,
-                            parent_email: email,
-                            child_first_name: childName,
-                            child_gender: childGender,
-                            child_birth_month: birthMonth,
-                            child_birth_year: parseInt(birthYear),
-                            account_tier: 'free'
+                        { 
+                            email: email, 
+                            birth_month: birthMonth, 
+                            birth_year: parseInt(birthYear) 
                         }
                     ]);
-
-                if (profileError) {
-                    console.error("Profile creation failed, but user account exists:", profileError);
-                }
                 
-                // 5. Update the partial lead status to converted!
-                await supabase
-                    .from('partial_leads')
-                    .update({ converted: true })
-                    .eq('email', email);
+                if (error) console.error("Error saving lead:", error);
+            } catch (err) {
+                console.error("Supabase failed:", err);
             }
 
-            // 6. Clear out the temporary backpack and log them into the dashboard
-            sessionStorage.removeItem('tempEmail');
-            sessionStorage.removeItem('tempMonth');
-            sessionStorage.removeItem('tempYear');
+            sessionStorage.setItem('tempEmail', email);
+            sessionStorage.setItem('tempMonth', birthMonth);
+            sessionStorage.setItem('tempYear', birthYear);
 
-            window.location.href = 'dashboard.html';
+            window.location.href = 'setup-profile.html';
         });
     </script>
 </body>
