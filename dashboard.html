@@ -22,12 +22,6 @@
             --wl-bg-main: #f2f2f2; 
             --wl-white: #ffffff;
             --wl-border: #e2e8f0;
-
-            /* TCG "Nyoro Nyoro" Inspired Palette */
-            --wl-nyoro-aqua: #bcedea;
-            --wl-nyoro-navy: #15325b;
-            --wl-nyoro-pink-text: #ea005e;
-            --wl-nyoro-pink-bg: #fce8ef;
             
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
@@ -169,26 +163,28 @@
         .td-empty { color: #cbd5e1; font-weight: 600; }
         .td-muted { color: var(--wl-text-muted); font-weight: 600; font-size: 0.95rem; }
 
-        /* --- BUNDLES & WRITING GRID --- */
+        /* --- UPGRADES TABLE --- */
         .section-title { font-size: 1.6rem; margin: 40px 0 16px; color: var(--wl-black); }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
-        .bundle-wrapper { background-color: var(--wl-nyoro-navy); margin-bottom: 0; }
-        .bundle-card { background-color: var(--wl-nyoro-aqua); }
-        .bundle-card h3 { color: var(--wl-nyoro-navy); margin-bottom: 12px; }
-        .bundle-list { list-style: none; margin-bottom: 20px; }
-        .bundle-list li { font-size: 0.95rem; margin-bottom: 8px; font-weight: 600; display: flex; gap: 8px; color: var(--wl-nyoro-navy); }
-        .bundle-list li::before { content: "✓"; color: var(--wl-nyoro-navy); font-weight: bold; }
-        .bundle-card .btn-outline { border-color: var(--wl-nyoro-navy); color: var(--wl-nyoro-navy); }
-        .bundle-card .btn-outline:hover { background-color: rgba(21, 50, 91, 0.05); }
-
-        .writing-wrapper { background-color: var(--wl-nyoro-pink-text); margin-bottom: 0; }
-        .writing-card { background-color: var(--wl-nyoro-pink-bg); }
-        .writing-card h3 { color: var(--wl-nyoro-pink-text); margin-bottom: 12px; }
-        .writing-card p { font-size: 0.95rem; margin-bottom: 20px; font-weight: 600; color: var(--wl-text-main); }
-        .btn-writing { background-color: var(--wl-white); color: var(--wl-nyoro-pink-text); border: 2px solid var(--wl-nyoro-pink-text); }
-        .writing-card .btn-outline { border-color: var(--wl-nyoro-pink-text); color: var(--wl-nyoro-pink-text); }
-        .writing-card .btn-outline:hover { background-color: rgba(234, 0, 94, 0.05); }
+        .upgrade-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 2px dashed var(--wl-bg-main);
+            gap: 20px;
+        }
+        .upgrade-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .upgrade-title { font-size: 1.2rem; color: var(--wl-black); font-weight: 800; margin-bottom: 4px; }
+        .upgrade-desc { color: var(--wl-text-muted); font-weight: 500; font-size: 0.95rem; }
+        
+        .btn-upgrade-buy {
+            background-color: var(--wl-white);
+            color: var(--wl-black);
+            border: 2px solid var(--wl-border);
+            min-width: 100px;
+        }
+        .btn-upgrade-buy:hover { border-color: var(--wl-black); background-color: #f8fafc; }
 
         /* --- MODALS --- */
         .modal-overlay {
@@ -247,11 +243,15 @@
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
             .active-week-card { flex-direction: column; align-items: flex-start; gap: 24px; }
-            .grid-2 { grid-template-columns: 1fr; }
             .nav-content { flex-direction: column; gap: 15px;}
             .nav-links { margin-left: 0; }
             .report-header { flex-direction: column; align-items: flex-start; gap: 16px; }
             .modal-close { top: 10px; right: 15px; }
+            
+            /* Responsive Upgrades Table */
+            .upgrade-row { flex-direction: column; align-items: flex-start; text-align: left; }
+            .upgrade-btn-group { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+            .upgrade-btn-group .btn { width: 100%; }
         }
     </style>
 </head>
@@ -285,7 +285,7 @@
         <div class="angled-wrapper" style="background-color: var(--wl-teal-dark);">
             <div class="angled-inner active-week-card" style="padding: 32px;">
                 <div class="active-info">
-                    <h2>⚡ Week 3 is open</h2>
+                    <h2>⚡ Week 3 11+ Mock Exam is open</h2>
                     <div class="sub-info" style="margin-top: 8px;">Time: 25 minutes</div>
                     <div class="sub-info">Ends: This Sunday at 10:00 PM</div>
                 </div>
@@ -372,37 +372,46 @@
             </div>
         </div>
 
-        <!-- Bundles & Add-ons Grid -->
+        <!-- Upgrades & Add-ons Clean List -->
         <h2 class="section-title">Upgrades & Add-ons</h2>
-        <div class="grid-2">
-            
-            <!-- Summer League Passes -->
-            <div class="angled-wrapper bundle-wrapper">
-                <div class="angled-inner bundle-card" style="padding: 32px;">
-                    <h3>Summer League Passes</h3>
-                    <ul class="bundle-list">
-                        <li><strong>Rank Pass (£19.99):</strong> Unlock all 6 weekly rankings</li>
-                        <li><strong>Review Pass (£99.00):</strong> Unlock all 6 review packs & answers</li>
-                    </ul>
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <button class="btn btn-outline btn-square">Buy Rank Pass</button>
-                        <button class="btn btn-outline btn-square">Buy Review Pass</button>
+        <div class="angled-wrapper">
+            <div class="angled-inner" style="padding: 32px;">
+                
+                <!-- Rank Pass Row -->
+                <div class="upgrade-row">
+                    <div>
+                        <h3 class="upgrade-title">Rank Pass (£19.99)</h3>
+                        <p class="upgrade-desc">Unlock all 6 weekly rankings</p>
+                    </div>
+                    <div class="upgrade-btn-group">
+                        <button class="btn btn-square btn-upgrade-buy">Buy</button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Optional Writing Feedback -->
-            <div class="angled-wrapper writing-wrapper">
-                <div class="angled-inner writing-card" style="padding: 32px;">
-                    <h3>Optional Writing Feedback</h3>
-                    <p>An optional writing task can be added to the weekend mock. Writing is marked separately by a tutor and is not included in the league ranking.</p>
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <button class="btn btn-writing btn-square">Join Week 3 Writing Task (£29.99)</button>
-                        <button class="btn btn-outline btn-square">Upload Script</button>
+                <!-- Review Pass Row -->
+                <div class="upgrade-row">
+                    <div>
+                        <h3 class="upgrade-title">Review Pass (£99.00)</h3>
+                        <p class="upgrade-desc">Unlock all 6 review packs & answers</p>
+                    </div>
+                    <div class="upgrade-btn-group">
+                        <button class="btn btn-square btn-upgrade-buy">Buy</button>
                     </div>
                 </div>
-            </div>
 
+                <!-- Optional Writing Feedback Row -->
+                <div class="upgrade-row">
+                    <div>
+                        <h3 class="upgrade-title">Join Week 3 Writing Task (£29.99)</h3>
+                        <p class="upgrade-desc">An optional writing task can be added to the weekend mock. Tutor-marked and returned separately.</p>
+                    </div>
+                    <div class="upgrade-btn-group" style="display: flex; gap: 12px; align-items: center;">
+                        <button class="btn btn-square btn-upgrade-buy">Buy</button>
+                        <button class="btn btn-square btn-outline">Upload Script</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
     </div>
@@ -419,14 +428,14 @@
                 <h2>Unlock Review Pack</h2>
                 <div class="price">Week 2 — £19.99</div>
                 
-                <ul class="bundle-list" style="margin-bottom: 24px; color: var(--wl-text-main);">
-                    <li style="color: var(--wl-text-main);">Full mixed paper access</li>
-                    <li style="color: var(--wl-text-main);">Answer key</li>
-                    <li style="color: var(--wl-text-main);">Your child’s answers vs correct answers</li>
-                    <li style="color: var(--wl-text-main);">Correct / incorrect review</li>
-                    <li style="color: var(--wl-text-main);">Subject ranks</li>
-                    <li style="color: var(--wl-text-main);">Skill and topic tags</li>
-                    <li style="color: var(--wl-text-main);">Main focus area</li>
+                <ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);">
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Your child’s answers vs correct answers</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Skill and topic tags</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Main focus area</li>
                 </ul>
 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -499,14 +508,14 @@
                             <div class="subject-row"><span>Non-Verbal Reasoning</span><strong>10 / 10</strong></div>
                         </div>
 
-                        <!-- Bold Yellow Upgrade Prompt -->
+                        <!-- Reverted Subtle Yellow Upgrade Prompt -->
                         <div class="angled-wrapper" style="margin-top: 40px; margin-bottom: 0;">
-                            <div class="angled-inner" style="background-color: var(--wl-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border: 2px solid var(--wl-black);">
+                            <div class="angled-inner" style="background-color: var(--wl-soft-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                                 <div>
-                                    <h4 style="color: var(--wl-black); margin-bottom: 4px; font-size: 1.2rem;">Unlock Detailed Insights</h4>
-                                    <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 600;">See subject rankings, question-by-topic analysis, and full paper access.</p>
+                                    <h4 style="color: #b48500; margin-bottom: 4px;">Unlock Detailed Insights</h4>
+                                    <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 500;">See subject rankings, question-by-topic analysis, and access the full paper.</p>
                                 </div>
-                                <button class="btn btn-square" style="background-color: var(--wl-black); color: var(--wl-yellow);" onclick="openModal('upgrade-modal')">Unlock Review Pack (£19.99)</button>
+                                <button class="btn btn-square" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;" onclick="openModal('upgrade-modal')">Unlock Review Pack (£19.99)</button>
                             </div>
                         </div>
 
@@ -528,7 +537,7 @@
                         </div>
                         <div class="stat-card">
                             <span>Subject Rank</span>
-                            <strong>142 / 512</strong>
+                            <strong>142 <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong>
                         </div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);">
                             <span style="color: var(--wl-teal);">Percentile</span>
@@ -561,7 +570,7 @@
                                     <td>Grammar - Punctuation</td>
                                     <td style="text-align: center;">A</td>
                                     <td style="text-align: center; font-weight: 800;">C</td>
-                                    <td style="color: var(--wl-nyoro-pink-text); font-weight: 800;">✗ Incorrect</td>
+                                    <td style="color: #ea005e; font-weight: 800;">✗ Incorrect</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: 800;">3</td>
@@ -575,7 +584,7 @@
                                     <td>Spelling</td>
                                     <td style="text-align: center;">B</td>
                                     <td style="text-align: center; font-weight: 800;">A</td>
-                                    <td style="color: var(--wl-nyoro-pink-text); font-weight: 800;">✗ Incorrect</td>
+                                    <td style="color: #ea005e; font-weight: 800;">✗ Incorrect</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -607,7 +616,7 @@
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
                             <div class="stat-card"><span>Raw Score</span><strong>? / 10</strong></div>
                             <div class="stat-card"><span>Accuracy</span><strong>?%</strong></div>
-                            <div class="stat-card"><span>Subject Rank</span><strong>? / 512</strong></div>
+                            <div class="stat-card"><span>Subject Rank</span><strong>? <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
                             <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong style="color: var(--wl-teal);">Top ?%</strong></div>
                         </div>
                         <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
