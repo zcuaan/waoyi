@@ -276,5 +276,13 @@
             }
         });
     </script>
+    <script>
+    const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Test the connection!
+    console.log("Supabase connected:", supabase);
+</script>
 </body>
 </html>
