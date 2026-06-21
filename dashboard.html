@@ -11,11 +11,10 @@
             --wl-yellow: #ffcb05;
             --wl-soft-yellow: #fff9e6;
             --wl-teal: #16a085;
+            --wl-teal-dark: #12826c;
             --wl-soft-teal: #e8f6f3;
             --wl-blue: #0065b3;
             --wl-soft-blue: #e5f0f9;
-            --wl-pink: #ff6b81;
-            --wl-soft-pink: #ffeef0;
             
             --wl-black: #1f2227; 
             --wl-text-main: #2c3e50; 
@@ -24,14 +23,11 @@
             --wl-white: #ffffff;
             --wl-border: #e2e8f0;
 
-            /* TCG Map Inspired Palette */
-            --wl-map-green-bg: #f2f8e6;
-            --wl-map-green-border: #c1de7e;
-            --wl-map-green-text: #3a5c14;
-            
-            --wl-tcg-blue-bg: #e6f3fc;
-            --wl-tcg-blue-border: #91c9ef;
-            --wl-tcg-blue-text: #0b75ba;
+            /* TCG "Nyoro Nyoro" Inspired Palette */
+            --wl-nyoro-aqua: #bcedea;
+            --wl-nyoro-navy: #15325b;
+            --wl-nyoro-pink-text: #ea005e;
+            --wl-nyoro-pink-bg: #fce8ef;
             
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
@@ -66,7 +62,7 @@
             height: 100%;
         }
 
-        /* --- NAVIGATION (Updated to White) --- */
+        /* --- NAVIGATION --- */
         .dash-nav {
             background-color: var(--wl-white);
             border-bottom: 2px solid var(--wl-border);
@@ -89,7 +85,6 @@
             height: 35px; 
             width: auto; 
             display: block; 
-            /* Filter removed so the original colors show on the white background */
         }
 
         .nav-links a { color: var(--wl-text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-left: 24px; transition: color 0.2s; }
@@ -136,7 +131,7 @@
         .header-section { margin: 40px 0 24px; display: flex; justify-content: space-between; align-items: flex-end; }
         .header-section h1 { font-size: 2.4rem; margin-bottom: 4px; }
         .header-section p { font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; }
-        /* Tier Badge (Diagonals removed) */
+        /* Tier Badge */
         .tier-badge { 
             background-color: var(--wl-soft-yellow); 
             color: #b48500; 
@@ -173,29 +168,33 @@
         .results-table tr:last-child td { border-bottom: none; }
         
         .td-week { font-weight: 800; font-size: 1.1rem; color: var(--wl-black); }
-        .td-test { font-weight: 600; color: var(--wl-text-muted); }
+        .td-status { font-weight: 600; color: var(--wl-text-muted); }
         .td-score { font-weight: 800; font-size: 1.2rem; color: var(--wl-blue); }
         .td-rank { font-weight: 800; color: var(--wl-teal); font-size: 1.1rem; }
         .td-empty { color: #cbd5e1; font-weight: 600; }
 
-        /* --- BUNDLES & WRITING GRID (Updated Colors) --- */
+        /* --- BUNDLES & WRITING GRID (Nyoro Inspired) --- */
         .section-title { font-size: 1.6rem; margin: 40px 0 16px; color: var(--wl-black); }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
-        .bundle-card { background-color: var(--wl-map-green-bg); border: 2px solid var(--wl-map-green-border); }
-        .bundle-card h3 { color: var(--wl-map-green-text); margin-bottom: 12px; }
+        /* Bundle Wrapper styling */
+        .bundle-wrapper { background-color: var(--wl-nyoro-navy); margin-bottom: 0; }
+        .bundle-card { background-color: var(--wl-nyoro-aqua); }
+        .bundle-card h3 { color: var(--wl-nyoro-navy); margin-bottom: 12px; }
         .bundle-list { list-style: none; margin-bottom: 20px; }
-        .bundle-list li { font-size: 0.95rem; margin-bottom: 8px; font-weight: 600; display: flex; gap: 8px; color: var(--wl-text-main); }
-        .bundle-list li::before { content: "✓"; color: var(--wl-map-green-text); font-weight: bold; }
-        .bundle-card .btn-outline { border-color: var(--wl-map-green-text); color: var(--wl-map-green-text); }
-        .bundle-card .btn-outline:hover { background-color: rgba(58, 92, 20, 0.05); }
+        .bundle-list li { font-size: 0.95rem; margin-bottom: 8px; font-weight: 600; display: flex; gap: 8px; color: var(--wl-nyoro-navy); }
+        .bundle-list li::before { content: "✓"; color: var(--wl-nyoro-navy); font-weight: bold; }
+        .bundle-card .btn-outline { border-color: var(--wl-nyoro-navy); color: var(--wl-nyoro-navy); }
+        .bundle-card .btn-outline:hover { background-color: rgba(21, 50, 91, 0.05); }
 
-        .writing-card { background-color: var(--wl-tcg-blue-bg); border: 2px solid var(--wl-tcg-blue-border); }
-        .writing-card h3 { color: var(--wl-tcg-blue-text); margin-bottom: 12px; }
+        /* Writing Wrapper styling */
+        .writing-wrapper { background-color: var(--wl-nyoro-pink-text); margin-bottom: 0; }
+        .writing-card { background-color: var(--wl-nyoro-pink-bg); }
+        .writing-card h3 { color: var(--wl-nyoro-pink-text); margin-bottom: 12px; }
         .writing-card p { font-size: 0.95rem; margin-bottom: 20px; font-weight: 600; color: var(--wl-text-main); }
-        .btn-writing { background-color: var(--wl-white); color: var(--wl-tcg-blue-text); border: 2px solid var(--wl-tcg-blue-border); }
-        .writing-card .btn-outline { border-color: var(--wl-tcg-blue-border); color: var(--wl-tcg-blue-text); }
-        .writing-card .btn-outline:hover { background-color: rgba(11, 117, 186, 0.05); }
+        .btn-writing { background-color: var(--wl-white); color: var(--wl-nyoro-pink-text); border: 2px solid var(--wl-nyoro-pink-text); }
+        .writing-card .btn-outline { border-color: var(--wl-nyoro-pink-text); color: var(--wl-nyoro-pink-text); }
+        .writing-card .btn-outline:hover { background-color: rgba(234, 0, 94, 0.05); }
 
         /* --- MODALS --- */
         .modal-overlay {
@@ -267,17 +266,15 @@
             <div class="tier-badge">Account: Free Tier</div>
         </div>
 
-        <!-- Current Week Card -->
-        <div class="angled-wrapper">
+        <!-- Current Week Card wrapped in dark teal Angled Border -->
+        <div class="angled-wrapper" style="background-color: var(--wl-teal-dark);">
             <div class="angled-inner active-week-card" style="padding: 32px;">
                 <div class="active-info">
                     <h2><span class="pulse-dot"></span> Week 3 is open</h2>
                     <p>25-minute mixed 11+ mock</p>
-                    <div class="sub-info">English · Maths · VR · NVR</div>
                     <div class="sub-info" style="margin-top: 8px;">Closes Sunday at 10:00 PM</div>
                 </div>
                 <div>
-                    <!-- Primary action button keeps the dynamic angled look -->
                     <button class="btn btn-primary" style="padding: 16px 28px; font-size: 1.1rem;">Start this week's mock</button>
                 </div>
             </div>
@@ -291,7 +288,7 @@
                         <thead>
                             <tr>
                                 <th>Week</th>
-                                <th>Test</th>
+                                <th>Status</th>
                                 <th>Free Score</th>
                                 <th>League Rank</th>
                                 <th>Review Pack</th>
@@ -299,35 +296,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Week 1 -->
+                            <!-- Week 1: Taken, Nothing bought -->
                             <tr>
                                 <td class="td-week" style="padding-left: 32px;">Week 1</td>
-                                <td class="td-test">Mixed 11+ Mock</td>
+                                <td class="td-status">Complete</td>
                                 <td class="td-score">28/40</td>
                                 <td><button class="btn btn-locked btn-sm btn-square">Unlock Rank £3.99</button></td>
                                 <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
                                 <td style="padding-right: 32px;"><button class="btn btn-locked btn-sm btn-square">Add Writing £29.99</button></td>
                             </tr>
                             
-                            <!-- Week 2 -->
+                            <!-- Week 2: Taken, Rank bought, Review locked -->
                             <tr>
                                 <td class="td-week" style="padding-left: 32px;">Week 2</td>
-                                <td class="td-test">Mixed 11+ Mock</td>
+                                <td class="td-status">Complete</td>
                                 <td class="td-score">31/40</td>
                                 <td>
                                     <div class="td-rank">Top 36%</div>
-                                    <!-- View Report retains the angled look to distinguish it as an primary action -->
                                     <button class="btn btn-action btn-sm" style="margin-top: 6px;" onclick="openModal('report-modal')">View Report</button>
                                 </td>
                                 <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
-                                <td style="padding-right: 32px;"><span class="td-test" style="font-size: 0.9rem;">Feedback pending</span></td>
+                                <td style="padding-right: 32px;"><span class="td-status" style="font-size: 0.9rem;">Feedback pending</span></td>
                             </tr>
 
-                            <!-- Week 3 -->
+                            <!-- Week 3: Open / Not taken -->
                             <tr>
                                 <td class="td-week" style="padding-left: 32px;">Week 3</td>
-                                <td class="td-test" style="color: var(--wl-teal); font-weight: 800;">Open</td>
-                                <td class="td-test">Not submitted</td>
+                                <td class="td-status" style="color: var(--wl-teal); font-weight: 800;">Open</td>
+                                <td class="td-status">Not submitted</td>
                                 <td class="td-empty">—</td>
                                 <td class="td-empty">—</td>
                                 <td class="td-empty" style="padding-right: 32px;">—</td>
@@ -343,7 +339,7 @@
         <div class="grid-2">
             
             <!-- Summer League Passes -->
-            <div class="angled-wrapper">
+            <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px;">
                     <h3>Summer League Passes</h3>
                     <ul class="bundle-list">
@@ -356,7 +352,7 @@
             </div>
 
             <!-- Optional Writing Feedback -->
-            <div class="angled-wrapper">
+            <div class="angled-wrapper writing-wrapper">
                 <div class="angled-inner writing-card" style="padding: 32px;">
                     <h3>Optional Writing Feedback</h3>
                     <p>Independent-school style writing task, tutor-marked and returned separately from the main report.</p>
@@ -383,14 +379,14 @@
                 <h2>Unlock Review Pack</h2>
                 <div class="price">Week 2 — £19.99</div>
                 
-                <ul class="bundle-list" style="margin-bottom: 24px;">
-                    <li>Full mixed paper access</li>
-                    <li>Answer key</li>
-                    <li>Your child’s answers vs correct answers</li>
-                    <li>Correct / incorrect review</li>
-                    <li>Subject ranks</li>
-                    <li>Skill and topic tags</li>
-                    <li>Main focus area</li>
+                <ul class="bundle-list" style="margin-bottom: 24px; color: var(--wl-text-main);">
+                    <li style="color: var(--wl-text-main);">Full mixed paper access</li>
+                    <li style="color: var(--wl-text-main);">Answer key</li>
+                    <li style="color: var(--wl-text-main);">Your child’s answers vs correct answers</li>
+                    <li style="color: var(--wl-text-main);">Correct / incorrect review</li>
+                    <li style="color: var(--wl-text-main);">Subject ranks</li>
+                    <li style="color: var(--wl-text-main);">Skill and topic tags</li>
+                    <li style="color: var(--wl-text-main);">Main focus area</li>
                 </ul>
 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -462,6 +458,7 @@
         </div>
     </div>
 
+    <!-- Simple JS to handle Modal Toggles -->
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
