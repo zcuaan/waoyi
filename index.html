@@ -476,7 +476,6 @@
             border-bottom: none;
         }
         
-        /* Ensures the table is scrollable on small screens */
         .table-responsive {
             overflow-x: auto;
             width: 100%;
@@ -683,6 +682,65 @@
             text-decoration-thickness: 2px;
         }
 
+        /* --- 11. MOBILE RESPONSIVENESS --- */
+        @media (max-width: 900px) {
+            .hero-grid { 
+                grid-template-columns: 1fr; 
+                gap: 40px; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Collapse Grids */
+            .steps-grid,
+            .schedule-grid,
+            .dashboard-ui,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Adjust Navigation */
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            /* Adjust Schedule Cell Borders for Stacking */
+            .schedule-cell[style*="border-left"] {
+                border-left: none !important;
+                border-right: none !important;
+                border-top: 2px solid var(--poke-grey);
+                border-bottom: 2px solid var(--poke-grey);
+            }
+            
+            /* Text Resizing */
+            .hero-headline { font-size: 1.8rem; }
+            .section-header h2 { font-size: 1.8rem; }
+            .trust-heading { font-size: 1.4rem; }
+            
+            /* Form Adjustments */
+            .dob-grid { grid-template-columns: 1fr; }
+            
+            /* Trust Layout */
+            .trust-grid { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 15px;
+            }
+            
+            /* Footer Stacking */
+            .footer-content { 
+                flex-direction: column; 
+                text-align: center; 
+            }
+            .footer-brand { justify-content: center; }
+            .footer-links { justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -709,7 +767,7 @@
         <div class="container hero-grid">
             <div class="hero-text">
                 <img src="PNG Logo.png" alt="The 11+ Weekend League" class="hero-logo-large">
-                <h2 class="hero-headline">Online 11+ Mock Tests with Rankings</h2>
+                <h2 class="hero-headline">11+ Weekend Mock Exams with Rankings.</h2>
                 <div class="subheading">A short 25-minute 11+ mock each weekend, with instant scores and optional cohort rankings released every Sunday.</div>
                 
                 <ul class="hero-bullets">
@@ -768,7 +826,6 @@
             </div>
         </div>
     </section>
-    <!-- SEO Intro Paragraph -->
     <section class="seo-intro">
         <div class="container">
             <p>The 11+ Weekend League is an online summer mock test series for children preparing for grammar school and independent school entrance exams. Each weekend focuses on one 11+ area, including English, Maths, Verbal Reasoning and Non-Verbal Reasoning.</p>
@@ -799,7 +856,7 @@
                     <div class="angled-inner step-inner">
                         <div class="step-marker">3</div>
                         <h3>Get results</h3>
-                        <p>Get your free score after submission, with optional rankings and review packs on Sunday night.</p>
+                        <p>Receive your detailed benchmark report on Sunday night.</p>
                     </div>
                 </div>
             </div>
