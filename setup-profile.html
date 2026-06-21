@@ -43,14 +43,10 @@
             margin-bottom: 32px;
         }
         .brand-header img {
-            height: 60px;
+            height: 60px; /* Adjusted for typical horizontal logo proportions */
             width: auto;
+            max-width: 100%;
             margin-bottom: 12px;
-        }
-        .brand-header h1 {
-            font-size: 1.4rem;
-            color: var(--wl-black);
-            font-weight: 800;
         }
 
         /* --- DYNAMIC ANGLED CORNERS --- */
@@ -71,7 +67,7 @@
 
         /* --- TYPOGRAPHY --- */
         .step-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
             color: var(--wl-black);
             margin-bottom: 8px;
@@ -87,6 +83,7 @@
         /* --- FORM ELEMENTS --- */
         .form-group {
             margin-bottom: 24px;
+            position: relative; /* For positioning the monkey button */
         }
         .form-label {
             display: block;
@@ -114,6 +111,25 @@
         }
         .form-input::placeholder {
             color: #94a3b8;
+        }
+        
+        /* Password Field Specifics */
+        #password {
+            padding-right: 48px; /* Leave room for the monkey */
+        }
+        .monkey-btn {
+            position: absolute;
+            right: 12px;
+            top: 36px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+        .monkey-btn:hover {
+            transform: scale(1.1);
         }
 
         /* --- GENDER SELECTOR (Pill Buttons) --- */
@@ -194,13 +210,14 @@
 
     <div>
         <div class="brand-header">
-            <img src="Asset 2.png" alt="Shiba Mascot">
+            <!-- Updated to use the primary logo -->
+            <img src="Logo.png" alt="The 11+ Weekend League Logo">
         </div>
 
         <div class="angled-wrapper">
             <div class="angled-inner">
                 
-                <h2 class="step-title">Almost ready for the League!</h2>
+                <h2 class="step-title">Almost ready…!</h2>
                 <p class="step-subtitle">Let's set up your child's profile.</p>
 
                 <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
@@ -213,7 +230,7 @@
 
                     <!-- Gender Selection -->
                     <div class="form-group">
-                        <label class="form-label">Child's Gender</label>
+                        <label class="form-label">Child's Gender (for ranking)</label>
                         <div class="gender-options">
                             <label class="gender-label">
                                 <input type="radio" name="gender" value="boy" required>
@@ -232,10 +249,11 @@
                         </div>
                     </div>
 
-                    <!-- Password -->
+                    <!-- Password with Monkey -->
                     <div class="form-group">
                         <label class="form-label" for="password">Set a Password</label>
                         <input type="password" id="password" class="form-input" placeholder="••••••••" required minlength="6">
+                        <button type="button" class="monkey-btn" id="toggleMonkey" aria-label="Show password" title="Show password">🙈</button>
                         <span class="help-text">Your child will use this to log in on test day.</span>
                     </div>
 
@@ -246,5 +264,23 @@
         </div>
     </div>
 
+    <script>
+        const passwordInput = document.getElementById('password');
+        const monkeyBtn = document.getElementById('toggleMonkey');
+
+        monkeyBtn.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                monkeyBtn.textContent = '🐵';
+                monkeyBtn.setAttribute('aria-label', 'Hide password');
+                monkeyBtn.setAttribute('title', 'Hide password');
+            } else {
+                passwordInput.type = 'password';
+                monkeyBtn.textContent = '🙈';
+                monkeyBtn.setAttribute('aria-label', 'Show password');
+                monkeyBtn.setAttribute('title', 'Show password');
+            }
+        });
+    </script>
 </body>
 </html>
