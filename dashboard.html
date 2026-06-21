@@ -106,7 +106,11 @@
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
         
-        .btn-square { clip-path: none !important; border-radius: 6px; }
+        /* Utility class to remove diagonals */
+        .btn-square {
+            clip-path: none !important;
+            border-radius: 6px;
+        }
 
         .btn-primary { background-color: var(--wl-blue); color: var(--wl-white); }
         .btn-primary:hover { background-color: #005299; transform: translateY(-1px); }
@@ -139,19 +143,24 @@
 
         /* --- ACTIVE WEEK CARD --- */
         .active-week-card {
-            background: linear-gradient(135deg, var(--wl-soft-teal) 0%, var(--wl-white) 100%);
+            background: linear-gradient(135deg, #a2d9ce 0%, #e8f6f3 100%);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .active-info h2 { font-size: 1.8rem; color: var(--wl-teal); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .active-info h2 { font-size: 1.8rem; color: var(--wl-teal-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         .active-info .sub-info { color: var(--wl-text-main); font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
 
         /* --- RESULTS TABLE --- */
         .table-responsive { overflow-x: auto; }
         .results-table { width: 100%; border-collapse: collapse; min-width: 850px; }
         .results-table th { padding: 16px 20px; text-align: left; font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 3px solid var(--wl-black); }
-        .results-table td { padding: 20px; border-bottom: 2px solid var(--wl-bg-main); vertical-align: middle; }
+        .results-table td { padding: 20px; border-bottom: 2px solid var(--wl-white); vertical-align: middle; }
+        
+        /* Zebra Striping */
+        .results-table tbody tr:nth-child(odd) { background-color: var(--wl-white); }
+        .results-table tbody tr:nth-child(even) { background-color: #f8fafc; }
+        
         .results-table tr:last-child td { border-bottom: none; }
         
         .td-week { font-weight: 800; font-size: 1.1rem; color: var(--wl-black); text-align: center; }
@@ -194,21 +203,25 @@
         }
         .modal-overlay.active { display: flex; }
 
+        /* Upgrade Modal */
+        .modal-upgrade { background: var(--wl-white); width: 100%; padding: 32px; position: relative; }
+        .modal-upgrade h2 { font-size: 1.8rem; margin-bottom: 8px; }
+        .modal-upgrade .price { font-size: 1.3rem; color: var(--wl-blue); font-weight: 800; margin-bottom: 20px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--wl-text-muted); font-weight: bold;}
 
         /* In-App Report Drawer/Modal */
-        .modal-report { background: var(--wl-bg-main); width: 100%; height: 95vh; display: flex; flex-direction: column; overflow: hidden; position: relative;}
+        .modal-report { background: var(--wl-bg-main); width: 100%; height: 90vh; display: flex; flex-direction: column; overflow: hidden; position: relative;}
         .report-header { background: var(--wl-white); padding: 24px 32px; border-bottom: 2px solid var(--wl-border); display: flex; justify-content: space-between; align-items: center; }
         
         .report-tabs { display: flex; background: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 0 32px; overflow-x: auto;}
         .tab { padding: 16px 20px; font-weight: 700; color: var(--wl-text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.2s;}
         .tab.active { color: var(--wl-black); border-bottom-color: var(--wl-yellow); }
-        .tab:hover:not(.active) { color: var(--wl-black); }
+        .tab.locked { color: #cbd5e1; cursor: not-allowed; display: flex; align-items: center; gap: 6px; }
         
         .report-content { padding: 32px; overflow-y: auto; flex: 1; display: none; }
         .report-content.active { display: block; }
         
-        /* Modal Grid Styles */
+        /* Modal Content Styles */
         .stat-card { background: var(--wl-white); padding: 20px; border-radius: 8px; border: 2px solid var(--wl-border); text-align: center; }
         .stat-card span { display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
         .stat-card strong { font-size: 1.8rem; color: var(--wl-black); font-weight: 800; line-height: 1.2; }
@@ -216,13 +229,15 @@
         .subject-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--wl-border); align-items: center;}
         .subject-row:last-child { border-bottom: none; padding-bottom: 0; }
         .subject-row span { font-weight: 600; color: var(--wl-text-main); }
-        .subject-row strong { font-weight: 800; font-size: 1.1rem; color: var(--wl-blue); }
+        .subject-row strong { font-weight: 800; font-size: 1.1rem; color: var(--wl-black); }
 
         /* Report Tables */
         .report-table { width: 100%; border-collapse: collapse; background: var(--wl-white); border: 1px solid var(--wl-border); border-radius: 8px; overflow: hidden; }
         .report-table th { background: var(--wl-black); color: var(--wl-white); padding: 12px 16px; text-align: left; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .report-table td { padding: 16px; border-bottom: 1px solid var(--wl-border); font-size: 0.95rem; font-weight: 500; }
         .report-table tr:last-child td { border-bottom: none; }
+
+        .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
 
         /* Blurred Content Overlay */
         .blur-container { position: relative; }
@@ -231,6 +246,7 @@
 
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .active-week-card { flex-direction: column; align-items: flex-start; gap: 24px; }
             .grid-2 { grid-template-columns: 1fr; }
             .nav-content { flex-direction: column; gap: 15px;}
             .nav-links { margin-left: 0; }
@@ -265,7 +281,7 @@
             <div class="tier-badge">Account: Free Tier</div>
         </div>
 
-        <!-- Current Week Card -->
+        <!-- Current Week Card wrapped in dark teal Angled Border -->
         <div class="angled-wrapper" style="background-color: var(--wl-teal-dark);">
             <div class="angled-inner active-week-card" style="padding: 32px;">
                 <div class="active-info">
@@ -279,7 +295,7 @@
             </div>
         </div>
 
-        <!-- Results Table -->
+        <!-- Results Table (Zebra Striped) -->
         <div class="angled-wrapper">
             <div class="angled-inner" style="padding: 0; overflow: hidden;">
                 <div class="table-responsive">
@@ -299,7 +315,7 @@
                                 <td class="td-week">1</td>
                                 <td class="td-score">28/40</td>
                                 <td><button class="btn btn-locked btn-sm btn-square">Unlock Rank £3.99</button></td>
-                                <td><button class="btn btn-locked btn-sm btn-square">Unlock Review Pack £19.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
                                 <td><span class="td-muted">Missed</span></td>
                             </tr>
                             
@@ -309,10 +325,9 @@
                                 <td class="td-score">31/40</td>
                                 <td>
                                     <div class="td-rank">Top 36%</div>
-                                    <!-- This button opens the new Report Modal -->
                                     <button class="btn btn-outline btn-sm btn-square" style="margin-top: 6px; border-color: var(--wl-black); color: var(--wl-black);" onclick="openModal('report-modal')">View Report</button>
                                 </td>
-                                <td><button class="btn btn-locked btn-sm btn-square">Unlock Review Pack £19.99</button></td>
+                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Unlock Review Pack £19.99</button></td>
                                 <td><span class="td-muted">Feedback pending</span></td>
                             </tr>
 
@@ -367,9 +382,12 @@
                     <h3>Summer League Passes</h3>
                     <ul class="bundle-list">
                         <li><strong>Rank Pass (£19.99):</strong> Unlock all 6 weekly rankings</li>
-                        <li><strong>Review Pass (£99):</strong> Unlock all 6 review packs & answers</li>
+                        <li><strong>Review Pass (£99.00):</strong> Unlock all 6 review packs & answers</li>
                     </ul>
-                    <button class="btn btn-outline btn-square">Buy Summer Pass</button>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button class="btn btn-outline btn-square">Buy Rank Pass</button>
+                        <button class="btn btn-outline btn-square">Buy Review Pass</button>
+                    </div>
                 </div>
             </div>
 
@@ -390,9 +408,35 @@
     </div>
 
     <!-- =========================================
-         IN-APP REPORT MODAL 
+         MODALS 
     ========================================== -->
 
+    <!-- 1. Upgrade Review Pack Modal -->
+    <div class="modal-overlay" id="upgrade-modal">
+        <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
+            <div class="angled-inner modal-upgrade" style="padding: 40px;">
+                <button class="modal-close" onclick="closeModal('upgrade-modal')">&times;</button>
+                <h2>Unlock Review Pack</h2>
+                <div class="price">Week 2 — £19.99</div>
+                
+                <ul class="bundle-list" style="margin-bottom: 24px; color: var(--wl-text-main);">
+                    <li style="color: var(--wl-text-main);">Full mixed paper access</li>
+                    <li style="color: var(--wl-text-main);">Answer key</li>
+                    <li style="color: var(--wl-text-main);">Your child’s answers vs correct answers</li>
+                    <li style="color: var(--wl-text-main);">Correct / incorrect review</li>
+                    <li style="color: var(--wl-text-main);">Subject ranks</li>
+                    <li style="color: var(--wl-text-main);">Skill and topic tags</li>
+                    <li style="color: var(--wl-text-main);">Main focus area</li>
+                </ul>
+
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button class="btn btn-primary btn-square" style="width: 100%;">Unlock Review Pack</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. In-App Report Drawer/Modal -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
@@ -401,7 +445,7 @@
                 <div class="report-header">
                     <div>
                         <h2 style="margin-bottom: 4px;">Week 2 Results</h2>
-                        <p style="color: var(--wl-text-muted); font-weight: 600;">Mixed 11+ Mock</p>
+                        <p style="color: var(--wl-text-muted); font-weight: 600;">31 July – 2 August 2026</p>
                     </div>
                     <div style="display: flex; gap: 16px; align-items: center; padding-right: 40px;">
                         <button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);">Download PDF</button>
@@ -421,65 +465,51 @@
 
                 <!-- TAB 1: SUMMARY (Clean & Organized) -->
                 <div class="report-content active" id="tab-summary">
-                    <div class="grid-2">
-                        <!-- Left Col: Headline Stats -->
-                        <div style="background: var(--wl-white); border: 2px solid var(--wl-black); border-radius: 12px; padding: 24px;">
-                            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">Overall Performance</h3>
-                            
-                            <div style="text-align: center; margin-bottom: 24px;">
-                                <span style="display: block; font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase;">League Rank</span>
-                                <strong style="font-size: 3rem; color: var(--wl-teal); font-weight: 800; line-height: 1;">184 <span style="font-size: 1.5rem; color: var(--wl-text-muted);">/ 512</span></strong>
-                                <div style="color: var(--wl-teal); font-weight: 700; margin-top: 8px; font-size: 1.1rem;">Top 36% Percentile</div>
-                            </div>
+                    <div style="max-width: 650px; margin: 0 auto;">
+                        
+                        <!-- Top Headline Rank -->
+                        <div style="text-align: center; margin-bottom: 32px;">
+                            <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Overall League Rank</h3>
+                            <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">184 <span style="font-size: 1.6rem; color: var(--wl-text-muted);">/ 512</span></strong>
+                            <div style="color: var(--wl-teal); font-weight: 800; font-size: 1.2rem; margin-top: 4px;">Top 36% Percentile</div>
+                        </div>
 
-                            <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--wl-border); padding-top: 16px;">
-                                <div style="text-align: center;">
-                                    <span style="display: block; font-size: 0.8rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span>
-                                    <strong style="font-size: 1.3rem; color: var(--wl-black);">28 / 40</strong>
-                                </div>
-                                <div style="text-align: center; border-left: 1px solid var(--wl-border); padding-left: 20px;">
-                                    <span style="display: block; font-size: 0.8rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Cohort Avg</span>
-                                    <strong style="font-size: 1.3rem; color: var(--wl-black);">61%</strong>
-                                </div>
-                                <div style="text-align: center; border-left: 1px solid var(--wl-border); padding-left: 20px;">
-                                    <span style="display: block; font-size: 0.8rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Top Score</span>
-                                    <strong style="font-size: 1.3rem; color: var(--wl-black);">95%</strong>
-                                </div>
+                        <!-- 3 Column Stats -->
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
+                            <div style="text-align: center;">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">31/40</strong>
+                            </div>
+                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Cohort Avg</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">61%</strong>
+                            </div>
+                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Top Score</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">95%</strong>
                             </div>
                         </div>
 
-                        <!-- Right Col: Subject Breakdown -->
-                        <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 12px; padding: 24px;">
-                            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">Subject Breakdown</h3>
-                            
-                            <div class="subject-row">
-                                <span>English</span>
-                                <strong>7 / 10</strong>
-                            </div>
-                            <div class="subject-row">
-                                <span>Maths</span>
-                                <strong>8 / 10</strong>
-                            </div>
-                            <div class="subject-row">
-                                <span>Verbal Reasoning</span>
-                                <strong>6 / 10</strong>
-                            </div>
-                            <div class="subject-row">
-                                <span>Non-Verbal Reasoning</span>
-                                <strong>7 / 10</strong>
-                            </div>
+                        <!-- Clean Subject Breakdown -->
+                        <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 24px;">
+                            <h3 style="margin-bottom: 16px; font-size: 1.2rem; text-align: center;">Subject Breakdown</h3>
+                            <div class="subject-row"><span>English</span><strong>7 / 10</strong></div>
+                            <div class="subject-row"><span>Maths</span><strong>8 / 10</strong></div>
+                            <div class="subject-row"><span>Verbal Reasoning</span><strong>6 / 10</strong></div>
+                            <div class="subject-row"><span>Non-Verbal Reasoning</span><strong>10 / 10</strong></div>
                         </div>
-                    </div>
 
-                    <!-- Upgrade Prompt at bottom of Summary -->
-                    <div class="angled-wrapper" style="margin-top: 32px; margin-bottom: 0;">
-                        <div class="angled-inner" style="background-color: var(--wl-soft-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                            <div>
-                                <h4 style="color: #b48500; margin-bottom: 4px;">Unlock Detailed Insights</h4>
-                                <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 500;">See subject rankings, question-by-question topic analysis, and access the full paper.</p>
+                        <!-- Bold Yellow Upgrade Prompt -->
+                        <div class="angled-wrapper" style="margin-top: 40px; margin-bottom: 0;">
+                            <div class="angled-inner" style="background-color: var(--wl-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border: 2px solid var(--wl-black);">
+                                <div>
+                                    <h4 style="color: var(--wl-black); margin-bottom: 4px; font-size: 1.2rem;">Unlock Detailed Insights</h4>
+                                    <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 600;">See subject rankings, question-by-topic analysis, and full paper access.</p>
+                                </div>
+                                <button class="btn btn-square" style="background-color: var(--wl-black); color: var(--wl-yellow);" onclick="openModal('upgrade-modal')">Unlock Review Pack (£19.99)</button>
                             </div>
-                            <button class="btn btn-square" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;">Unlock Review Pack (£19.99)</button>
                         </div>
+
                     </div>
                 </div>
 
@@ -487,18 +517,22 @@
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
                     
-                    <div style="display: flex; gap: 20px; margin-bottom: 32px; flex-wrap: wrap;">
-                        <div class="stat-card" style="flex: 1; min-width: 150px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card">
                             <span>Raw Score</span>
                             <strong>7 / 10</strong>
                         </div>
-                        <div class="stat-card" style="flex: 1; min-width: 150px;">
+                        <div class="stat-card">
                             <span>Accuracy</span>
                             <strong>70%</strong>
                         </div>
-                        <div class="stat-card" style="flex: 1; min-width: 150px; border-color: var(--wl-teal); background: var(--wl-soft-teal);">
-                            <span style="color: var(--wl-teal);">Subject Rank</span>
-                            <strong style="color: var(--wl-teal);">142 / 512</strong>
+                        <div class="stat-card">
+                            <span>Subject Rank</span>
+                            <strong>142 / 512</strong>
+                        </div>
+                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);">
+                            <span style="color: var(--wl-teal);">Percentile</span>
+                            <strong style="color: var(--wl-teal);">Top 28%</strong>
                         </div>
                     </div>
 
@@ -546,6 +580,11 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="focus-area">
+                        <strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> 
+                        <span style="font-weight: 600; font-size: 1.1rem;">Grammar & Punctuation</span>
+                    </div>
                 </div>
 
                 <!-- TAB 3: MATHS (Locked/Blurred Preview) -->
@@ -557,7 +596,7 @@
                             <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
                                 <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pack Locked</h3>
                                 <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Unlock to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
-                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;">Unlock Review Pack (£19.99)</button>
+                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Unlock Review Pack (£19.99)</button>
                             </div>
                         </div>
                     </div>
@@ -565,10 +604,11 @@
                     <!-- The Blurred Content Behind it -->
                     <div class="blur-content">
                         <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
-                        <div style="display: flex; gap: 20px; margin-bottom: 32px; flex-wrap: wrap;">
-                            <div class="stat-card" style="flex: 1; min-width: 150px;"><span>Raw Score</span><strong>? / 10</strong></div>
-                            <div class="stat-card" style="flex: 1; min-width: 150px;"><span>Accuracy</span><strong>?%</strong></div>
-                            <div class="stat-card" style="flex: 1; min-width: 150px; border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Subject Rank</span><strong style="color: var(--wl-teal);">? / 512</strong></div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                            <div class="stat-card"><span>Raw Score</span><strong>? / 10</strong></div>
+                            <div class="stat-card"><span>Accuracy</span><strong>?%</strong></div>
+                            <div class="stat-card"><span>Subject Rank</span><strong>? / 512</strong></div>
+                            <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong style="color: var(--wl-teal);">Top ?%</strong></div>
                         </div>
                         <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
                         <table class="report-table">
