@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | The 11+ Weekend League</title>
+    <link rel="icon" type="image/png" href="Asset 2.png">
+    <style>
+        :root {
+            --wl-yellow: #ffcb05;
+            --wl-teal: #16a085;
+            --wl-blue: #0065b3;
+            --wl-blue-hover: #004b87;
+            --wl-soft-blue: #e5f0f9;
+            --wl-black: #1f2227; 
+            --wl-text-main: #2c3e50; 
+            --wl-text-muted: #64748b;
+            --wl-bg-main: #f1f5f9; 
+            --wl-white: #ffffff;
+            --wl-border: #e2e8f0;
+            
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: var(--wl-bg-main); 
+            color: var(--wl-text-main); 
+            line-height: 1.6; 
+            font-family: var(--font-main); 
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* --- LOGO HEADER --- */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .brand-header img {
+            height: 85px;
+            width: auto;
+            max-width: 100%;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        /* --- DYNAMIC ANGLED CORNERS --- */
+        .angled-wrapper {
+            background-color: var(--wl-black);
+            padding: 4px;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            width: 100%;
+            max-width: 480px; 
+        }
+        
+        .angled-inner {
+            background-color: var(--wl-white);
+            padding: 40px;
+            clip-path: polygon(17px 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%, 0 17px);
+            height: 100%;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .step-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--wl-black);
+            margin-bottom: 8px;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .step-subtitle {
+            font-size: 1.05rem;
+            color: var(--wl-text-muted);
+            margin-bottom: 32px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* --- FORM ELEMENTS --- */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative; 
+        }
+        .form-label {
+            display: block;
+            font-weight: 700;
+            color: var(--wl-black);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--wl-border);
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 1.05rem;
+            color: var(--wl-text-main);
+            transition: all 0.2s;
+            background-color: #f8fafc;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--wl-blue);
+            background-color: var(--wl-white);
+            box-shadow: 0 0 0 4px var(--wl-soft-blue);
+        }
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+        
+        /* Password Field Specifics */
+        #loginPassword {
+            padding-right: 48px; 
+        }
+        .monkey-btn {
+            position: absolute;
+            right: 12px;
+            top: 36px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+        .monkey-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- BUTTON --- */
+        .btn-submit {
+            width: 100%;
+            background-color: var(--wl-blue);
+            color: var(--wl-white);
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 16px 24px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-main);
+            margin-top: 8px;
+            transition: background 0.2s;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+        .btn-submit:hover {
+            background-color: var(--wl-blue-hover);
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .auth-links a {
+            color: var(--wl-blue);
+            text-decoration: none;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .angled-inner { padding: 32px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="brand-header">
+            <a href="index.html">
+                <img src="PNG Logo.png" alt="The 11+ Weekend League Logo">
+            </a>
+        </div>
+
+        <div class="angled-wrapper">
+            <div class="angled-inner">
+                
+                <h2 class="step-title">Welcome back</h2>
+                <p class="step-subtitle">Log in to access your dashboard.</p>
+
+                <form id="loginForm">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="loginEmail">Parent Email Address</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+                        <button type="button" class="monkey-btn" id="toggleMonkey" aria-label="Show password" title="Show password">🙈</button>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Log In</button>
+                </form>
+
+                <div class="auth-links">
+                    Don't have an account? <a href="index.html">Register free</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Monkey Password Script -->
+    <script>
+        const passwordInput = document.getElementById('loginPassword');
+        const monkeyBtn = document.getElementById('toggleMonkey');
+
+        monkeyBtn.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                monkeyBtn.textContent = '🐵';
+                monkeyBtn.setAttribute('aria-label', 'Hide password');
+                monkeyBtn.setAttribute('title', 'Hide password');
+            } else {
+                passwordInput.type = 'password';
+                monkeyBtn.textContent = '🙈';
+                monkeyBtn.setAttribute('aria-label', 'Show password');
+                monkeyBtn.setAttribute('title', 'Show password');
+            }
+        });
+    </script>
+
+    <!-- Supabase Connection & Login Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const submitBtn = document.querySelector('.btn-submit');
+
+            submitBtn.innerText = "Logging in...";
+            submitBtn.disabled = true;
+
+            // Ask Supabase to verify the email and password
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                // If wrong password or email doesn't exist, tell the user
+                alert("Login failed: " + error.message);
+                submitBtn.innerText = "Log In";
+                submitBtn.disabled = false;
+            } else {
+                // Success! Send them to the dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
