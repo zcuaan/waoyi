@@ -26,6 +26,7 @@
             --wl-nyoro-navy: #15325b;
             --wl-nyoro-pink-text: #ea005e;
             --wl-nyoro-pink-bg: #fce8ef;
+            --wl-soft-pink: #fdf2f8;
             
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
@@ -45,23 +46,11 @@
 
         .container { max-width: 1050px; margin: 0 auto; padding: 0 20px; }
 
-        .angled-wrapper {
-            background-color: var(--wl-black);
-            padding: 4px;
-            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-            margin-bottom: 32px;
-        }
-        
-        .angled-inner {
-            background-color: var(--wl-white);
-            padding: 32px;
-            clip-path: polygon(17px 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%, 0 17px);
-            height: 100%;
-        }
+        .angled-wrapper { background-color: var(--wl-black); padding: 4px; clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); margin-bottom: 32px; }
+        .angled-inner { background-color: var(--wl-white); padding: 32px; clip-path: polygon(17px 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%, 0 17px); height: 100%; }
 
         .dash-nav { background-color: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 16px 0; position: sticky; top: 0; z-index: 50; }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        
         .nav-brand { font-weight: 800; font-size: 1.2rem; color: var(--wl-black); display: flex; align-items: center; gap: 12px; }
         .nav-brand img { height: 35px; width: auto; display: block; }
         .nav-links a { color: var(--wl-text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-left: 24px; transition: color 0.2s; }
@@ -118,7 +107,7 @@
         .writing-card .btn-outline { border-color: var(--wl-nyoro-pink-text); color: var(--wl-nyoro-pink-text); }
         .writing-card .btn-outline:hover { background-color: rgba(234, 0, 94, 0.05); }
 
-        /* --- MODALS --- */
+        /* --- MODALS & REPORT TABS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 34, 39, 0.8); backdrop-filter: blur(4px); z-index: 100; display: none; justify-content: center; align-items: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
 
@@ -133,6 +122,7 @@
         .report-tabs { display: flex; background: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 0 32px; overflow-x: auto;}
         .tab { padding: 16px 20px; font-weight: 700; color: var(--wl-text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.2s;}
         .tab.active { color: var(--wl-black); border-bottom-color: var(--wl-yellow); }
+        .tab.locked { color: #cbd5e1; cursor: not-allowed; display: flex; align-items: center; gap: 6px; }
         
         .report-content { padding: 32px; overflow-y: auto; flex: 1; display: none; }
         .report-content.active { display: block; }
@@ -150,6 +140,12 @@
         .report-table th { background: var(--wl-black); color: var(--wl-white); padding: 12px 16px; text-align: left; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .report-table td { padding: 16px; border-bottom: 1px solid var(--wl-border); font-size: 0.95rem; font-weight: 500; }
         .report-table tr:last-child td { border-bottom: none; }
+
+        .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
+
+        .blur-container { position: relative; }
+        .blur-content { filter: blur(6px); opacity: 0.5; pointer-events: none; user-select: none; }
+        .Reveal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -231,13 +227,11 @@
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3 style="margin-bottom: 24px; font-size: 1.4rem;">Summer League Passes</h3>
-                    
                     <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px dashed rgba(21, 50, 91, 0.2);">
                         <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Rank Pass (£19.99)</h4>
                         <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.</p>
                         <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Upgrade to Rank Pass</button>
                     </div>
-
                     <div style="flex-grow: 1;">
                         <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Review Pass (£99)</h4>
                         <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 review packs, including the papers, answers and explanations.</p>
@@ -259,7 +253,6 @@
         </div>
     </div>
 
-    <!-- Upgrade Modal -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -270,14 +263,16 @@
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li>
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li>
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Your child’s answers vs correct answers</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li>
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Skill and topic tags</li>
+                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Main focus area</li>
                 </ul>
                 <button class="btn btn-primary btn-square" style="width: 100%;">Get Review Pack</button>
             </div>
         </div>
     </div>
 
-    <!-- Unlocked Report Modal -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
@@ -296,14 +291,16 @@
                 <div class="report-tabs">
                     <div class="tab active" onclick="switchTab('tab-summary', this)">Summary</div>
                     <div class="tab" onclick="switchTab('tab-english', this)">English</div>
-                    <div class="tab" onclick="switchTab('tab-maths', this)">Maths</div>
+                    <div class="tab locked" onclick="openModal('upgrade-modal')">Maths <span>🔒</span></div>
+                    <div class="tab locked" onclick="openModal('upgrade-modal')">VR <span>🔒</span></div>
+                    <div class="tab locked" onclick="openModal('upgrade-modal')">NVR <span>🔒</span></div>
                 </div>
 
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         <div style="text-align: center; margin-bottom: 32px;">
                             <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Overall League Rank</h3>
-                            <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">TBD <span style="font-size: 1.6rem; color: var(--wl-text-muted);">/ 512</span></strong>
+                            <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">Top <span id="modalSummaryRank">X</span>%</strong>
                         </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
@@ -333,16 +330,113 @@
 
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
-                    <p style="color: var(--wl-text-muted);">Detailed question analysis will appear here.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card">
+                            <span>Raw Score</span>
+                            <strong id="tabEngRaw">0</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span>Accuracy</span>
+                            <strong>70%</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span>Subject Rank</span>
+                            <strong>142 <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong>
+                        </div>
+                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);">
+                            <span style="color: var(--wl-teal);">Percentile</span>
+                            <strong style="color: var(--wl-teal);">Top 28%</strong>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">Q#</th>
+                                    <th>Topic / Skill</th>
+                                    <th style="text-align: center;">Your Answer</th>
+                                    <th style="text-align: center;">Correct Answer</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 800;">1</td>
+                                    <td>Comprehension - Inference</td>
+                                    <td style="text-align: center;">B</td>
+                                    <td style="text-align: center;">B</td>
+                                    <td style="color: var(--wl-teal); font-weight: 800;">✓ Correct</td>
+                                </tr>
+                                <tr style="background-color: var(--wl-soft-pink);">
+                                    <td style="font-weight: 800;">2</td>
+                                    <td>Grammar - Punctuation</td>
+                                    <td style="text-align: center;">A</td>
+                                    <td style="text-align: center; font-weight: 800;">C</td>
+                                    <td style="color: var(--wl-nyoro-pink-text); font-weight: 800;">✗ Incorrect</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 800;">3</td>
+                                    <td>Comprehension - Vocabulary</td>
+                                    <td style="text-align: center;">D</td>
+                                    <td style="text-align: center;">D</td>
+                                    <td style="color: var(--wl-teal); font-weight: 800;">✓ Correct</td>
+                                </tr>
+                                <tr style="background-color: var(--wl-soft-pink);">
+                                    <td style="font-weight: 800;">4</td>
+                                    <td>Spelling</td>
+                                    <td style="text-align: center;">B</td>
+                                    <td style="text-align: center; font-weight: 800;">A</td>
+                                    <td style="color: var(--wl-nyoro-pink-text); font-weight: 800;">✗ Incorrect</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="focus-area">
+                        <strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> 
+                        <span style="font-weight: 600; font-size: 1.1rem;">Grammar & Punctuation</span>
+                    </div>
                 </div>
 
-                <div class="report-content" id="tab-maths">
-                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
-                    <p style="color: var(--wl-text-muted);">Detailed question analysis will appear here.</p>
-                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            if(modalId === 'report-modal') {
+                const firstTab = document.querySelector('.report-tabs .tab');
+                switchTab('tab-summary', firstTab);
+            }
+        }
+        
+        function switchTab(tabId, element) {
+            if (element.classList.contains('locked')) return; // Prevent switching to locked tabs
+
+            const contents = document.querySelectorAll('.report-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            const tabs = document.querySelectorAll('.report-tabs .tab:not(.locked)');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+        
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -358,7 +452,6 @@
             window.location.href = 'index.html'; 
         });
 
-        // The Official Schedule
         const schedule = [
             { week: 1, start: new Date(2026, 6, 24, 16, 0), end: new Date(2026, 6, 26, 22, 0) },
             { week: 2, start: new Date(2026, 6, 31, 16, 0), end: new Date(2026, 7, 2, 22, 0) },
@@ -390,32 +483,22 @@
             "december": 11, "dec": 11, "12": 11
         };
 
-        // Converts separated month/year into "10Y 2M" format
         function calculateAgeString(bMonth, bYear, examDate) {
-            if (!bMonth || !bYear) return "10Y 5M"; // Fallback to 0% adjustment
-
+            if (!bMonth || !bYear) return "10Y 5M"; 
             const monthInt = monthMap[bMonth.toString().toLowerCase().trim()];
             if (monthInt === undefined) return "10Y 5M"; 
-
             let years = examDate.getFullYear() - bYear;
             let months = examDate.getMonth() - monthInt;
-            
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
+            if (months < 0) { years--; months += 12; }
             return `${years}Y ${months}M`;
         }
 
-        // The core Standardisation Math
         function calculateRankPercentile(rawScore, totalQs, examDate) {
             const rawPercentage = rawScore / totalQs;
             const ageString = calculateAgeString(childBirthMonth, childBirthYear, examDate);
             const adjustment = ageAdjustments[ageString] || 0.0; 
-
             const standardisedScoreDec = (rawPercentage + adjustment + 1) / 2;
             const standardisedScore = Math.round(standardisedScoreDec * 100);
-            
             const rankPercentile = 100 - standardisedScore;
             return Math.max(1, Math.min(rankPercentile, 99)); 
         }
@@ -461,13 +544,11 @@
 
         async function loadDashboard() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-
             if (!session) {
                 window.location.href = 'login.html';
                 return;
             }
 
-            // 1. Fetch Profile Data
             const { data: profileData } = await supabaseClient
                 .from('profiles')
                 .select('child_first_name, child_birth_month, child_birth_year, child_gender')
@@ -508,12 +589,14 @@
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
-                    // Calculate dynamic rank!
                     const rank = calculateRankPercentile(weekScore.raw_score, weekScore.total_questions, weekSchedule.start);
 
                     scoreHtml = `<td class="td-score">${weekScore.raw_score}/${weekScore.total_questions}</td>`;
-                    rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`; // <-- Injects exact rank
+                    
+                    // For the prototype, we are automatically unlocking the "View Report" button so you can test the UI!
+                    rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`; 
                     packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i}, ${rank})">View Report</button></td>`;
+                    
                     feedbackHtml = `<td><span class="td-muted">Feedback pending</span></td>`;
                 } else if (now > weekSchedule.end) {
                     scoreHtml = `<td class="td-empty">—</td>`;
@@ -545,13 +628,14 @@
             if (!scoreData) return;
 
             document.getElementById('reportWeekNum').innerText = weekNum;
-            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
+            document.getElementById('upgradeWeekNum').innerText = weekNum;
             
-            // Inject Rank into the massive text
-            document.getElementById('tab-summary').querySelector('strong').innerHTML = 
-                `Top ${rankPercentile}%`;
+            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
+            document.getElementById('modalSummaryRank').innerText = rankPercentile;
 
             document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}`;
+            document.getElementById('tabEngRaw').innerText = `${scoreData.english_score || 0}`;
+
             document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}`;
             document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}`;
             document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0}`;
@@ -559,31 +643,6 @@
             openModal('report-modal');
         }
 
-        // --- Modal Control Logic ---
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            if(modalId === 'report-modal') {
-                const firstTab = document.querySelector('.report-tabs .tab');
-                switchTab('tab-summary', firstTab);
-            }
-        }
-        function switchTab(tabId, element) {
-            const contents = document.querySelectorAll('.report-content');
-            contents.forEach(content => content.classList.remove('active'));
-            const tabs = document.querySelectorAll('.report-tabs .tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
-        }
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) event.target.classList.remove('active');
-        }
-
-        // Initialize
         loadDashboard();
         updateSchedule();
     </script>
