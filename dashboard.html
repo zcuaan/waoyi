@@ -633,18 +633,18 @@
             for (let i = 1; i <= 6; i++) {
                 const weekSchedule = schedule[i - 1];
                 
-                // For the sake of the prototype, we are manually grabbing the score for week 3 (the one you took)
-                // and applying it to weeks 1, 2, and 3 so you can test all the visual states.
-                const testScoreData = scores.length > 0 ? scores[0] : null; 
+                // Fetch the EXACT score for this specific week from Supabase
+                const weekScore = scores.find(s => s.week_number === i); 
                 
                 let tr = document.createElement('tr');
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
-                if (testScoreData && i <= 3) {
-                    const rank = calculateRankPercentile(testScoreData.raw_score, testScoreData.total_questions, weekSchedule.start);
-                    scoreHtml = `<td class="td-score">${testScoreData.raw_score}/${testScoreData.total_questions}</td>`;
+                if (weekScore) {
+                    // Calculate rank based on this specific week's real database score
+                    const rank = calculateRankPercentile(weekScore.raw_score, weekScore.total_questions, weekSchedule.start);
+                    scoreHtml = `<td class="td-score">${weekScore.raw_score}/${weekScore.total_questions}</td>`;
                     
-                    // --- SCENARIO TESTING ---
+                    // --- PURCHASE SIMULATION ---
                     if (i === 1) {
                         // Week 1: Did not buy Rank, did not buy Report
                         rankHtml = `<td><button class="btn btn-locked btn-sm btn-square">Reveal Rank £3.99</button></td>`; 
@@ -655,10 +655,10 @@
                         rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`;
                         packHtml = `<td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>`;
                     } 
-                    else if (i === 3) {
-                        // Week 3: Bought Rank AND Report
+                    else {
+                        // Week 3+: Bought Rank AND Report
                         rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`;
-                        packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i}, ${rank}, ${testScoreData.english_score})">View Report</button></td>`;
+                        packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i}, ${rank})">View Report</button></td>`;
                     }
                     
                     feedbackHtml = `<td><span class="td-muted">Feedback pending</span></td>`;
