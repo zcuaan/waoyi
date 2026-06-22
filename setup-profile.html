@@ -1,5 +1,280 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Setup | The 11+ Weekend League</title>
+    <link rel="icon" type="image/png" href="Asset 2.png">
+    <style>
+        :root {
+            --wl-yellow: #ffcb05;
+            --wl-teal: #16a085;
+            --wl-blue: #0065b3;
+            --wl-blue-hover: #004b87;
+            --wl-soft-blue: #e5f0f9;
+            --wl-black: #1f2227; 
+            --wl-text-main: #2c3e50; 
+            --wl-text-muted: #64748b;
+            --wl-bg-main: #f1f5f9; 
+            --wl-white: #ffffff;
+            --wl-border: #e2e8f0;
+            
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: var(--wl-bg-main); 
+            color: var(--wl-text-main); 
+            line-height: 1.6; 
+            font-family: var(--font-main); 
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* --- LOGO HEADER --- */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .brand-header img {
+            height: 85px;
+            width: auto;
+            max-width: 100%;
+            margin-bottom: 12px;
+        }
+
+        /* --- DYNAMIC ANGLED CORNERS --- */
+        .angled-wrapper {
+            background-color: var(--wl-black);
+            padding: 4px;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            width: 100%;
+            max-width: 540px; 
+        }
+        
+        .angled-inner {
+            background-color: var(--wl-white);
+            padding: 40px;
+            clip-path: polygon(17px 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%, 0 17px);
+            height: 100%;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .step-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--wl-black);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        .step-subtitle {
+            font-size: 1.05rem;
+            color: var(--wl-text-muted);
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+
+        /* --- FORM ELEMENTS --- */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative; 
+        }
+        .form-label {
+            display: block;
+            font-weight: 700;
+            color: var(--wl-black);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--wl-border);
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 1.05rem;
+            color: var(--wl-text-main);
+            transition: all 0.2s;
+            background-color: #f8fafc;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--wl-blue);
+            background-color: var(--wl-white);
+            box-shadow: 0 0 0 4px var(--wl-soft-blue);
+        }
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+        
+        /* Password Field Specifics */
+        #password {
+            padding-right: 48px; 
+        }
+        .monkey-btn {
+            position: absolute;
+            right: 12px;
+            top: 36px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+        .monkey-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- GENDER SELECTOR (Pill Buttons) --- */
+        .gender-options {
+            display: flex;
+            gap: 16px; 
+        }
+        .gender-label {
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+        }
+        .gender-label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .gender-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 8px; 
+            border: 2px solid var(--wl-border);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--wl-text-muted);
+            background-color: var(--wl-white);
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .gender-label:hover .gender-box {
+            border-color: #cbd5e1;
+            background-color: #f8fafc;
+        }
+        /* Active State */
+        .gender-label input:checked ~ .gender-box {
+            border-color: var(--wl-blue);
+            background-color: var(--wl-soft-blue);
+            color: var(--wl-blue);
+        }
+
+        /* --- BUTTON --- */
+        .btn-submit {
+            width: 100%;
+            background-color: var(--wl-blue);
+            color: var(--wl-white);
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 16px 24px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-main);
+            margin-top: 16px;
+            transition: background 0.2s;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+        .btn-submit:hover {
+            background-color: var(--wl-blue-hover);
+        }
+
+        /* Password helper text */
+        .help-text {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--wl-text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .angled-inner { padding: 32px 24px; }
+            .gender-options { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="brand-header">
+            <img src="PNG Logo.png" alt="The 11+ Weekend League Logo">
+        </div>
+
+        <div class="angled-wrapper">
+            <div class="angled-inner">
+                
+                <h2 class="step-title">Create your child’s test login</h2>
+                <p class="step-subtitle">We’ll use this for their weekend mock, score history and optional rankings.</p>
+
+                <form id="profileForm">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="childName">Child's First Name</label>
+                        <input type="text" id="childName" class="form-input" placeholder="e.g. Leo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Child's Gender (for ranking)</label>
+                        <div class="gender-options">
+                            <label class="gender-label">
+                                <input type="radio" name="gender" value="boy" required>
+                                <div class="gender-box">Boy</div>
+                            </label>
+                            
+                            <label class="gender-label">
+                                <input type="radio" name="gender" value="girl">
+                                <div class="gender-box">Girl</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Set a Password</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••" required minlength="6">
+                        <button type="button" class="monkey-btn" id="toggleMonkey" aria-label="Show password" title="Show password">🙈</button>
+                        <span class="help-text">Your child will use this to log in on test day.</span>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Continue to dashboard ➔</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const monkeyBtn = document.getElementById('toggleMonkey');
+
+        monkeyBtn.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                monkeyBtn.textContent = '🐵';
+                monkeyBtn.setAttribute('aria-label', 'Hide password');
+                monkeyBtn.setAttribute('title', 'Hide password');
+            } else {
+                passwordInput.type = 'password';
+                monkeyBtn.textContent = '🙈';
+                monkeyBtn.setAttribute('aria-label', 'Show password');
+                monkeyBtn.setAttribute('title', 'Show password');
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
@@ -62,3 +337,4 @@
         });
     </script>
 </body>
+</html>
