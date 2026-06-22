@@ -368,6 +368,63 @@
             { week: 6, start: new Date(2026, 7, 28, 16, 0), end: new Date(2026, 7, 30, 22, 0) }
         ];
 
+        // --- 11+ STANDARDISATION DATA ---
+        // Extracted directly from "English - Analysis 2.0 - Standardisation 11+.csv"
+        const ageAdjustments = {"6Y 2M": 0.25, "6Y 3M": 0.25, "6Y 4M": 0.24, "6Y 5M": 0.24, "6Y 6M": 0.23, "6Y 7M": 0.23, "6Y 8M": 0.22, "6Y 9M": 0.22, "6Y 10M": 0.21, "6Y 11M": 0.21, "7Y 0M": 0.2, "7Y 1M": 0.2, "7Y 2M": 0.19, "7Y 3M": 0.19, "7Y 4M": 0.19, "7Y 5M": 0.18, "7Y 6M": 0.18, "7Y 7M": 0.17, "7Y 8M": 0.17, "7Y 9M": 0.16, "7Y 10M": 0.16, "7Y 11M": 0.15, "8Y 0M": 0.15, "8Y 1M": 0.14, "8Y 2M": 0.14, "8Y 3M": 0.13, "8Y 4M": 0.13, "8Y 5M": 0.12, "8Y 6M": 0.12, "8Y 7M": 0.11, "8Y 8M": 0.11, "8Y 9M": 0.1, "8Y 10M": 0.1, "8Y 11M": 0.09, "9Y 0M": 0.09, "9Y 1M": 0.08, "9Y 2M": 0.08, "9Y 3M": 0.07, "9Y 4M": 0.07, "9Y 5M": 0.06, "9Y 6M": 0.06, "9Y 7M": 0.05, "9Y 8M": 0.05, "9Y 9M": 0.04, "9Y 10M": 0.04, "9Y 11M": 0.03, "10Y 0M": 0.03, "10Y 1M": 0.02, "10Y 2M": 0.02, "10Y 3M": 0.01, "10Y 4M": 0.01, "10Y 5M": 0.0, "10Y 6M": 0.0, "10Y 7M": -0.01, "10Y 8M": -0.01, "10Y 9M": -0.02, "10Y 10M": -0.02, "10Y 11M": -0.03, "11Y 0M": -0.03, "11Y 1M": -0.04, "11Y 2M": -0.05, "11Y 3M": -0.05, "11Y 4M": -0.06, "11Y 5M": -0.06, "11Y 6M": -0.07, "11Y 7M": -0.07, "11Y 8M": -0.08, "11Y 9M": -0.08, "11Y 10M": -0.09, "11Y 11M": -0.09, "12Y 0M": -0.1, "12Y 1M": -0.1, "12Y 2M": -0.11, "12Y 3M": -0.11, "12Y 4M": -0.12, "12Y 5M": -0.12, "12Y 6M": -0.13, "12Y 7M": -0.13, "12Y 8M": -0.13, "12Y 9M": -0.14, "12Y 10M": -0.14, "12Y 11M": -0.15, "13Y 0M": -0.15, "13Y 1M": -0.16, "13Y 2M": -0.16, "13Y 3M": -0.17, "13Y 4M": -0.17, "13Y 5M": -0.18, "13Y 6M": -0.18, "13Y 7M": -0.19, "13Y 8M": -0.19, "13Y 9M": -0.2, "13Y 10M": -0.2, "13Y 11M": -0.21, "14Y 0M": -0.21, "14Y 1M": -0.22, "14Y 2M": -0.22, "14Y 3M": -0.23, "14Y 4M": -0.23, "14Y 5M": -0.24, "14Y 6M": -0.24, "14Y 7M": -0.25};
+
+        let childBirthMonth = null; 
+        let childBirthYear = null;
+        let childGender = null; // Stored for future gender-based rankings
+
+        let childBirthMonth = null; 
+        let childBirthYear = null;
+        let childGender = null; // Stored for future gender-based rankings
+
+        const monthMap = {
+            "january": 0, "jan": 0, "1": 0, "01": 0,
+            "february": 1, "feb": 1, "2": 1, "02": 1,
+            "march": 2, "mar": 2, "3": 2, "03": 2,
+            "april": 3, "apr": 3, "4": 3, "04": 3,
+            "may": 4, "5": 4, "05": 4,
+            "june": 5, "jun": 5, "6": 5, "06": 5,
+            "july": 6, "jul": 6, "7": 6, "07": 6,
+            "august": 7, "aug": 7, "8": 7, "08": 7,
+            "september": 8, "sep": 8, "9": 8, "09": 8,
+            "october": 9, "oct": 9, "10": 9,
+            "november": 10, "nov": 10, "11": 10,
+            "december": 11, "dec": 11, "12": 11
+        };
+
+        // Converts separated month/year into "10Y 2M" format
+        function calculateAgeString(bMonth, bYear, examDate) {
+            if (!bMonth || !bYear) return "10Y 5M"; // Fallback to 0% adjustment
+
+            const monthInt = monthMap[bMonth.toString().toLowerCase().trim()];
+            if (monthInt === undefined) return "10Y 5M"; 
+
+            let years = examDate.getFullYear() - bYear;
+            let months = examDate.getMonth() - monthInt;
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            return `${years}Y ${months}M`;
+        }
+
+        // The core Standardisation Math
+        function calculateRankPercentile(rawScore, totalQs, examDate) {
+            const rawPercentage = rawScore / totalQs;
+            const ageString = calculateAgeString(childBirthMonth, childBirthYear, examDate);
+            const adjustment = ageAdjustments[ageString] || 0.0; 
+
+            const standardisedScoreDec = (rawPercentage + adjustment + 1) / 2;
+            const standardisedScore = Math.round(standardisedScoreDec * 100);
+            
+            const rankPercentile = 100 - standardisedScore;
+            return Math.max(1, Math.min(rankPercentile, 99)); 
+        }
+
         function updateSchedule() {
             const now = new Date();
             let currentWeek = 1;
@@ -415,14 +472,20 @@
                 return;
             }
 
+            // 1. Fetch Profile Data
             const { data: profileData } = await supabaseClient
                 .from('profiles')
-                .select('child_first_name')
+                .select('child_first_name, child_birth_month, child_birth_year, child_gender')
                 .eq('id', session.user.id)
                 .single();
 
-            if (profileData && profileData.child_first_name) {
-                document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
+            if (profileData) {
+                if (profileData.child_first_name) {
+                    document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
+                }
+                childBirthMonth = profileData.child_birth_month;
+                childBirthYear = profileData.child_birth_year;
+                childGender = profileData.child_gender;
             }
 
             const { data: scoreData, error: scoreError } = await supabaseClient
@@ -450,9 +513,12 @@
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
+                    // Calculate dynamic rank!
+                    const rank = calculateRankPercentile(weekScore.raw_score, weekScore.total_questions, weekSchedule.start);
+
                     scoreHtml = `<td class="td-score">${weekScore.raw_score}/${weekScore.total_questions}</td>`;
-                    rankHtml = `<td><div class="td-rank">Top 36%</div></td>`; // Placeholder Rank
-                    packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i})">View Report</button></td>`;
+                    rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`; // <-- Injects exact rank
+                    packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i}, ${rank})">View Report</button></td>`;
                     feedbackHtml = `<td><span class="td-muted">Feedback pending</span></td>`;
                 } else if (now > weekSchedule.end) {
                     scoreHtml = `<td class="td-empty">—</td>`;
@@ -479,14 +545,17 @@
         }
 
         // Triggered when "View Report" is clicked
-        function viewReport(weekNum) {
+        function viewReport(weekNum, rankPercentile) {
             const scoreData = userScores.find(s => s.week_number === weekNum);
             if (!scoreData) return;
 
             document.getElementById('reportWeekNum').innerText = weekNum;
             document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
             
-            // Assume 10 questions per subject for this prototype display
+            // Inject Rank into the massive text
+            document.getElementById('tab-summary').querySelector('strong').innerHTML = 
+                `Top ${rankPercentile}%`;
+
             document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}`;
             document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}`;
             document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}`;
