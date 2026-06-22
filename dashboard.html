@@ -569,6 +569,7 @@
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
+                    // STRICT DATABASE CHECKS: No overrides. 
                     const hasGlobalRank = userProfile?.has_rank_pass;
                     const hasGlobalReport = userProfile?.has_review_pass;
                     
