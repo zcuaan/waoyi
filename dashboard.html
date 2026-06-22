@@ -76,7 +76,7 @@
         .detail-card { background: var(--wl-white); padding: 24px; border-radius: 8px; border: 1px solid var(--wl-border); display: flex; flex-direction: column; }
         .detail-card h4 { font-size: 0.95rem; color: var(--wl-text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--wl-border); padding-bottom: 8px; font-weight: 800;}
         .detail-val { font-size: 1.8rem; font-weight: 800; color: var(--wl-black); margin-bottom: 4px; line-height: 1.1; }
-        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); margin-bottom: 20px; font-weight: 500; }
+        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 500; flex-grow: 1; }
 
         /* --- UPGRADES --- */
         .bundle-wrapper { background-color: var(--wl-black); margin-bottom: 0; }
@@ -195,7 +195,7 @@
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Rank Pass (£19.99)</h3>
-                    <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.</p>
+                    <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly league rankings. Best if you want to track your child’s position across the summer.</p>
                     <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 24px; font-style: italic;">Weekly rankings can also be revealed individually for £3.99 each.</p>
                     <button class="btn btn-action btn-square" style="padding: 10px 24px; font-size: 1.05rem; margin-top: auto;">Upgrade to Rank Pass</button>
                 </div>
@@ -204,7 +204,7 @@
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Review Pass (£99)</h3>
-                    <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 review packs, including the papers, answers and explanations.</p>
+                    <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 detailed review packs, including papers, answers and explanations.</p>
                     <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 24px; font-style: italic;">Weekly review packs can also be bought individually for £19.99 each.</p>
                     <button class="btn btn-action btn-square" style="padding: 10px 24px; font-size: 1.05rem; margin-top: auto;">Upgrade to Review Pass</button>
                 </div>
@@ -217,7 +217,7 @@
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
                 <button class="modal-close" onclick="closeModal('upgrade-modal')">&times;</button>
-                <h2 id="upgradeTitle">Get Review Pack</h2>
+                <h2 id="upgradeTitle">Unlock Detailed Review</h2>
                 <div class="price">Week <span id="upgradeWeekNum">X</span> — <span id="upgradePrice">£19.99</span></div>
                 <div id="upgradeDesc">
                     <ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);">
@@ -249,7 +249,7 @@
 
                 <!-- DYNAMIC ACCESS BANNER -->
                 <div id="modalAccessBanner" class="access-banner">
-                    You’re viewing the free score summary. Unlock the benchmark position or detailed review to see more.
+                    You’re viewing the free score summary. Reveal the league rank or unlock the detailed review to see more.
                 </div>
                 
                 <div class="report-tabs">
@@ -290,7 +290,7 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
                         <div class="stat-card"><span>Raw Score</span><strong id="tabEngRaw">0/10</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabEngAcc">0%</strong></div>
-                        <div class="stat-card"><span>Subject Rank</span><strong id="tabEngRankStr">TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong id="tabEngRankStr" style="font-size: 1.2rem; padding-top: 6px;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabEngPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
@@ -304,7 +304,7 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
                         <div class="stat-card"><span>Raw Score</span><strong id="tabMathRaw">0/10</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabMathAcc">0%</strong></div>
-                        <div class="stat-card"><span>Subject Rank</span><strong id="tabMathRankStr">TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong id="tabMathRankStr" style="font-size: 1.2rem; padding-top: 6px;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabMathPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
@@ -318,7 +318,7 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
                         <div class="stat-card"><span>Raw Score</span><strong id="tabVrRaw">0/10</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabVrAcc">0%</strong></div>
-                        <div class="stat-card"><span>Subject Rank</span><strong id="tabVrRankStr">TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong id="tabVrRankStr" style="font-size: 1.2rem; padding-top: 6px;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabVrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
@@ -332,7 +332,7 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
                         <div class="stat-card"><span>Raw Score</span><strong id="tabNvrRaw">0/10</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabNvrAcc">0%</strong></div>
-                        <div class="stat-card"><span>Subject Rank</span><strong id="tabNvrRankStr">TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong id="tabNvrRankStr" style="font-size: 1.2rem; padding-top: 6px;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabNvrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
@@ -562,14 +562,6 @@
                 const hasReview = userProfile?.has_review_pass || score.report_unlocked;
                 const rank = calculateRankPercentile(score.raw_score, score.total_questions, sched.start);
 
-                let rankBox = hasRank 
-                    ? `<div class="detail-val" style="color: var(--wl-teal);">Top ${rank}%</div><div style="flex-grow:1;"></div><button class="btn btn-outline btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank})">View Results</button>`
-                    : `<div class="detail-val" style="color: var(--wl-text-muted);">Locked</div><div style="flex-grow:1;"></div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal Benchmark — £3.99</button>`;
-                
-                let reviewBox = hasReview
-                    ? `<div class="detail-val" style="color: var(--wl-blue);">Unlocked</div><div style="flex-grow:1;"></div><button class="btn btn-primary btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank})">Open Detailed Review</button>`
-                    : `<div class="detail-val" style="color: var(--wl-text-main);">Available</div><div style="flex-grow:1;"></div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'review')">Unlock Detailed Review — £19.99</button>`;
-
                 html = `
                     <div class="detail-header"><h2>Week ${weekNum} Results</h2><p>${score.raw_score}/${score.total_questions}</p></div>
                     <div class="detail-grid">
@@ -577,21 +569,28 @@
                             <h4>Score</h4>
                             <div class="detail-val">${score.raw_score}/${score.total_questions}</div>
                             <div class="detail-desc">Raw total</div>
-                            <button class="btn btn-action btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank})">View Results</button>
                         </div>
                         <div class="detail-card">
-                            <h4>Benchmark Position</h4>
-                            ${rankBox}
+                            <h4>League Rank</h4>
+                            <div class="detail-val" style="color: ${hasRank ? 'var(--wl-teal)' : 'var(--wl-text-muted)'};">${hasRank ? `Top ${rank}%` : 'Locked'}</div>
+                            <div class="detail-desc">${hasRank ? 'Rank unlocked' : 'Hidden'}</div>
                         </div>
                         <div class="detail-card">
                             <h4>Detailed Review</h4>
-                            ${reviewBox}
+                            <div class="detail-val" style="color: ${hasReview ? 'var(--wl-blue)' : 'var(--wl-text-muted)'}; font-size: ${hasReview ? '1.4rem' : '1.4rem'}; padding-top: 5px;">${hasReview ? 'Unlocked' : 'Locked'}</div>
+                            <div class="detail-desc">${hasReview ? 'Paper, answers and analysis included' : 'Available for purchase'}</div>
                         </div>
                         <div class="detail-card">
                             <h4>Writing Challenge</h4>
-                            <div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.2rem; padding-top: 10px;">—</div>
-                            <div style="flex-grow:1;"></div>
+                            <div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.4rem; padding-top: 5px;">—</div>
+                            <div class="detail-desc">Not joined</div>
                         </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
+                        <button class="btn btn-action btn-square" onclick="openReportModal(${weekNum}, ${rank}, '${hasReview ? 'review' : 'free'}')">Open Week ${weekNum} Results</button>
+                        ${!hasRank ? `<button class="btn btn-outline btn-square" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal League Rank — £3.99</button>` : ''}
+                        ${!hasReview ? `<button class="btn btn-outline btn-square" onclick="triggerUpgradeModal(${weekNum}, 'review')">Unlock Detailed Review — £19.99</button>` : ''}
                     </div>
                 `;
             }
@@ -602,11 +601,11 @@
         function triggerUpgradeModal(weekNum, type) {
             setTxt('upgradeWeekNum', weekNum);
             if (type === 'rank') {
-                setTxt('upgradeTitle', "Reveal Benchmark");
+                setTxt('upgradeTitle', "Reveal League Rank");
                 setTxt('upgradePrice', "£3.99");
                 setHtml('upgradeDesc', `<p style="margin-bottom: 24px;">See exactly where your child places against the cohort this week.</p>`);
             } else {
-                setTxt('upgradeTitle', "Get Detailed Review");
+                setTxt('upgradeTitle', "Unlock Detailed Review");
                 setTxt('upgradePrice', "£19.99");
                 setHtml('upgradeDesc', `<ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);"><li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks & Focus areas</li></ul>`);
             }
@@ -646,11 +645,11 @@
                     banner.style.backgroundColor = "var(--wl-soft-teal)";
                     banner.style.color = "var(--wl-teal-dark)";
                 } else if (hasRank) {
-                    banner.innerText = "Benchmark position unlocked. Unlock the detailed review to see question-by-question answers and topic tags.";
+                    banner.innerText = "League rank unlocked. Unlock the detailed review to see question-by-question answers and topic tags.";
                     banner.style.backgroundColor = "var(--wl-soft-yellow)";
                     banner.style.color = "var(--wl-black)";
                 } else {
-                    banner.innerText = "You’re viewing the free score summary. Unlock the benchmark position or detailed review to see more.";
+                    banner.innerText = "You’re viewing the free score summary. Reveal the league rank or unlock the detailed review to see more.";
                     banner.style.backgroundColor = "var(--wl-bg-main)";
                     banner.style.color = "var(--wl-text-muted)";
                 }
@@ -665,15 +664,15 @@
             
             if (hasRank) {
                 setHtml('summaryBenchmarkContainer', `
-                    <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Benchmark Position</h3>
-                    <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">${rNum} <span style="font-size: 2rem; color: var(--wl-text-muted);">/ ${COHORT_SIZE}</span></strong>
+                    <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">League Rank</h3>
+                    <strong style="font-size: 2.2rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">Ranked ${rNum} out of ${COHORT_SIZE} students</strong>
                     <div style="font-size: 1.2rem; font-weight: 700; color: var(--wl-text-muted); margin-top: 8px;">Top ${rankPercentile}%</div>
                 `);
             } else {
                 setHtml('summaryBenchmarkContainer', `
-                    <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Benchmark Position</h3>
+                    <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">League Rank</h3>
                     <strong style="font-size: 3.5rem; color: #cbd5e1; font-weight: 800; line-height: 1.1;">Locked</strong>
-                    <div style="margin-top: 12px;"><button class="btn btn-outline btn-sm btn-square" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal Benchmark — £3.99</button></div>
+                    <div style="margin-top: 12px;"><button class="btn btn-outline btn-sm btn-square" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal League Rank — £3.99</button></div>
                 `);
             }
 
@@ -753,28 +752,28 @@
             setTxt('tabEngRaw', `${scoreData.english_score || 0}/${engTot}`);
             setTxt('tabEngAcc', `${eM.acc}%`);
             setTxt('tabEngPerc', `Top ${eM.rankP}%`);
-            setHtml('tabEngRankStr', `${eM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setHtml('tabEngRankStr', `Ranked ${eM.rankNum} out of ${COHORT_SIZE} students`);
             setTxt('focusEng', calculateModeFocus(engWrong));
 
             // Maths Insights
             setTxt('tabMathRaw', `${scoreData.maths_score || 0}/${mathTot}`);
             setTxt('tabMathAcc', `${mM.acc}%`);
             setTxt('tabMathPerc', `Top ${mM.rankP}%`);
-            setHtml('tabMathRankStr', `${mM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setHtml('tabMathRankStr', `Ranked ${mM.rankNum} out of ${COHORT_SIZE} students`);
             setTxt('focusMath', calculateModeFocus(mathWrong));
 
             // VR Insights
             setTxt('tabVrRaw', `${scoreData.vr_score || 0}/${vrTot}`);
             setTxt('tabVrAcc', `${vM.acc}%`);
             setTxt('tabVrPerc', `Top ${vM.rankP}%`);
-            setHtml('tabVrRankStr', `${vM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setHtml('tabVrRankStr', `Ranked ${vM.rankNum} out of ${COHORT_SIZE} students`);
             setTxt('focusVr', calculateModeFocus(vrWrong));
 
             // NVR Insights
             setTxt('tabNvrRaw', `${scoreData.nvr_score || 0}/${nvrTot}`);
             setTxt('tabNvrAcc', `${nM.acc}%`);
             setTxt('tabNvrPerc', `Top ${nM.rankP}%`);
-            setHtml('tabNvrRankStr', `${nM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setHtml('tabNvrRankStr', `Ranked ${nM.rankNum} out of ${COHORT_SIZE} students`);
             setTxt('focusNvr', calculateModeFocus(nvrWrong));
 
             openModal('report-modal');
