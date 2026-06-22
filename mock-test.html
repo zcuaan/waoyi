@@ -499,8 +499,15 @@
             if (currentQuestion < totalQuestions) {
                 currentQuestion++;
                 updateUI();
+                
+                // If they reach the last question, change the button text to Submit!
+                if (currentQuestion === totalQuestions) {
+                    document.querySelector('.btn-next').innerText = "Submit Exam";
+                    document.querySelector('.btn-next').style.backgroundColor = "var(--wl-teal)";
+                }
             } else {
-                alert("You've reached the end of the template prototypes!");
+                // If they are already on the last question and click it, submit!
+                submitExam();
             }
         }
 
@@ -548,21 +555,52 @@
         }
         securePage();
 
-        // 2. Prepare the Submit Function (We will wire this to the database next)
+        // 2. Submit the Exam to Supabase
         async function submitExam() {
-            // Stop the timer
+            // Stop the timer and change the button
             clearInterval(timerInterval);
+            const nextBtn = document.querySelector('.btn-next');
+            nextBtn.innerText = "Saving Score...";
+            nextBtn.disabled = true;
             
-            // For now, just a placeholder alert
-            alert("Exam submitted! Calculating your score...");
+            // Get the logged-in user
+            const { data: { session } } = await supabaseClient.auth.getSession();
             
-            // Send them back to the dashboard
+            if (!session) {
+                alert("Session expired. Cannot save score.");
+                return window.location.href = 'login.html';
+            }
+
+            // Generate a fake prototype score between 25 and 40
+            const fakeScore = Math.floor(Math.random() * (40 - 25 + 1)) + 25; 
+
+            // Save the score to our new table!
+            const { error } = await supabaseClient
+                .from('scores')
+                .insert([
+                    {
+                        user_id: session.user.id,
+                        week_number: 3, // Hardcoded to Week 3 for this test
+                        raw_score: fakeScore,
+                        total_questions: 40
+                    }
+                ]);
+
+            if (error) {
+                console.error("Error saving score:", error);
+                alert("There was an error saving your score.");
+                nextBtn.innerText = "Submit Exam";
+                nextBtn.disabled = false;
+                return;
+            }
+
+            // Success! Alert them and redirect to dashboard
+            alert(`Exam submitted successfully! You scored ${fakeScore}/40.`);
             window.location.href = 'dashboard.html';
         }
 
         // 3. Override the prototype's autoSubmit function
         function autoSubmit() {
-            alert("Time is up! Submitting your test...");
             submitExam();
         }
     </script>
