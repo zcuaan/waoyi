@@ -458,9 +458,8 @@
             }
         }
 
-        function autoSubmit() {
-            alert("Time is up! Your test has been automatically submitted to your dashboard.");
-        }
+        // Track answers for the navigation grid state
+        const answersTracker = {};
 
         // Standard Option Selection
         function selectOption(element, layoutId) {
@@ -468,6 +467,9 @@
             const options = container.querySelectorAll('.option-item');
             options.forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
+            
+            // Mark as answered
+            markQuestionAsAnswered(layoutId);
         }
 
         // Multi-Select Option Logic (for Template 6)
@@ -476,37 +478,67 @@
             const options = groupContainer.querySelectorAll('.option-item');
             options.forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
+            
+            // For layout 6, ensure both groups have a selection before marking complete
+            const totalGroupsSelected = document.querySelectorAll('#layout-6 .option-item.selected').length;
+            if (totalGroupsSelected >= 2) {
+                markQuestionAsAnswered('6');
+            }
         }
 
-        // --- Layout Switching Logic for Prototype ---
+        function markQuestionAsAnswered(qNum) {
+            answersTracker[qNum] = true;
+            const gridItem = document.querySelector(`.grid-item[data-q="${qNum}"]`);
+            if (gridItem && !gridItem.classList.contains('current')) {
+                gridItem.classList.add('answered');
+            }
+        }
+
+        // --- Layout Switching Logic ---
         let currentQuestion = 1;
-        const totalQuestions = 6; // We now have 6 templates to cycle through
+        const totalQuestions = 6; 
 
         function updateUI() {
+            // 1. Update text indicators & progress bar
             document.getElementById('current-q-num').innerText = currentQuestion;
             document.getElementById('progress-bar').style.width = `${(currentQuestion / 40) * 100}%`;
 
-            // Hide all layouts
-            for(let i=1; i<=6; i++) {
+            // 2. Hide all layouts and show the active one
+            for(let i = 1; i <= 6; i++) {
                 document.getElementById('layout-' + i).classList.remove('active');
             }
-
-            // Show layout based on current question
             document.getElementById('layout-' + currentQuestion).classList.add('active');
+
+            // 3. FIX: Synchronize Next/Submit button text and styles dynamically
+            const nextBtn = document.querySelector('.btn-next');
+            if (currentQuestion === totalQuestions) {
+                nextBtn.innerText = "Submit Exam";
+                nextBtn.style.backgroundColor = "var(--wl-teal)";
+            } else {
+                nextBtn.innerText = "Next";
+                nextBtn.style.backgroundColor = "var(--wl-blue)";
+            }
+
+            // 4. FIX: Synchronize active highlight state in Navigation Grid
+            const gridItems = document.querySelectorAll('.grid-item');
+            gridItems.forEach((item) => {
+                const itemQNum = item.getAttribute('data-q');
+                item.classList.remove('current');
+                
+                if (itemQNum == currentQuestion) {
+                    item.classList.add('current');
+                    item.classList.remove('answered'); // current takes visual priority
+                } else if (answersTracker[itemQNum]) {
+                    item.classList.add('answered');
+                }
+            });
         }
 
         function nextQuestion() {
             if (currentQuestion < totalQuestions) {
                 currentQuestion++;
                 updateUI();
-                
-                // If they reach the last question, change the button text to Submit!
-                if (currentQuestion === totalQuestions) {
-                    document.querySelector('.btn-next').innerText = "Submit Exam";
-                    document.querySelector('.btn-next').style.backgroundColor = "var(--wl-teal)";
-                }
             } else {
-                // If they are already on the last question and click it, submit!
                 submitExam();
             }
         }
@@ -521,14 +553,15 @@
         // Setup Jump Grid
         function toggleGrid() { document.getElementById('grid-overlay').classList.toggle('active'); }
         const gridContainer = document.getElementById('q-grid');
+
         for (let i = 1; i <= 40; i++) {
             const box = document.createElement('div');
             box.className = 'grid-item';
+            box.setAttribute('data-q', i); // Assign unique ID for matching later
             box.innerText = i;
             if (i === 1) box.classList.add('current');
             
             box.onclick = () => {
-                // For the prototype, constrain clicks to available templates (1-6)
                 if(i <= 6) {
                     currentQuestion = i;
                     updateUI();
@@ -540,6 +573,7 @@
             gridContainer.appendChild(box);
         }
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
