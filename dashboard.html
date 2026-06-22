@@ -72,11 +72,11 @@
         .detail-header h2 { font-size: 1.8rem; margin-bottom: 4px; }
         .detail-header p { color: var(--wl-text-muted); font-weight: 600; font-size: 1.1rem; }
         
-        .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         .detail-card { background: var(--wl-white); padding: 24px; border-radius: 8px; border: 1px solid var(--wl-border); display: flex; flex-direction: column; }
-        .detail-card h4 { font-size: 0.9rem; text-transform: uppercase; color: var(--wl-text-muted); letter-spacing: 0.5px; margin-bottom: 12px; border-bottom: 1px solid var(--wl-border); padding-bottom: 8px;}
-        .detail-val { font-size: 1.8rem; font-weight: 800; color: var(--wl-black); margin-bottom: 16px; line-height: 1.1; flex-grow: 1; }
-        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); margin-bottom: 16px; font-weight: 500; flex-grow: 1; }
+        .detail-card h4 { font-size: 0.95rem; color: var(--wl-text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--wl-border); padding-bottom: 8px; font-weight: 800;}
+        .detail-val { font-size: 1.8rem; font-weight: 800; color: var(--wl-black); margin-bottom: 4px; line-height: 1.1; }
+        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); margin-bottom: 20px; font-weight: 500; }
 
         /* --- UPGRADES --- */
         .bundle-wrapper { background-color: var(--wl-black); margin-bottom: 0; }
@@ -92,7 +92,10 @@
         .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--wl-text-muted); font-weight: bold;}
 
         .modal-report { background: var(--wl-bg-main); width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; position: relative;}
-        .report-header { background: var(--wl-white); padding: 24px 32px; border-bottom: 2px solid var(--wl-border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;}
+        .report-header { background: var(--wl-white); padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;}
+        
+        /* Banner Logic */
+        .access-banner { padding: 12px 32px; font-size: 0.95rem; font-weight: 600; text-align: center; border-bottom: 1px solid var(--wl-border); border-top: 1px solid var(--wl-border); flex-shrink: 0; }
         
         .report-tabs { display: flex; background: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 0 32px; overflow-x: auto; flex-shrink: 0;}
         .tab { padding: 16px 20px; font-weight: 700; color: var(--wl-text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.2s;}
@@ -118,13 +121,6 @@
 
         .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
 
-        /* BELL CURVE STYLES */
-        .bell-curve-container { position: relative; width: 100%; max-width: 500px; margin: 0 auto 40px; height: 160px; }
-        .bell-marker { position: absolute; bottom: 20px; display: flex; flex-direction: column; align-items: center; transition: left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .bell-marker-label { background: var(--wl-teal); color: var(--wl-white); font-weight: 800; font-size: 0.95rem; padding: 6px 14px; border-radius: 20px; white-space: nowrap; margin-bottom: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .bell-marker-line { width: 2px; height: 160px; background: var(--wl-teal); opacity: 0.5;}
-        .bell-marker-dot { width: 16px; height: 16px; background: var(--wl-white); border: 4px solid var(--wl-teal); border-radius: 50%; margin-top: -8px; box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.2); }
-
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
             .path-grid { grid-template-columns: 1fr; }
@@ -134,6 +130,7 @@
             .active-week-card { flex-direction: column; align-items: flex-start; gap: 24px; }
             .modal-close { top: 10px; right: 15px; }
             .grid-2 { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -163,6 +160,7 @@
             </div>
         </div>
 
+        <!-- HERO ACTIVE MOCK CARD -->
         <div class="angled-wrapper" style="background-color: var(--wl-black);">
             <div class="angled-inner active-week-card" style="background-color: var(--wl-teal); padding: 32px;">
                 <div class="active-info">
@@ -178,18 +176,22 @@
             </div>
         </div>
 
+        <!-- THE 6-WEEK PATHWAY -->
         <div class="angled-wrapper">
             <div class="angled-inner" style="padding: 32px;">
                 <div class="path-grid" id="path-grid">
-                    </div>
+                    <!-- Tiles injected by JS -->
+                </div>
 
                 <div class="detail-panel active" id="detail-panel">
-                    </div>
+                    <!-- Detail content injected by JS -->
+                </div>
             </div>
         </div>
 
         <h2 class="section-title">Want the full summer unlocked?</h2>
         <div class="grid-2">
+            <!-- Upgrades: White boxes with yellow buttons -->
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Rank Pass (£19.99)</h3>
@@ -210,6 +212,7 @@
         </div>
     </div>
 
+    <!-- UPGRADE MODAL -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -230,17 +233,23 @@
         </div>
     </div>
 
+    <!-- REPORT MODAL -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
                 
                 <div class="report-header">
-                    <div><h2 style="margin-bottom: 4px;">Week <span id="reportWeekNum">X</span> Results</h2></div>
+                    <div><h2 style="margin-bottom: 0px;">Week <span id="reportWeekNum">X</span> Results</h2></div>
                     <div style="display: flex; gap: 16px; align-items: center; padding-right: 40px;">
                         <button class="btn btn-outline btn-sm btn-square" id="btnDownload" style="border-color: var(--wl-black); color: var(--wl-black);">Download PDF</button>
                         <button class="btn btn-primary btn-sm btn-square" id="btnPaper">View Paper</button>
                         <button class="modal-close" style="position: absolute; top: 15px; right: 20px;" onclick="closeModal('report-modal')">&times;</button>
                     </div>
+                </div>
+
+                <!-- DYNAMIC ACCESS BANNER -->
+                <div id="modalAccessBanner" class="access-banner">
+                    You’re viewing the free score summary. Unlock the benchmark position or detailed review to see more.
                 </div>
                 
                 <div class="report-tabs">
@@ -251,27 +260,12 @@
                     <div class="tab" id="nav-nvr" onclick="switchTab('tab-nvr', this)">NVR</div>
                 </div>
 
+                <!-- SUMMARY TAB (NO BELL CURVE, CLEAN RANK) -->
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         
-                        <div style="text-align: center; margin-bottom: 8px;">
-                            <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Benchmark Position</h3>
-                        </div>
-
-                        <div class="bell-curve-container">
-                            <svg viewBox="0 0 1000 220" style="width: 100%; height: 140px; overflow: visible;">
-                                <path d="M 0 200 C 250 200 350 20 500 20 C 650 20 750 200 1000 200" fill="none" stroke="var(--wl-border)" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                            <div id="bellCurveMarker" class="bell-marker" style="left: 50%;">
-                                <div class="bell-marker-label">You (Top <span id="markerRankText">X</span>%)</div>
-                                <div class="bell-marker-line"></div>
-                                <div class="bell-marker-dot"></div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; margin-top: 12px; padding: 0 10px;">
-                                <span>Lower</span>
-                                <span>Average</span>
-                                <span>Top</span>
-                            </div>
+                        <div style="text-align: center; margin-bottom: 40px;" id="summaryBenchmarkContainer">
+                            <!-- Injected by JS based on access -->
                         </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
@@ -290,6 +284,7 @@
                     </div>
                 </div>
 
+                <!-- ENGLISH TAB -->
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -303,6 +298,7 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusEng" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
+                <!-- MATHS TAB -->
                 <div class="report-content" id="tab-maths">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -316,6 +312,7 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusMath" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
+                <!-- VR TAB -->
                 <div class="report-content" id="tab-vr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -329,6 +326,7 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusVr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
+                <!-- NVR TAB -->
                 <div class="report-content" id="tab-nvr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -346,6 +344,7 @@
         </div>
     </div>
 
+    <!-- Script: UI Toggles -->
     <script>
         function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
         function closeModal(modalId) {
@@ -362,6 +361,7 @@
         window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
     </script>
 
+    <!-- Script: Supabase & App Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
@@ -389,7 +389,7 @@
         const ageAdjustments = {"6Y 2M": 0.25, "6Y 3M": 0.25, "6Y 4M": 0.24, "6Y 5M": 0.24, "6Y 6M": 0.23, "6Y 7M": 0.23, "6Y 8M": 0.22, "6Y 9M": 0.22, "6Y 10M": 0.21, "6Y 11M": 0.21, "7Y 0M": 0.2, "7Y 1M": 0.2, "7Y 2M": 0.19, "7Y 3M": 0.19, "7Y 4M": 0.19, "7Y 5M": 0.18, "7Y 6M": 0.18, "7Y 7M": 0.17, "7Y 8M": 0.17, "7Y 9M": 0.16, "7Y 10M": 0.16, "7Y 11M": 0.15, "8Y 0M": 0.15, "8Y 1M": 0.14, "8Y 2M": 0.14, "8Y 3M": 0.13, "8Y 4M": 0.13, "8Y 5M": 0.12, "8Y 6M": 0.12, "8Y 7M": 0.11, "8Y 8M": 0.11, "8Y 9M": 0.1, "8Y 10M": 0.1, "8Y 11M": 0.09, "9Y 0M": 0.09, "9Y 1M": 0.08, "9Y 2M": 0.08, "9Y 3M": 0.07, "9Y 4M": 0.07, "9Y 5M": 0.06, "9Y 6M": 0.06, "9Y 7M": 0.05, "9Y 8M": 0.05, "9Y 9M": 0.04, "9Y 10M": 0.04, "9Y 11M": 0.03, "10Y 0M": 0.03, "10Y 1M": 0.02, "10Y 2M": 0.02, "10Y 3M": 0.01, "10Y 4M": 0.01, "10Y 5M": 0.0, "10Y 6M": 0.0, "10Y 7M": -0.01, "10Y 8M": -0.01, "10Y 9M": -0.02, "10Y 10M": -0.02, "10Y 11M": -0.03, "11Y 0M": -0.03, "11Y 1M": -0.04, "11Y 2M": -0.05, "11Y 3M": -0.05, "11Y 4M": -0.06, "11Y 5M": -0.06, "11Y 6M": -0.07, "11Y 7M": -0.07, "11Y 8M": -0.08, "11Y 9M": -0.08, "11Y 10M": -0.09, "11Y 11M": -0.09, "12Y 0M": -0.1, "12Y 1M": -0.1, "12Y 2M": -0.11, "12Y 3M": -0.11, "12Y 4M": -0.12, "12Y 5M": -0.12, "12Y 6M": -0.13, "12Y 7M": -0.13, "12Y 8M": -0.13, "12Y 9M": -0.14, "12Y 10M": -0.14, "12Y 11M": -0.15, "13Y 0M": -0.15, "13Y 1M": -0.16, "13Y 2M": -0.16, "13Y 3M": -0.17, "13Y 4M": -0.17, "13Y 5M": -0.18, "13Y 6M": -0.18, "13Y 7M": -0.19, "13Y 8M": -0.19, "13Y 9M": -0.2, "13Y 10M": -0.2, "13Y 11M": -0.21, "14Y 0M": -0.21, "14Y 1M": -0.22, "14Y 2M": -0.22, "14Y 3M": -0.23, "14Y 4M": -0.23, "14Y 5M": -0.24, "14Y 6M": -0.24, "14Y 7M": -0.25};
         const monthMap = {"january": 0, "jan": 0, "1": 0, "01": 0, "february": 1, "feb": 1, "2": 1, "02": 1, "march": 2, "mar": 2, "3": 2, "03": 2, "april": 3, "apr": 3, "4": 3, "04": 3, "may": 4, "5": 4, "05": 4, "june": 5, "jun": 5, "6": 5, "06": 5, "july": 6, "jul": 6, "7": 6, "07": 6, "august": 7, "aug": 7, "8": 7, "08": 7, "september": 8, "sep": 8, "9": 8, "09": 8, "october": 9, "oct": 9, "10": 9, "november": 10, "nov": 10, "11": 10, "december": 11, "dec": 11, "12": 11};
 
-        // UI SAFETY HELPER: Guarantees Javascript never crashes if a UI element is missing
+        // UI SAFETY HELPER
         const setTxt = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
         const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
 
@@ -563,20 +563,35 @@
                 const rank = calculateRankPercentile(score.raw_score, score.total_questions, sched.start);
 
                 let rankBox = hasRank 
-                    ? `<div class="detail-val" style="color: var(--wl-teal);">Top ${rank}%</div><button class="btn btn-outline btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank}, 'rank')">View Rank Report</button>`
-                    : `<div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.4rem; padding-top: 5px;">Locked</div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal Rank — £3.99</button>`;
+                    ? `<div class="detail-val" style="color: var(--wl-teal);">Top ${rank}%</div><div style="flex-grow:1;"></div><button class="btn btn-outline btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank})">View Results</button>`
+                    : `<div class="detail-val" style="color: var(--wl-text-muted);">Locked</div><div style="flex-grow:1;"></div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal Benchmark — £3.99</button>`;
                 
                 let reviewBox = hasReview
-                    ? `<div class="detail-val" style="color: var(--wl-blue); font-size: 1.4rem; padding-top: 5px;">Available</div><button class="btn btn-primary btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank}, 'review')">Open Review Pack</button>`
-                    : `<div class="detail-val" style="font-size: 1rem; font-weight: 500; color: var(--wl-text-muted);">Get the paper, answers and explanations.</div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'review')">Get Review Pack — £19.99</button>`;
+                    ? `<div class="detail-val" style="color: var(--wl-blue);">Unlocked</div><div style="flex-grow:1;"></div><button class="btn btn-primary btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank})">Open Detailed Review</button>`
+                    : `<div class="detail-val" style="color: var(--wl-text-main);">Available</div><div style="flex-grow:1;"></div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'review')">Unlock Detailed Review — £19.99</button>`;
 
                 html = `
                     <div class="detail-header"><h2>Week ${weekNum} Results</h2><p>${score.raw_score}/${score.total_questions}</p></div>
                     <div class="detail-grid">
-                        <div class="detail-card"><h4>Score</h4><div class="detail-val">${score.raw_score}/${score.total_questions}</div><div class="detail-desc">Raw total</div></div>
-                        <div class="detail-card"><h4>Benchmark Position</h4>${rankBox}</div>
-                        <div class="detail-card"><h4>Review Pack</h4>${reviewBox}</div>
-                        <div class="detail-card"><h4>Writing Challenge</h4><div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.2rem; padding-top: 10px;">—</div></div>
+                        <div class="detail-card">
+                            <h4>Score</h4>
+                            <div class="detail-val">${score.raw_score}/${score.total_questions}</div>
+                            <div class="detail-desc">Raw total</div>
+                            <button class="btn btn-action btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank})">View Results</button>
+                        </div>
+                        <div class="detail-card">
+                            <h4>Benchmark Position</h4>
+                            ${rankBox}
+                        </div>
+                        <div class="detail-card">
+                            <h4>Detailed Review</h4>
+                            ${reviewBox}
+                        </div>
+                        <div class="detail-card">
+                            <h4>Writing Challenge</h4>
+                            <div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.2rem; padding-top: 10px;">—</div>
+                            <div style="flex-grow:1;"></div>
+                        </div>
                     </div>
                 `;
             }
@@ -587,11 +602,11 @@
         function triggerUpgradeModal(weekNum, type) {
             setTxt('upgradeWeekNum', weekNum);
             if (type === 'rank') {
-                setTxt('upgradeTitle', "Reveal Rank");
+                setTxt('upgradeTitle', "Reveal Benchmark");
                 setTxt('upgradePrice', "£3.99");
                 setHtml('upgradeDesc', `<p style="margin-bottom: 24px;">See exactly where your child places against the cohort this week.</p>`);
             } else {
-                setTxt('upgradeTitle', "Get Review Pack");
+                setTxt('upgradeTitle', "Get Detailed Review");
                 setTxt('upgradePrice', "£19.99");
                 setHtml('upgradeDesc', `<ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);"><li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks & Focus areas</li></ul>`);
             }
@@ -609,8 +624,6 @@
         function calculateSubjectMetrics(subjScore, subjTot, overallAcc, rankPercentile) {
             if (subjTot === 0) return { acc: 0, rankP: 'N/A', rankNum: 'N/A' };
             const subjAcc = subjScore / subjTot;
-            
-            // Protect against NaN
             const safePercentile = Number(rankPercentile) || 50;
             let p = Math.max(1, Math.min(99, safePercentile - Math.round((subjAcc - overallAcc) * 50)));
             let rNum = Math.max(1, Math.round(COHORT_SIZE * (p / 100)));
@@ -618,43 +631,71 @@
         }
 
         // --- FULL REPORT MODAL ---
-        async function openReportModal(weekNum, rankPercentile, accessLevel) {
+        async function openReportModal(weekNum, rankPercentile) {
             const scoreData = userScores.find(s => s.week_number === weekNum);
             if (!scoreData) return;
 
+            const hasRank = userProfile?.has_rank_pass || scoreData.rank_unlocked;
+            const hasReview = userProfile?.has_review_pass || scoreData.report_unlocked;
+
+            // Handle Banner Text
+            const banner = document.getElementById('modalAccessBanner');
+            if (banner) {
+                if (hasReview) {
+                    banner.innerText = "Detailed review unlocked.";
+                    banner.style.backgroundColor = "var(--wl-soft-teal)";
+                    banner.style.color = "var(--wl-teal-dark)";
+                } else if (hasRank) {
+                    banner.innerText = "Benchmark position unlocked. Unlock the detailed review to see question-by-question answers and topic tags.";
+                    banner.style.backgroundColor = "var(--wl-soft-yellow)";
+                    banner.style.color = "var(--wl-black)";
+                } else {
+                    banner.innerText = "You’re viewing the free score summary. Unlock the benchmark position or detailed review to see more.";
+                    banner.style.backgroundColor = "var(--wl-bg-main)";
+                    banner.style.color = "var(--wl-text-muted)";
+                }
+            }
+
             setTxt('reportWeekNum', weekNum);
             setTxt('modalSummaryScore', `${scoreData.raw_score}/${scoreData.total_questions}`);
-            setTxt('modalSummaryRank', rankPercentile);
 
-            // Update Bell Curve Position Safely
+            // Render Benchmark logic for Summary Tab
             const safeRank = Number(rankPercentile) || 50;
-            const visualLeft = 10 + ((100 - safeRank) * 0.8);
-            const bellMarker = document.getElementById('bellCurveMarker');
-            if (bellMarker) bellMarker.style.left = `${visualLeft}%`;
-            setTxt('markerRankText', rankPercentile);
+            const rNum = Math.max(1, Math.round(COHORT_SIZE * (safeRank / 100)));
+            
+            if (hasRank) {
+                setHtml('summaryBenchmarkContainer', `
+                    <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Benchmark Position</h3>
+                    <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">${rNum} <span style="font-size: 2rem; color: var(--wl-text-muted);">/ ${COHORT_SIZE}</span></strong>
+                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--wl-text-muted); margin-top: 8px;">Top ${rankPercentile}%</div>
+                `);
+            } else {
+                setHtml('summaryBenchmarkContainer', `
+                    <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Benchmark Position</h3>
+                    <strong style="font-size: 3.5rem; color: #cbd5e1; font-weight: 800; line-height: 1.1;">Locked</strong>
+                    <div style="margin-top: 12px;"><button class="btn btn-outline btn-sm btn-square" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal Benchmark — £3.99</button></div>
+                `);
+            }
 
-            // Handle Access Level Locks
-            const isReview = (accessLevel === 'review');
+            // Lock or unlock detailed tabs
             ['nav-english', 'nav-maths', 'nav-vr', 'nav-nvr'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
                     el.setAttribute('data-week', weekNum);
-                    if(isReview) {
-                        el.classList.remove('locked'); 
-                        el.innerHTML = el.innerText.replace(' 🔒', ''); 
+                    if(hasReview) {
+                        el.classList.remove('locked'); el.innerHTML = el.innerText.replace(' 🔒', ''); 
                     } else {
-                        el.classList.add('locked'); 
-                        if(!el.innerHTML.includes('🔒')) el.innerHTML += ' <span>🔒</span>';
+                        el.classList.add('locked'); if(!el.innerHTML.includes('🔒')) el.innerHTML += ' <span>🔒</span>';
                     }
                 }
             });
             
             const dlBtn = document.getElementById('btnDownload');
-            if(dlBtn) dlBtn.style.display = isReview ? 'inline-flex' : 'none';
+            if(dlBtn) dlBtn.style.display = hasReview ? 'inline-flex' : 'none';
             const ppBtn = document.getElementById('btnPaper');
-            if(ppBtn) ppBtn.style.display = isReview ? 'inline-flex' : 'none';
+            if(ppBtn) ppBtn.style.display = hasReview ? 'inline-flex' : 'none';
 
-            // Fetch Data
+            // Fetch Question Data
             const { data: qData } = await supabaseClient.from('questions').select('question_number, topic_tag, correct_answer').eq('exam_id', `week-${weekNum}`).order('question_number', { ascending: true });
 
             let engTot=0, mathTot=0, vrTot=0, nvrTot=0;
@@ -703,7 +744,6 @@
             const vM = calculateSubjectMetrics(scoreData.vr_score || 0, vrTot, overallAcc, rankPercentile);
             const nM = calculateSubjectMetrics(scoreData.nvr_score || 0, nvrTot, overallAcc, rankPercentile);
 
-            // Populate Breakdown Tab
             setTxt('modalEngScore', `${scoreData.english_score || 0}/${engTot}`);
             setTxt('modalMathScore', `${scoreData.maths_score || 0}/${mathTot}`);
             setTxt('modalVrScore', `${scoreData.vr_score || 0}/${vrTot}`);
