@@ -76,6 +76,7 @@
 
         .btn-start { background-color: var(--wl-blue); color: var(--wl-white); font-size: 1.3rem; padding: 16px 32px; width: 100%; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px); border: none; cursor: pointer; font-weight: bold;}
         .btn-start:hover { background-color: var(--wl-blue-hover); }
+        .btn-start:disabled { background-color: var(--wl-text-muted); cursor: not-allowed; }
 
         /* --- EXAM WRAPPER --- */
         .exam-container {
@@ -127,6 +128,7 @@
         /* Common Question Elements */
         .question-box { margin-bottom: 32px; width: 100%; }
         .question-text { font-size: 1.3rem; font-weight: 600; color: var(--wl-black); line-height: 1.5; }
+        .question-quote { font-size: 1.1rem; color: #555; margin-bottom: 16px; font-style: italic; border-left: 3px solid var(--wl-border); padding-left: 16px; }
         .question-box.centered { text-align: center; font-size: 1.4rem; }
 
         /* VR Alphabet Strip */
@@ -145,7 +147,7 @@
         }
 
         /* Diagrams & Graphs */
-        .diagram-box { width: 100%; min-height: 250px; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px; background-color: var(--wl-bg-main); color: var(--wl-text-muted); font-weight: 600;}
+        .diagram-box { width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px;}
         .graph-box { width: 100%; height: 100%; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; background-color: var(--wl-white); color: var(--wl-text-muted); font-weight: 600;}
 
         /* Options Vertical */
@@ -162,14 +164,9 @@
         .option-item:hover { background-color: var(--option-hover); border-color: #cbd5e1; }
         .option-item.selected { background-color: var(--option-selected-bg); border-color: var(--option-selected-border); }
         
-        /* Math specific */
-        .option-item.math-box { padding: 16px 24px; flex-direction: row; gap: 12px; font-size: 1.3rem;}
-        .math-fraction { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.2; font-size: 1.2rem;}
-        .math-fraction span:first-child { border-bottom: 2px solid var(--wl-text-main); padding: 0 4px; }
-        
         /* NVR specific */
-        .option-item.nvr-box { flex-direction: column; padding: 16px; gap: 12px; }
-        .nvr-img-placeholder { width: 80px; height: 80px; background: var(--wl-bg-main); border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; color: #999;}
+        .option-item.nvr-box { flex-direction: column; padding: 16px; gap: 12px; min-width: 120px; }
+        .nvr-img-placeholder { width: 80px; height: 80px; background: var(--wl-white); display: flex; align-items: center; justify-content: center; color: #999;}
 
         /* Option Letters */
         .option-letter { width: 32px; height: 32px; background-color: var(--wl-bg-main); color: var(--wl-text-main); display: flex; align-items: center; justify-content: center; border-radius: 4px; font-weight: 800; margin-right: 16px; flex-shrink: 0; border: 1px solid var(--wl-border); transition: all 0.2s; }
@@ -223,7 +220,6 @@
             <ul class="rules-box">
                 <li>You have <b>25 minutes</b> to complete the exam.</li>
                 <li>Once the time is up, your exam will be <b>submitted automatically</b>.</li>
-                <li>There will be <b>40 questions</b> in total.</li>
                 <li>You will be able to jump back and forth between questions.</li>
             </ul>
 
@@ -237,7 +233,7 @@
             <div class="header-left"><img src="Asset 2.png" alt="Logo"><span>The 11+ Weekend League</span></div>
             <div class="header-center">
                 <div class="exam-title">Week 3 11+ Mock Exam</div>
-                <div class="question-selector" onclick="toggleGrid()">Question <span id="current-q-num">1</span>/ 40 <span>▼</span></div>
+                <div class="question-selector" onclick="toggleGrid()">Question <span id="current-q-num">1</span>/ <span id="total-q-count">40</span> <span>▼</span></div>
             </div>
             <div class="header-right"><div class="timer-box" id="timer">⏱ 25:00</div></div>
         </div>
@@ -245,157 +241,86 @@
 
         <div class="exam-body">
             
-            <div class="layout-wrapper active" id="layout-1">
+            <!-- LAYOUT 1: Split Screen Reading Comprehension -->
+            <div class="layout-wrapper" id="layout-1">
                 <div class="panel-left">
                     <div class="passage-content">
                         <div style="color: var(--wl-text-muted); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
                             <span>ⓘ</span> Scroll to read the entire text
                         </div>
-                        <h2 class="passage-title">The Voyage of the Beagle</h2>
-                        <h3 class="passage-author">Charles Darwin</h3>
-                        <div class="passage-text">
-                            <p>The tortoise is very fond of water, drinking large quantities, and wallowing in the mud. The larger islands alone possess springs, and these are always situated towards the central parts, and at a considerable height. The tortoises, therefore, which frequent the lower districts, when thirsty, are obliged to travel from a long distance.</p>
-                            <p>Hence <span class="highlight-word">broad</span> and well-beaten paths branch off in every direction from the wells down to the sea coast; and the Spanish sailors, by following them up, first discovered the watering places. When I landed at Chatham Island, I could not imagine what animal travelled so methodically along well-chosen tracks.</p>
-                        </div>
+                        <h2 class="passage-title"></h2>
+                        <h3 class="passage-author"></h3>
+                        <div class="passage-text"></div>
                     </div>
                 </div>
                 <div class="panel-right">
                     <div class="question-content-split">
                         <div class="question-box">
-                            <div style="font-size: 1.1rem; color: #555; margin-bottom: 16px; font-style: italic; border-left: 3px solid var(--wl-border); padding-left: 16px;">
-                                '...<span style="font-weight: bold; text-decoration: underline;">broad</span> and well-beaten paths...'
-                            </div>
-                            <div class="question-text">Which word is closest in meaning to the word 'broad' as it is used in the passage?</div>
+                            <div class="question-quote"></div>
+                            <div class="question-text"></div>
                         </div>
-                        <div class="options-vertical">
-                            <div class="option-item" onclick="selectOption(this, '1')"><div class="option-letter">A</div><div class="option-text">width</div></div>
-                            <div class="option-item" onclick="selectOption(this, '1')"><div class="option-letter">B</div><div class="option-text">tall</div></div>
-                            <div class="option-item" onclick="selectOption(this, '1')"><div class="option-letter">C</div><div class="option-text">wide</div></div>
-                            <div class="option-item" onclick="selectOption(this, '1')"><div class="option-letter">D</div><div class="option-text">thick</div></div>
-                        </div>
+                        <div class="options-vertical"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 2: Standard Single View (Text, Math, SPAG, Cloze) -->
             <div class="layout-wrapper" id="layout-2">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="question-box centered" style="margin-bottom: 48px;">
-                            <div class="question-text">A train leaves London at 08:45 and arrives in Manchester at 11:20. How long did the journey take in minutes?</div>
-                        </div>
-                        
-                        <div class="options-horizontal">
-                            <div class="option-item" onclick="selectOption(this, '2')"><div class="option-letter">A</div><div class="option-text">135 minutes</div></div>
-                            <div class="option-item" onclick="selectOption(this, '2')"><div class="option-letter">B</div><div class="option-text">145 minutes</div></div>
-                            <div class="option-item" onclick="selectOption(this, '2')"><div class="option-letter">C</div><div class="option-text">155 minutes</div></div>
-                            <div class="option-item" onclick="selectOption(this, '2')"><div class="option-letter">D</div><div class="option-text">165 minutes</div></div>
-                            <div class="option-item" onclick="selectOption(this, '2')"><div class="option-letter">E</div><div class="option-text">175 minutes</div></div>
-                        </div>
+                        <div class="question-box centered" style="margin-bottom: 48px;"></div>
+                        <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 3: Split Screen (Image Left, Options Right) -->
             <div class="layout-wrapper" id="layout-3">
                 <div class="panel-left" style="background: var(--wl-bg-main);">
-                    <div class="graph-box">
-                        [ Placeholder for Graph / Data Table Image ]
-                    </div>
+                    <div class="graph-box"></div>
                 </div>
                 <div class="panel-right">
                     <div class="question-content-split">
-                        <div class="question-box">
-                            <div class="question-text">Using the chart on the left, how many more students chose blue as their favourite colour compared to green?</div>
-                        </div>
-                        <div class="options-vertical">
-                            <div class="option-item" onclick="selectOption(this, '3')"><div class="option-letter">A</div><div class="option-text">4</div></div>
-                            <div class="option-item" onclick="selectOption(this, '3')"><div class="option-letter">B</div><div class="option-text">6</div></div>
-                            <div class="option-item" onclick="selectOption(this, '3')"><div class="option-letter">C</div><div class="option-text">8</div></div>
-                            <div class="option-item" onclick="selectOption(this, '3')"><div class="option-letter">D</div><div class="option-text">10</div></div>
-                            <div class="option-item" onclick="selectOption(this, '3')"><div class="option-letter">E</div><div class="option-text">12</div></div>
-                        </div>
+                        <div class="question-box"></div>
+                        <div class="options-vertical"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 4: Single View (NVR Image Options) -->
             <div class="layout-wrapper" id="layout-4">
                 <div class="panel-single">
                     <div class="question-content-single">
                         <div class="question-box centered" style="margin-bottom: 16px;">
-                            <div class="question-text">Which of the figures below completes the sequence?</div>
+                            <div class="question-text"></div>
                         </div>
-                        
-                        <div class="diagram-box" style="background: none; border: none; min-height: 150px;">
-                            <div style="width: 400px; height: 120px; background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--wl-text-muted);">
-                                [ Sequence Prompt Image ]
-                            </div>
-                        </div>
-
-                        <div class="options-horizontal">
-                            <div class="option-item nvr-box" onclick="selectOption(this, '4')">
-                                <div class="nvr-img-placeholder">Img A</div>
-                                <div class="option-letter">A</div>
-                            </div>
-                            <div class="option-item nvr-box" onclick="selectOption(this, '4')">
-                                <div class="nvr-img-placeholder">Img B</div>
-                                <div class="option-letter">B</div>
-                            </div>
-                            <div class="option-item nvr-box" onclick="selectOption(this, '4')">
-                                <div class="nvr-img-placeholder">Img C</div>
-                                <div class="option-letter">C</div>
-                            </div>
-                            <div class="option-item nvr-box" onclick="selectOption(this, '4')">
-                                <div class="nvr-img-placeholder">Img D</div>
-                                <div class="option-letter">D</div>
-                            </div>
-                            <div class="option-item nvr-box" onclick="selectOption(this, '4')">
-                                <div class="nvr-img-placeholder">Img E</div>
-                                <div class="option-letter">E</div>
-                            </div>
-                        </div>
+                        <div class="diagram-box"></div>
+                        <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 5: Single View (Reference String/Alphabet at Top) -->
             <div class="layout-wrapper" id="layout-5">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="alphabet-strip">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
-                        
+                        <div class="alphabet-strip"></div>
                         <div class="question-box centered" style="margin-bottom: 40px;">
-                            <div class="question-text">Find the letters that complete the sequence.<br><br>AB is to CD as EF is to [ ? ]</div>
+                            <div class="question-text"></div>
                         </div>
-                        
-                        <div class="options-horizontal">
-                            <div class="option-item" onclick="selectOption(this, '5')"><div class="option-letter">A</div><div class="option-text">GH</div></div>
-                            <div class="option-item" onclick="selectOption(this, '5')"><div class="option-letter">B</div><div class="option-text">HI</div></div>
-                            <div class="option-item" onclick="selectOption(this, '5')"><div class="option-letter">C</div><div class="option-text">FG</div></div>
-                            <div class="option-item" onclick="selectOption(this, '5')"><div class="option-letter">D</div><div class="option-text">IJ</div></div>
-                            <div class="option-item" onclick="selectOption(this, '5')"><div class="option-letter">E</div><div class="option-text">JK</div></div>
-                        </div>
+                        <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 6: Single View (Compound Groups) -->
             <div class="layout-wrapper" id="layout-6">
                 <div class="panel-single">
                     <div class="question-content-single">
                         <div class="question-box centered" style="margin-bottom: 40px;">
-                            <div class="question-text">Select one word from the first group and one word from the second group to make a new, compound word.</div>
+                            <div class="question-text"></div>
                         </div>
-                        
-                        <div class="multi-select-container">
-                            <div class="options-group" id="group-1">
-                                <div class="option-item" onclick="selectGroupedOption(this, 'group-1')"><div class="option-letter">A</div><div class="option-text">fire</div></div>
-                                <div class="option-item" onclick="selectGroupedOption(this, 'group-1')"><div class="option-letter">B</div><div class="option-text">water</div></div>
-                                <div class="option-item" onclick="selectGroupedOption(this, 'group-1')"><div class="option-letter">C</div><div class="option-text">earth</div></div>
-                            </div>
-                            
-                            <div class="options-group" id="group-2">
-                                <div class="option-item" onclick="selectGroupedOption(this, 'group-2')"><div class="option-letter">D</div><div class="option-text">fly</div></div>
-                                <div class="option-item" onclick="selectGroupedOption(this, 'group-2')"><div class="option-letter">E</div><div class="option-text">swim</div></div>
-                                <div class="option-item" onclick="selectGroupedOption(this, 'group-2')"><div class="option-letter">F</div><div class="option-text">walk</div></div>
-                            </div>
-                        </div>
+                        <div class="multi-select-container"></div>
                     </div>
                 </div>
             </div>
@@ -422,8 +347,10 @@
 
     </div>
 
+    <!-- 1. Load Supabase Library First -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- 2. All App Logic -->
     <script>
         // --- SUPABASE INITIALIZATION ---
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
@@ -445,7 +372,7 @@
         let endTime;
         let timerInterval;
         let currentQuestion = 1;
-        const totalQuestions = 6; // Change this to 40 later!
+        let totalQuestions = 0; // Will be set dynamically after fetch
         const answersTracker = {};
 
         // --- FETCH DATA ---
@@ -468,6 +395,8 @@
             }
 
             questionsList = data;
+            totalQuestions = questionsList.length;
+            document.getElementById('total-q-count').innerText = totalQuestions;
             return true;
         }
 
@@ -477,7 +406,6 @@
             startBtn.innerText = "Loading Exam...";
             startBtn.disabled = true;
 
-            // Wait for Supabase to pull the questions
             const success = await fetchQuestions();
             
             if (!success) {
@@ -493,10 +421,7 @@
             updateTimer();
             timerInterval = setInterval(updateTimer, 1000);
 
-            // Generate the jump grid dynamically based on fetched questions
             generateNavGrid();
-
-            // Load the first question
             updateUI(); 
         }
 
@@ -505,14 +430,15 @@
             document.getElementById('current-q-num').innerText = currentQuestion;
             document.getElementById('progress-bar').style.width = `${(currentQuestion / totalQuestions) * 100}%`;
 
+            // Hide all layouts
             for(let i = 1; i <= 6; i++) {
                 document.getElementById('layout-' + i).classList.remove('active');
             }
             
-            // Inject the data from Supabase before showing the layout!
+            // Inject and show correct layout
             renderQuestionData();
 
-            // Next / Submit button state
+            // Setup buttons
             const nextBtn = document.querySelector('.btn-next');
             if (currentQuestion === totalQuestions) {
                 nextBtn.innerText = "Submit Exam";
@@ -531,7 +457,7 @@
                 if (itemQNum == currentQuestion) {
                     item.classList.add('current');
                     item.classList.remove('answered');
-                } else if (answersTracker[itemQNum]) {
+                } else if (isQuestionAnswered(itemQNum)) {
                     item.classList.add('answered');
                 }
             });
@@ -539,63 +465,178 @@
 
         function renderQuestionData() {
             const currentData = questionsList[currentQuestion - 1]; 
-            if (!currentData) return; // Failsafe
+            if (!currentData) return;
 
-            const layoutId = currentData.layout_template;
+            const layoutId = currentData.layout_template; // Must be "1" through "6"
             const qData = currentData.question_data; 
+            const container = document.getElementById('layout-' + layoutId);
+            
+            if (!container) return console.error("Missing layout template: " + layoutId);
+            container.classList.add('active');
 
-            // Make the correct layout visible
-            document.getElementById('layout-' + layoutId).classList.add('active');
+            // --- LAYOUT 1: Split Screen Reading ---
+            if (layoutId === '1') {
+                container.querySelector('.passage-title').innerHTML = qData.passage_title || '';
+                container.querySelector('.passage-author').innerHTML = qData.passage_author || '';
+                container.querySelector('.passage-text').innerHTML = qData.passage_text || '';
+                
+                container.querySelector('.question-quote').innerHTML = qData.question_quote || '';
+                container.querySelector('.question-quote').style.display = qData.question_quote ? 'block' : 'none';
+                container.querySelector('.question-text').innerHTML = qData.question_text || '';
+                
+                renderStandardOptions(container, qData, layoutId, 'options-vertical');
+            }
 
-            // Example: Injecting data for Layout 2
-            if (layoutId === '2') {
-                const container = document.getElementById('layout-2');
+            // --- LAYOUT 2: Standard Single Column (MCQ, SPAG, Cloze, Multi-select, Image+MCQ) ---
+            else if (layoutId === '2') {
+                let textHtml = '';
+                if (qData.instruction_text) textHtml += `<div style="font-size: 1.1rem; color: #555; margin-bottom: 16px;">${qData.instruction_text}</div>`;
+                if (qData.spag_sentence) textHtml += `<div style="font-size: 1.3rem; margin-bottom: 24px;">${qData.spag_sentence}</div>`;
+                if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.3rem; margin-bottom: 24px;">${qData.cloze_sentence}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                if (qData.question_image_url) textHtml += `<img src="${qData.question_image_url}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
+                
+                container.querySelector('.question-box').innerHTML = textHtml;
+                renderStandardOptions(container, qData, layoutId, 'options-horizontal');
+            }
+
+            // --- LAYOUT 3: Split Screen (Image Left, Options Right) ---
+            else if (layoutId === '3') {
+                container.querySelector('.graph-box').innerHTML = `<img src="${qData.side_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                let textHtml = '';
+                if (qData.instruction_text) textHtml += `<div style="font-size: 1.1rem; color: #555; margin-bottom: 16px;">${qData.instruction_text}</div>`;
+                textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                container.querySelector('.question-box').innerHTML = textHtml;
+                
+                renderStandardOptions(container, qData, layoutId, 'options-vertical');
+            }
+
+            // --- LAYOUT 4: NVR (Image Options) ---
+            else if (layoutId === '4') {
                 container.querySelector('.question-text').innerHTML = qData.question_text;
-
+                container.querySelector('.diagram-box').innerHTML = `<img src="${qData.question_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                
                 const optionsContainer = container.querySelector('.options-horizontal');
-                optionsContainer.innerHTML = ''; 
-
+                optionsContainer.innerHTML = '';
                 qData.options.forEach(opt => {
-                    const isSelected = answersTracker[currentQuestion] === opt.letter ? 'selected' : '';
+                    const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
                     optionsContainer.innerHTML += `
-                        <div class="option-item ${isSelected}" onclick="selectOption(this, '2', '${opt.letter}')">
+                        <div class="option-item nvr-box ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', 1)">
+                            <div class="nvr-img-placeholder" style="background: url('${opt.image_url}') center/contain no-repeat; background-color: var(--wl-white);"></div>
                             <div class="option-letter">${opt.letter}</div>
-                            <div class="option-text">${opt.text}</div>
-                        </div>
-                    `;
+                        </div>`;
                 });
             }
-            // Add your other layout rendering logic here...
+
+            // --- LAYOUT 5: Reference Text + Question ---
+            else if (layoutId === '5') {
+                container.querySelector('.alphabet-strip').innerHTML = qData.reference_text;
+                container.querySelector('.question-text').innerHTML = qData.question_text;
+                renderStandardOptions(container, qData, layoutId, 'options-horizontal');
+            }
+
+            // --- LAYOUT 6: Compound Words / Grouped Options ---
+            else if (layoutId === '6') {
+                container.querySelector('.question-text').innerHTML = qData.question_text;
+                const msContainer = container.querySelector('.multi-select-container');
+                msContainer.innerHTML = '';
+
+                qData.option_groups.forEach(group => {
+                    let groupHtml = `<div class="options-group" id="${group.group_id}">`;
+                    group.options.forEach(opt => {
+                        const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
+                        groupHtml += `
+                            <div class="option-item ${isSelected}" onclick="selectGroupedOption(this, '${group.group_id}', '${opt.letter}')">
+                                <div class="option-letter">${opt.letter}</div>
+                                <div class="option-text">${opt.text}</div>
+                            </div>`;
+                    });
+                    groupHtml += `</div>`;
+                    msContainer.innerHTML += groupHtml;
+                });
+            }
+        }
+
+        function renderStandardOptions(container, qData, layoutId, defaultClass) {
+            let optionsContainer = container.querySelector('.options-horizontal') || container.querySelector('.options-vertical');
+            optionsContainer.className = defaultClass; 
+            optionsContainer.innerHTML = '';
+            const maxSelections = qData.selection_count || 1; // Used for "Choose Two" questions
+
+            qData.options.forEach(opt => {
+                const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
+                optionsContainer.innerHTML += `
+                    <div class="option-item ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', ${maxSelections})">
+                        <div class="option-letter">${opt.letter}</div>
+                        <div class="option-text">${opt.text}</div>
+                    </div>`;
+            });
         }
 
         // --- SELECTION & NAVIGATION ---
-        function selectOption(element, layoutId, chosenLetter) {
-            const container = document.getElementById('layout-' + layoutId);
-            const options = container.querySelectorAll('.option-item');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            
-            answersTracker[currentQuestion] = chosenLetter;
-            
+        function checkIsSelected(letter) {
+            const currentAns = answersTracker[currentQuestion];
+            if (!currentAns) return false;
+            if (Array.isArray(currentAns)) return currentAns.includes(letter);
+            return currentAns === letter;
+        }
+
+        function selectOption(element, layoutId, chosenLetter, maxSelections = 1) {
+            if (maxSelections === 1) {
+                // Standard Single Select Logic
+                const container = document.getElementById('layout-' + layoutId);
+                const options = container.querySelectorAll('.option-item');
+                options.forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+                answersTracker[currentQuestion] = chosenLetter;
+            } else {
+                // Multi-Select Logic (Format 9)
+                if (!answersTracker[currentQuestion]) answersTracker[currentQuestion] = [];
+                let currentAns = answersTracker[currentQuestion];
+
+                if (currentAns.includes(chosenLetter)) {
+                    answersTracker[currentQuestion] = currentAns.filter(l => l !== chosenLetter);
+                    element.classList.remove('selected');
+                } else if (currentAns.length < maxSelections) {
+                    answersTracker[currentQuestion].push(chosenLetter);
+                    element.classList.add('selected');
+                }
+            }
+
+            // Sync navigation grid status
             const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
-            if (gridItem && !gridItem.classList.contains('current')) {
+            if (isQuestionAnswered(currentQuestion) && gridItem && !gridItem.classList.contains('current')) {
                 gridItem.classList.add('answered');
+            } else if (!isQuestionAnswered(currentQuestion) && gridItem) {
+                gridItem.classList.remove('answered');
             }
         }
 
-        // For Layout 6 (Multi-Select)
-        function selectGroupedOption(element, groupId) {
+        function selectGroupedOption(element, groupId, chosenLetter) {
             const groupContainer = document.getElementById(groupId);
             const options = groupContainer.querySelectorAll('.option-item');
             options.forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
-            
-            const totalGroupsSelected = document.querySelectorAll('#layout-6 .option-item.selected').length;
-            if (totalGroupsSelected >= 2) {
-                answersTracker[currentQuestion] = "completed"; // Update this logic later
+
+            // Find all active selections in this layout
+            const allSelected = document.querySelectorAll('#layout-6 .option-item.selected');
+            const selectedLetters = Array.from(allSelected).map(el => el.querySelector('.option-letter').innerText);
+            answersTracker[currentQuestion] = selectedLetters;
+
+            if (selectedLetters.length >= 2) {
                 const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
                 if (gridItem && !gridItem.classList.contains('current')) gridItem.classList.add('answered');
             }
+        }
+
+        function isQuestionAnswered(qNum) {
+            const currentData = questionsList[qNum - 1];
+            const maxSelections = currentData?.question_data?.selection_count || (currentData?.layout_template === '6' ? 2 : 1);
+            const currentAns = answersTracker[qNum];
+
+            if (!currentAns) return false;
+            if (maxSelections === 1) return currentAns !== '';
+            return Array.isArray(currentAns) && currentAns.length === maxSelections;
         }
 
         function nextQuestion() {
@@ -650,8 +691,8 @@
                 return window.location.href = 'login.html';
             }
 
-            // Calculate actual score based on answersTracker vs questionsList later!
-            const fakeScore = Math.floor(Math.random() * (40 - 25 + 1)) + 25; 
+            // Calculate actual score (prototype fake calculation for now)
+            const fakeScore = Math.floor(Math.random() * (totalQuestions - 25 + 1)) + 25; 
 
             const { error } = await supabaseClient
                 .from('scores')
@@ -659,7 +700,7 @@
                     user_id: session.user.id,
                     week_number: 3, 
                     raw_score: fakeScore,
-                    total_questions: 40
+                    total_questions: totalQuestions
                 }]);
 
             if (error) {
@@ -681,10 +722,9 @@
         
         function generateNavGrid() {
             const gridContainer = document.getElementById('q-grid');
-            gridContainer.innerHTML = ''; // Clear it out first
+            gridContainer.innerHTML = ''; 
             
-            // Generate grid based on actual questions loaded from Supabase
-            for (let i = 1; i <= questionsList.length; i++) {
+            for (let i = 1; i <= totalQuestions; i++) {
                 const box = document.createElement('div');
                 box.className = 'grid-item';
                 box.setAttribute('data-q', i); 
