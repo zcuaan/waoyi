@@ -143,10 +143,6 @@
 
         .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
 
-        .blur-container { position: relative; }
-        .blur-content { filter: blur(6px); opacity: 0.5; pointer-events: none; user-select: none; }
-        .Reveal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
-
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
             .active-week-card { flex-direction: column; align-items: flex-start; gap: 24px; }
@@ -253,7 +249,6 @@
         </div>
     </div>
 
-    <!-- UPGRADE MODAL -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -274,7 +269,6 @@
         </div>
     </div>
 
-    <!-- UNLOCKED REPORT MODAL -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
@@ -298,7 +292,6 @@
                     <div class="tab" onclick="switchTab('tab-nvr', this)">NVR</div>
                 </div>
 
-                <!-- SUMMARY TAB -->
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         <div style="text-align: center; margin-bottom: 32px;">
@@ -331,59 +324,82 @@
                     </div>
                 </div>
 
-                <!-- ENGLISH TAB -->
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabEngRaw">0 / 10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabEngAcc">0%</strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong>TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabEngPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
+                    </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
                     <div class="table-responsive">
                         <table class="report-table">
                             <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
-                            <tbody><!-- Dynamic Rows Go Here --></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">TBD</span></div>
                 </div>
 
-                <!-- MATHS TAB -->
                 <div class="report-content" id="tab-maths">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabMathRaw">0 / 10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabMathAcc">0%</strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong>TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabMathPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
+                    </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
                     <div class="table-responsive">
                         <table class="report-table">
                             <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
-                            <tbody><!-- Dynamic Rows Go Here --></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">TBD</span></div>
                 </div>
 
-                <!-- VR TAB -->
                 <div class="report-content" id="tab-vr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabVrRaw">0 / 10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabVrAcc">0%</strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong>TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabVrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
+                    </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
                     <div class="table-responsive">
                         <table class="report-table">
                             <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
-                            <tbody><!-- Dynamic Rows Go Here --></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">TBD</span></div>
                 </div>
 
-                <!-- NVR TAB -->
                 <div class="report-content" id="tab-nvr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabNvrRaw">0 / 10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabNvrAcc">0%</strong></div>
+                        <div class="stat-card"><span>Subject Rank</span><strong>TBD <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
+                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabNvrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
+                    </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
                     <div class="table-responsive">
                         <table class="report-table">
                             <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
-                            <tbody><!-- Dynamic Rows Go Here --></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">TBD</span></div>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- UI Toggles -->
     <script>
         function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
         function closeModal(modalId) {
@@ -395,7 +411,6 @@
         }
         function switchTab(tabId, element) {
             if (element.classList.contains('locked')) return; 
-            
             const contents = document.querySelectorAll('.report-content');
             contents.forEach(content => content.classList.remove('active'));
             const tabs = document.querySelectorAll('.report-tabs .tab:not(.locked)');
@@ -405,13 +420,10 @@
             element.classList.add('active');
         }
         window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('active');
-            }
+            if (event.target.classList.contains('modal-overlay')) event.target.classList.remove('active');
         }
     </script>
 
-    <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
@@ -559,6 +571,7 @@
                 if (weekScore) {
                     const hasGlobalRank = userProfile?.has_rank_pass;
                     const hasGlobalReport = userProfile?.has_review_pass;
+                    
                     const canSeeRank = hasGlobalRank || weekScore.rank_unlocked;
                     const canSeeReport = hasGlobalReport || weekScore.report_unlocked;
 
@@ -610,10 +623,11 @@
             document.getElementById('reportWeekNum').innerText = weekNum;
             document.getElementById('upgradeWeekNum').innerText = weekNum;
             
-            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score}/${scoreData.total_questions}`;
+            // Populating Summary Tab
+            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
             document.getElementById('modalSummaryRank').innerText = rankPercentile;
 
-            // Fetch original questions for this exact week to build the table!
+            // Fetch original questions for this exact week to build the table
             const { data: qData, error } = await supabaseClient
                 .from('questions')
                 .select('question_number, topic_tag, correct_answer')
@@ -650,7 +664,7 @@
                     `;
 
                     const tLower = topic.toLowerCase();
-                    if (tLower.includes('english') || tLower.includes('spag') || tLower.includes('comprehension') || tLower.includes('spelling') || tLower.includes('grammar')) {
+                    if (tLower.includes('english') || tLower.includes('spag') || tLower.includes('comprehension') || tLower.includes('spelling') || tLower.includes('grammar') || tLower.includes('cloze')) {
                         engRows += rowHtml;
                     } else if (tLower.includes('math')) {
                         mathRows += rowHtml;
@@ -667,10 +681,28 @@
                 document.querySelector('#tab-nvr tbody').innerHTML = nvrRows || '<tr><td colspan="5" style="text-align:center; color:#999;">No questions found.</td></tr>';
             }
 
+            // Summary Modal Subject Raw Scores
             document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}`;
             document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}`;
             document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}`;
             document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0}`;
+
+            // Inject Data into the specific Subject Stat Cards
+            document.getElementById('tabEngRaw').innerText = `${scoreData.english_score || 0} / 10`;
+            document.getElementById('tabEngAcc').innerText = `${Math.round(((scoreData.english_score || 0) / 10) * 100)}%`;
+            document.getElementById('tabEngPerc').innerText = `Top ${rankPercentile}%`;
+
+            document.getElementById('tabMathRaw').innerText = `${scoreData.maths_score || 0} / 10`;
+            document.getElementById('tabMathAcc').innerText = `${Math.round(((scoreData.maths_score || 0) / 10) * 100)}%`;
+            document.getElementById('tabMathPerc').innerText = `Top ${rankPercentile}%`;
+
+            document.getElementById('tabVrRaw').innerText = `${scoreData.vr_score || 0} / 10`;
+            document.getElementById('tabVrAcc').innerText = `${Math.round(((scoreData.vr_score || 0) / 10) * 100)}%`;
+            document.getElementById('tabVrPerc').innerText = `Top ${rankPercentile}%`;
+
+            document.getElementById('tabNvrRaw').innerText = `${scoreData.nvr_score || 0} / 10`;
+            document.getElementById('tabNvrAcc').innerText = `${Math.round(((scoreData.nvr_score || 0) / 10) * 100)}%`;
+            document.getElementById('tabNvrPerc').innerText = `Top ${rankPercentile}%`;
 
             openModal('report-modal');
         }
