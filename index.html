@@ -835,25 +835,6 @@
     </section>
 
     <!-- The Javascript that acts as the "Invisible Backpack" -->
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            // 1. Stop the page from reloading
-            event.preventDefault();
-
-            // 2. Grab the data they typed in
-            const email = document.getElementById('emailInput').value; 
-            const birthMonth = document.getElementById('birthMonth').value; 
-            const birthYear = document.getElementById('birthYear').value; 
-
-            // 3. Put it in the browser's invisible backpack
-            sessionStorage.setItem('tempEmail', email);
-            sessionStorage.setItem('tempMonth', birthMonth);
-            sessionStorage.setItem('tempYear', birthYear);
-
-            // 4. Shoot them over to the setup page
-            window.location.href = 'setup-profile.html';
-        });
-    </script>
 
     <section class="seo-intro">
         <div class="container">
