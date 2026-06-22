@@ -78,6 +78,11 @@
         .detail-val { font-size: 1.8rem; font-weight: 800; color: var(--wl-black); margin-bottom: 16px; line-height: 1.1; flex-grow: 1; }
         .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); margin-bottom: 16px; font-weight: 500; flex-grow: 1; }
 
+        /* --- UPGRADES --- */
+        .bundle-wrapper { background-color: var(--wl-black); margin-bottom: 0; }
+        .bundle-card { background-color: var(--wl-white); }
+        .bundle-card h3 { color: var(--wl-black); margin-bottom: 12px; font-size: 1.5rem; }
+
         /* --- MODALS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 34, 39, 0.8); backdrop-filter: blur(4px); z-index: 100; display: none; justify-content: center; align-items: center; padding: 20px; overflow-y: auto;}
         .modal-overlay.active { display: flex; }
@@ -185,18 +190,18 @@
 
         <h2 class="section-title">Want the full summer unlocked?</h2>
         <div class="grid-2">
-            <div class="angled-wrapper bundle-wrapper" style="background-color: var(--wl-black);">
-                <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column; background-color: var(--wl-white);">
-                    <h3 style="margin-bottom: 12px; font-size: 1.5rem; color: var(--wl-black);">Rank Pass (£19.99)</h3>
+            <div class="angled-wrapper bundle-wrapper">
+                <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
+                    <h3>Rank Pass (£19.99)</h3>
                     <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.</p>
                     <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 24px; font-style: italic;">Weekly rankings can also be revealed individually for £3.99 each.</p>
                     <button class="btn btn-action btn-square" style="padding: 10px 24px; font-size: 1.05rem; margin-top: auto;">Upgrade to Rank Pass</button>
                 </div>
             </div>
 
-            <div class="angled-wrapper bundle-wrapper" style="background-color: var(--wl-black);">
-                <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column; background-color: var(--wl-white);">
-                    <h3 style="margin-bottom: 12px; font-size: 1.5rem; color: var(--wl-black);">Review Pass (£99)</h3>
+            <div class="angled-wrapper bundle-wrapper">
+                <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
+                    <h3>Review Pass (£99)</h3>
                     <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 review packs, including the papers, answers and explanations.</p>
                     <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 24px; font-style: italic;">Weekly review packs can also be bought individually for £19.99 each.</p>
                     <button class="btn btn-action btn-square" style="padding: 10px 24px; font-size: 1.05rem; margin-top: auto;">Upgrade to Review Pass</button>
@@ -294,7 +299,7 @@
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabEngPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
-                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody id="body-english"></tbody></table></div>
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusEng" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
@@ -307,7 +312,7 @@
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabMathPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
-                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody id="body-maths"></tbody></table></div>
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusMath" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
@@ -320,7 +325,7 @@
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabVrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
-                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody id="body-vr"></tbody></table></div>
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusVr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
@@ -333,7 +338,7 @@
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabNvrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
                     </div>
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
-                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody></tbody></table></div>
+                    <div class="table-responsive"><table class="report-table"><thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead><tbody id="body-nvr"></tbody></table></div>
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusNvr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
@@ -366,7 +371,7 @@
         let userScores = [];
         let userProfile = null;
         let activeWeekSelection = 1;
-        const COHORT_SIZE = 512; // Base prototype cohort size
+        const COHORT_SIZE = 512; 
 
         document.getElementById('logoutBtn').addEventListener('click', async function(e) {
             e.preventDefault(); await supabaseClient.auth.signOut(); window.location.href = 'index.html'; 
@@ -383,6 +388,10 @@
 
         const ageAdjustments = {"6Y 2M": 0.25, "6Y 3M": 0.25, "6Y 4M": 0.24, "6Y 5M": 0.24, "6Y 6M": 0.23, "6Y 7M": 0.23, "6Y 8M": 0.22, "6Y 9M": 0.22, "6Y 10M": 0.21, "6Y 11M": 0.21, "7Y 0M": 0.2, "7Y 1M": 0.2, "7Y 2M": 0.19, "7Y 3M": 0.19, "7Y 4M": 0.19, "7Y 5M": 0.18, "7Y 6M": 0.18, "7Y 7M": 0.17, "7Y 8M": 0.17, "7Y 9M": 0.16, "7Y 10M": 0.16, "7Y 11M": 0.15, "8Y 0M": 0.15, "8Y 1M": 0.14, "8Y 2M": 0.14, "8Y 3M": 0.13, "8Y 4M": 0.13, "8Y 5M": 0.12, "8Y 6M": 0.12, "8Y 7M": 0.11, "8Y 8M": 0.11, "8Y 9M": 0.1, "8Y 10M": 0.1, "8Y 11M": 0.09, "9Y 0M": 0.09, "9Y 1M": 0.08, "9Y 2M": 0.08, "9Y 3M": 0.07, "9Y 4M": 0.07, "9Y 5M": 0.06, "9Y 6M": 0.06, "9Y 7M": 0.05, "9Y 8M": 0.05, "9Y 9M": 0.04, "9Y 10M": 0.04, "9Y 11M": 0.03, "10Y 0M": 0.03, "10Y 1M": 0.02, "10Y 2M": 0.02, "10Y 3M": 0.01, "10Y 4M": 0.01, "10Y 5M": 0.0, "10Y 6M": 0.0, "10Y 7M": -0.01, "10Y 8M": -0.01, "10Y 9M": -0.02, "10Y 10M": -0.02, "10Y 11M": -0.03, "11Y 0M": -0.03, "11Y 1M": -0.04, "11Y 2M": -0.05, "11Y 3M": -0.05, "11Y 4M": -0.06, "11Y 5M": -0.06, "11Y 6M": -0.07, "11Y 7M": -0.07, "11Y 8M": -0.08, "11Y 9M": -0.08, "11Y 10M": -0.09, "11Y 11M": -0.09, "12Y 0M": -0.1, "12Y 1M": -0.1, "12Y 2M": -0.11, "12Y 3M": -0.11, "12Y 4M": -0.12, "12Y 5M": -0.12, "12Y 6M": -0.13, "12Y 7M": -0.13, "12Y 8M": -0.13, "12Y 9M": -0.14, "12Y 10M": -0.14, "12Y 11M": -0.15, "13Y 0M": -0.15, "13Y 1M": -0.16, "13Y 2M": -0.16, "13Y 3M": -0.17, "13Y 4M": -0.17, "13Y 5M": -0.18, "13Y 6M": -0.18, "13Y 7M": -0.19, "13Y 8M": -0.19, "13Y 9M": -0.2, "13Y 10M": -0.2, "13Y 11M": -0.21, "14Y 0M": -0.21, "14Y 1M": -0.22, "14Y 2M": -0.22, "14Y 3M": -0.23, "14Y 4M": -0.23, "14Y 5M": -0.24, "14Y 6M": -0.24, "14Y 7M": -0.25};
         const monthMap = {"january": 0, "jan": 0, "1": 0, "01": 0, "february": 1, "feb": 1, "2": 1, "02": 1, "march": 2, "mar": 2, "3": 2, "03": 2, "april": 3, "apr": 3, "4": 3, "04": 3, "may": 4, "5": 4, "05": 4, "june": 5, "jun": 5, "6": 5, "06": 5, "july": 6, "jul": 6, "7": 6, "07": 6, "august": 7, "aug": 7, "8": 7, "08": 7, "september": 8, "sep": 8, "9": 8, "09": 8, "october": 9, "oct": 9, "10": 9, "november": 10, "nov": 10, "11": 10, "december": 11, "dec": 11, "12": 11};
+
+        // UI SAFETY HELPER: Guarantees Javascript never crashes if a UI element is missing
+        const setTxt = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
+        const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
 
         function calculateAgeString(bMonth, bYear, examDate) {
             if (!bMonth || !bYear) return "10Y 5M"; 
@@ -423,14 +432,18 @@
             }
 
             if (isOpen) {
-                titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⚡</span> Week ${cW} 11+ Mock Exam is open`;
-                btnEl.innerText = `Start Week ${cW} Mock`;
-                btnEl.disabled = false; btnEl.style.opacity = "1"; btnEl.style.cursor = "pointer";
-                btnEl.onclick = function() { window.location.href = 'mock-test.html'; };
+                if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⚡</span> Week ${cW} 11+ Mock Exam is open`;
+                if(btnEl) {
+                    btnEl.innerText = `Start Week ${cW} Mock`;
+                    btnEl.disabled = false; btnEl.style.opacity = "1"; btnEl.style.cursor = "pointer";
+                    btnEl.onclick = function() { window.location.href = 'mock-test.html'; };
+                }
             } else {
-                titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⏳</span> Week ${cW} opens Friday at 4 PM`;
-                btnEl.innerText = `Week ${cW} Locked`;
-                btnEl.disabled = true; btnEl.style.opacity = "0.6"; btnEl.style.cursor = "not-allowed";
+                if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⏳</span> Week ${cW} opens Friday at 4 PM`;
+                if(btnEl) {
+                    btnEl.innerText = `Week ${cW} Locked`;
+                    btnEl.disabled = true; btnEl.style.opacity = "0.6"; btnEl.style.cursor = "not-allowed";
+                }
             }
         }
 
@@ -442,19 +455,21 @@
 
             if (profileData) {
                 userProfile = profileData;
-                if (profileData.child_first_name) document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
+                setTxt('childNameDisplay', profileData.child_first_name || 'Student');
+                
                 const badge = document.getElementById('accountBadge');
-                if (profileData.has_review_pass) {
-                    badge.innerText = 'REVIEW PASS ACTIVE'; badge.style.backgroundColor = 'var(--wl-nyoro-aqua)'; badge.style.color = 'var(--wl-nyoro-navy)';
-                } else if (profileData.has_rank_pass) {
-                    badge.innerText = 'RANK PASS ACTIVE'; badge.style.backgroundColor = 'var(--wl-teal)'; badge.style.color = 'var(--wl-white)';
+                if (badge) {
+                    if (profileData.has_review_pass) {
+                        badge.innerText = 'REVIEW PASS ACTIVE'; badge.style.backgroundColor = 'var(--wl-nyoro-aqua)'; badge.style.color = 'var(--wl-nyoro-navy)';
+                    } else if (profileData.has_rank_pass) {
+                        badge.innerText = 'RANK PASS ACTIVE'; badge.style.backgroundColor = 'var(--wl-teal)'; badge.style.color = 'var(--wl-white)';
+                    }
                 }
             }
 
             const { data: scoreData } = await supabaseClient.from('scores').select('*').eq('user_id', session.user.id);
             userScores = scoreData || [];
             
-            // Set active selection to the current open week, or the highest completed week
             let foundCurrent = false;
             for (let i = 1; i <= 6; i++) {
                 if (getWeekState(i) === 'current') { activeWeekSelection = i; foundCurrent = true; break; }
@@ -469,6 +484,7 @@
         // --- PATHWAY & DETAIL RENDERING ---
         function renderPath() {
             const grid = document.getElementById('path-grid');
+            if(!grid) return;
             grid.innerHTML = '';
 
             for (let i = 1; i <= 6; i++) {
@@ -508,6 +524,8 @@
 
         function renderDetailPanel(weekNum) {
             const panel = document.getElementById('detail-panel');
+            if(!panel) return;
+            
             const state = getWeekState(weekNum);
             const score = userScores.find(s => s.week_number === weekNum);
             const sched = schedule[weekNum - 1];
@@ -567,15 +585,15 @@
 
         // --- UPGRADE MODAL TRIGGER ---
         function triggerUpgradeModal(weekNum, type) {
-            document.getElementById('upgradeWeekNum').innerText = weekNum;
+            setTxt('upgradeWeekNum', weekNum);
             if (type === 'rank') {
-                document.getElementById('upgradeTitle').innerText = "Reveal Rank";
-                document.getElementById('upgradePrice').innerText = "£3.99";
-                document.getElementById('upgradeDesc').innerHTML = `<p style="margin-bottom: 24px;">See exactly where your child places against the cohort this week.</p>`;
+                setTxt('upgradeTitle', "Reveal Rank");
+                setTxt('upgradePrice', "£3.99");
+                setHtml('upgradeDesc', `<p style="margin-bottom: 24px;">See exactly where your child places against the cohort this week.</p>`);
             } else {
-                document.getElementById('upgradeTitle').innerText = "Get Review Pack";
-                document.getElementById('upgradePrice').innerText = "£19.99";
-                document.getElementById('upgradeDesc').innerHTML = `<ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);"><li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks & Focus areas</li></ul>`;
+                setTxt('upgradeTitle', "Get Review Pack");
+                setTxt('upgradePrice', "£19.99");
+                setHtml('upgradeDesc', `<ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);"><li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li><li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks & Focus areas</li></ul>`);
             }
             openModal('upgrade-modal');
         }
@@ -591,8 +609,10 @@
         function calculateSubjectMetrics(subjScore, subjTot, overallAcc, rankPercentile) {
             if (subjTot === 0) return { acc: 0, rankP: 'N/A', rankNum: 'N/A' };
             const subjAcc = subjScore / subjTot;
-            // Shift their overall rank slightly based on how much better/worse this subject is vs their average
-            let p = Math.max(1, Math.min(99, rankPercentile - Math.round((subjAcc - overallAcc) * 50)));
+            
+            // Protect against NaN
+            const safePercentile = Number(rankPercentile) || 50;
+            let p = Math.max(1, Math.min(99, safePercentile - Math.round((subjAcc - overallAcc) * 50)));
             let rNum = Math.max(1, Math.round(COHORT_SIZE * (p / 100)));
             return { acc: Math.round(subjAcc * 100), rankP: p, rankNum: rNum };
         }
@@ -602,29 +622,37 @@
             const scoreData = userScores.find(s => s.week_number === weekNum);
             if (!scoreData) return;
 
-            document.getElementById('reportWeekNum').innerText = weekNum;
-            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
-            document.getElementById('modalSummaryRank').innerText = rankPercentile;
+            setTxt('reportWeekNum', weekNum);
+            setTxt('modalSummaryScore', `${scoreData.raw_score}/${scoreData.total_questions}`);
+            setTxt('modalSummaryRank', rankPercentile);
 
-            // Update Bell Curve Position
-            // A visual proxy: centering the marker on the bell shape (from 10% to 90% width)
-            const visualLeft = 10 + ((100 - rankPercentile) * 0.8);
-            document.getElementById('bellCurveMarker').style.left = `${visualLeft}%`;
-            document.getElementById('markerRankText').innerText = rankPercentile;
+            // Update Bell Curve Position Safely
+            const safeRank = Number(rankPercentile) || 50;
+            const visualLeft = 10 + ((100 - safeRank) * 0.8);
+            const bellMarker = document.getElementById('bellCurveMarker');
+            if (bellMarker) bellMarker.style.left = `${visualLeft}%`;
+            setTxt('markerRankText', rankPercentile);
 
             // Handle Access Level Locks
             const isReview = (accessLevel === 'review');
             ['nav-english', 'nav-maths', 'nav-vr', 'nav-nvr'].forEach(id => {
                 const el = document.getElementById(id);
-                el.setAttribute('data-week', weekNum);
-                if(isReview) {
-                    el.classList.remove('locked'); el.innerHTML = el.innerText.replace(' 🔒', ''); 
-                } else {
-                    el.classList.add('locked'); if(!el.innerHTML.includes('🔒')) el.innerHTML += ' <span>🔒</span>';
+                if(el) {
+                    el.setAttribute('data-week', weekNum);
+                    if(isReview) {
+                        el.classList.remove('locked'); 
+                        el.innerHTML = el.innerText.replace(' 🔒', ''); 
+                    } else {
+                        el.classList.add('locked'); 
+                        if(!el.innerHTML.includes('🔒')) el.innerHTML += ' <span>🔒</span>';
+                    }
                 }
             });
-            document.getElementById('btnDownload').style.display = isReview ? 'inline-flex' : 'none';
-            document.getElementById('btnPaper').style.display = isReview ? 'inline-flex' : 'none';
+            
+            const dlBtn = document.getElementById('btnDownload');
+            if(dlBtn) dlBtn.style.display = isReview ? 'inline-flex' : 'none';
+            const ppBtn = document.getElementById('btnPaper');
+            if(ppBtn) ppBtn.style.display = isReview ? 'inline-flex' : 'none';
 
             // Fetch Data
             const { data: qData } = await supabaseClient.from('questions').select('question_number, topic_tag, correct_answer').eq('exam_id', `week-${weekNum}`).order('question_number', { ascending: true });
@@ -661,53 +689,53 @@
                     }
                 });
 
-                document.querySelector('#tab-english tbody').innerHTML = engRows;
-                document.querySelector('#tab-maths tbody').innerHTML = mathRows;
-                document.querySelector('#tab-vr tbody').innerHTML = vrRows;
-                document.querySelector('#tab-nvr tbody').innerHTML = nvrRows;
+                setHtml('body-english', engRows);
+                setHtml('body-maths', mathRows);
+                setHtml('body-vr', vrRows);
+                setHtml('body-nvr', nvrRows);
             }
 
             engTot = engTot || 10; mathTot = mathTot || 10; vrTot = vrTot || 10; nvrTot = nvrTot || 10;
-            const overallAcc = scoreData.raw_score / scoreData.total_questions;
+            const overallAcc = (scoreData.raw_score || 0) / (scoreData.total_questions || 40);
 
             const eM = calculateSubjectMetrics(scoreData.english_score || 0, engTot, overallAcc, rankPercentile);
             const mM = calculateSubjectMetrics(scoreData.maths_score || 0, mathTot, overallAcc, rankPercentile);
             const vM = calculateSubjectMetrics(scoreData.vr_score || 0, vrTot, overallAcc, rankPercentile);
             const nM = calculateSubjectMetrics(scoreData.nvr_score || 0, nvrTot, overallAcc, rankPercentile);
 
-            // Populate Breakdown
-            document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}/${engTot}`;
-            document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}/${mathTot}`;
-            document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}/${vrTot}`;
-            document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0}/${nvrTot}`;
+            // Populate Breakdown Tab
+            setTxt('modalEngScore', `${scoreData.english_score || 0}/${engTot}`);
+            setTxt('modalMathScore', `${scoreData.maths_score || 0}/${mathTot}`);
+            setTxt('modalVrScore', `${scoreData.vr_score || 0}/${vrTot}`);
+            setTxt('modalNvrScore', `${scoreData.nvr_score || 0}/${nvrTot}`);
 
             // English Insights
-            document.getElementById('tabEngRaw').innerText = `${scoreData.english_score || 0}/${engTot}`;
-            document.getElementById('tabEngAcc').innerText = `${eM.acc}%`;
-            document.getElementById('tabEngPerc').innerText = `Top ${eM.rankP}%`;
-            document.getElementById('tabEngRankStr').innerHTML = `${eM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`;
-            document.getElementById('focusEng').innerText = calculateModeFocus(engWrong);
+            setTxt('tabEngRaw', `${scoreData.english_score || 0}/${engTot}`);
+            setTxt('tabEngAcc', `${eM.acc}%`);
+            setTxt('tabEngPerc', `Top ${eM.rankP}%`);
+            setHtml('tabEngRankStr', `${eM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setTxt('focusEng', calculateModeFocus(engWrong));
 
             // Maths Insights
-            document.getElementById('tabMathRaw').innerText = `${scoreData.maths_score || 0}/${mathTot}`;
-            document.getElementById('tabMathAcc').innerText = `${mM.acc}%`;
-            document.getElementById('tabMathPerc').innerText = `Top ${mM.rankP}%`;
-            document.getElementById('tabMathRankStr').innerHTML = `${mM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`;
-            document.getElementById('focusMath').innerText = calculateModeFocus(mathWrong);
+            setTxt('tabMathRaw', `${scoreData.maths_score || 0}/${mathTot}`);
+            setTxt('tabMathAcc', `${mM.acc}%`);
+            setTxt('tabMathPerc', `Top ${mM.rankP}%`);
+            setHtml('tabMathRankStr', `${mM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setTxt('focusMath', calculateModeFocus(mathWrong));
 
             // VR Insights
-            document.getElementById('tabVrRaw').innerText = `${scoreData.vr_score || 0}/${vrTot}`;
-            document.getElementById('tabVrAcc').innerText = `${vM.acc}%`;
-            document.getElementById('tabVrPerc').innerText = `Top ${vM.rankP}%`;
-            document.getElementById('tabVrRankStr').innerHTML = `${vM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`;
-            document.getElementById('focusVr').innerText = calculateModeFocus(vrWrong);
+            setTxt('tabVrRaw', `${scoreData.vr_score || 0}/${vrTot}`);
+            setTxt('tabVrAcc', `${vM.acc}%`);
+            setTxt('tabVrPerc', `Top ${vM.rankP}%`);
+            setHtml('tabVrRankStr', `${vM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setTxt('focusVr', calculateModeFocus(vrWrong));
 
             // NVR Insights
-            document.getElementById('tabNvrRaw').innerText = `${scoreData.nvr_score || 0}/${nvrTot}`;
-            document.getElementById('tabNvrAcc').innerText = `${nM.acc}%`;
-            document.getElementById('tabNvrPerc').innerText = `Top ${nM.rankP}%`;
-            document.getElementById('tabNvrRankStr').innerHTML = `${nM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`;
-            document.getElementById('focusNvr').innerText = calculateModeFocus(nvrWrong);
+            setTxt('tabNvrRaw', `${scoreData.nvr_score || 0}/${nvrTot}`);
+            setTxt('tabNvrAcc', `${nM.acc}%`);
+            setTxt('tabNvrPerc', `Top ${nM.rankP}%`);
+            setHtml('tabNvrRankStr', `${nM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
+            setTxt('focusNvr', calculateModeFocus(nvrWrong));
 
             openModal('report-modal');
         }
