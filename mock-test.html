@@ -422,94 +422,97 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
-        // Start Exam Logic
+        // --- SUPABASE INITIALIZATION ---
+        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Kick out anyone who isn't logged in
+        async function securePage() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+            }
+        }
+        securePage();
+
+        // --- GLOBAL EXAM VARIABLES ---
+        let questionsList = []; 
+        const CURRENT_EXAM_ID = 'week-3'; 
         let endTime;
         let timerInterval;
+        let currentQuestion = 1;
+        const totalQuestions = 6; // Change this to 40 later!
+        const answersTracker = {};
 
-        function startExam() {
-            document.getElementById('splash-screen').style.display = 'none';
-            document.getElementById('exam-ui').style.display = 'flex';
-            endTime = Date.now() + (25 * 60 * 1000);
-            updateTimer();
-            timerInterval = setInterval(updateTimer, 1000);
+        // --- FETCH DATA ---
+        async function fetchQuestions() {
+            const { data, error } = await supabaseClient
+                .from('questions')
+                .select('*')
+                .eq('exam_id', CURRENT_EXAM_ID)
+                .order('question_number', { ascending: true });
+
+            if (error) {
+                console.error("Error fetching questions:", error);
+                alert("Failed to load exam. Please check your connection.");
+                return false;
+            }
+
+            if (!data || data.length === 0) {
+                alert("No questions found for this exam!");
+                return false;
+            }
+
+            questionsList = data;
+            return true;
         }
 
-        function updateTimer() {
-            const now = Date.now();
-            const timeRemaining = endTime - now;
-            const timerElement = document.getElementById('timer');
+        // --- START EXAM ---
+        async function startExam() {
+            const startBtn = document.querySelector('.btn-start');
+            startBtn.innerText = "Loading Exam...";
+            startBtn.disabled = true;
 
-            if (timeRemaining <= 0) {
-                clearInterval(timerInterval);
-                timerElement.innerText = `⏱ 00:00`;
-                autoSubmit();
+            // Wait for Supabase to pull the questions
+            const success = await fetchQuestions();
+            
+            if (!success) {
+                startBtn.innerText = "Begin Exam";
+                startBtn.disabled = false;
                 return;
             }
 
-            const totalSeconds = Math.floor(timeRemaining / 1000);
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
+            document.getElementById('splash-screen').style.display = 'none';
+            document.getElementById('exam-ui').style.display = 'flex';
             
-            timerElement.innerText = `⏱ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            endTime = Date.now() + (25 * 60 * 1000);
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
 
-            if (totalSeconds <= 120 && !timerElement.classList.contains('danger')) {
-                timerElement.classList.add('danger');
-            }
+            // Generate the jump grid dynamically based on fetched questions
+            generateNavGrid();
+
+            // Load the first question
+            updateUI(); 
         }
 
-        // Track answers for the navigation grid state
-        const answersTracker = {};
-
-        // Standard Option Selection
-        function selectOption(element, layoutId) {
-            const container = document.getElementById('layout-' + layoutId);
-            const options = container.querySelectorAll('.option-item');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            
-            // Mark as answered
-            markQuestionAsAnswered(layoutId);
-        }
-
-        // Multi-Select Option Logic (for Template 6)
-        function selectGroupedOption(element, groupId) {
-            const groupContainer = document.getElementById(groupId);
-            const options = groupContainer.querySelectorAll('.option-item');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            
-            // For layout 6, ensure both groups have a selection before marking complete
-            const totalGroupsSelected = document.querySelectorAll('#layout-6 .option-item.selected').length;
-            if (totalGroupsSelected >= 2) {
-                markQuestionAsAnswered('6');
-            }
-        }
-
-        function markQuestionAsAnswered(qNum) {
-            answersTracker[qNum] = true;
-            const gridItem = document.querySelector(`.grid-item[data-q="${qNum}"]`);
-            if (gridItem && !gridItem.classList.contains('current')) {
-                gridItem.classList.add('answered');
-            }
-        }
-
-        // --- Layout Switching Logic ---
-        let currentQuestion = 1;
-        const totalQuestions = 6; 
-
+        // --- UI & DATA INJECTION ---
         function updateUI() {
-            // 1. Update text indicators & progress bar
             document.getElementById('current-q-num').innerText = currentQuestion;
-            document.getElementById('progress-bar').style.width = `${(currentQuestion / 40) * 100}%`;
+            document.getElementById('progress-bar').style.width = `${(currentQuestion / totalQuestions) * 100}%`;
 
-            // 2. Hide all layouts and show the active one
             for(let i = 1; i <= 6; i++) {
                 document.getElementById('layout-' + i).classList.remove('active');
             }
-            document.getElementById('layout-' + currentQuestion).classList.add('active');
+            
+            // Inject the data from Supabase before showing the layout!
+            renderQuestionData();
 
-            // 3. FIX: Synchronize Next/Submit button text and styles dynamically
+            // Next / Submit button state
             const nextBtn = document.querySelector('.btn-next');
             if (currentQuestion === totalQuestions) {
                 nextBtn.innerText = "Submit Exam";
@@ -519,7 +522,7 @@
                 nextBtn.style.backgroundColor = "var(--wl-blue)";
             }
 
-            // 4. FIX: Synchronize active highlight state in Navigation Grid
+            // Sync grid highlights
             const gridItems = document.querySelectorAll('.grid-item');
             gridItems.forEach((item) => {
                 const itemQNum = item.getAttribute('data-q');
@@ -527,11 +530,72 @@
                 
                 if (itemQNum == currentQuestion) {
                     item.classList.add('current');
-                    item.classList.remove('answered'); // current takes visual priority
+                    item.classList.remove('answered');
                 } else if (answersTracker[itemQNum]) {
                     item.classList.add('answered');
                 }
             });
+        }
+
+        function renderQuestionData() {
+            const currentData = questionsList[currentQuestion - 1]; 
+            if (!currentData) return; // Failsafe
+
+            const layoutId = currentData.layout_template;
+            const qData = currentData.question_data; 
+
+            // Make the correct layout visible
+            document.getElementById('layout-' + layoutId).classList.add('active');
+
+            // Example: Injecting data for Layout 2
+            if (layoutId === '2') {
+                const container = document.getElementById('layout-2');
+                container.querySelector('.question-text').innerHTML = qData.question_text;
+
+                const optionsContainer = container.querySelector('.options-horizontal');
+                optionsContainer.innerHTML = ''; 
+
+                qData.options.forEach(opt => {
+                    const isSelected = answersTracker[currentQuestion] === opt.letter ? 'selected' : '';
+                    optionsContainer.innerHTML += `
+                        <div class="option-item ${isSelected}" onclick="selectOption(this, '2', '${opt.letter}')">
+                            <div class="option-letter">${opt.letter}</div>
+                            <div class="option-text">${opt.text}</div>
+                        </div>
+                    `;
+                });
+            }
+            // Add your other layout rendering logic here...
+        }
+
+        // --- SELECTION & NAVIGATION ---
+        function selectOption(element, layoutId, chosenLetter) {
+            const container = document.getElementById('layout-' + layoutId);
+            const options = container.querySelectorAll('.option-item');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            answersTracker[currentQuestion] = chosenLetter;
+            
+            const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
+            if (gridItem && !gridItem.classList.contains('current')) {
+                gridItem.classList.add('answered');
+            }
+        }
+
+        // For Layout 6 (Multi-Select)
+        function selectGroupedOption(element, groupId) {
+            const groupContainer = document.getElementById(groupId);
+            const options = groupContainer.querySelectorAll('.option-item');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            const totalGroupsSelected = document.querySelectorAll('#layout-6 .option-item.selected').length;
+            if (totalGroupsSelected >= 2) {
+                answersTracker[currentQuestion] = "completed"; // Update this logic later
+                const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
+                if (gridItem && !gridItem.classList.contains('current')) gridItem.classList.add('answered');
+            }
         }
 
         function nextQuestion() {
@@ -550,75 +614,53 @@
             }
         }
 
-        // Setup Jump Grid
-        function toggleGrid() { document.getElementById('grid-overlay').classList.toggle('active'); }
-        const gridContainer = document.getElementById('q-grid');
+        // --- TIMER & SUBMIT ---
+        function updateTimer() {
+            const now = Date.now();
+            const timeRemaining = endTime - now;
+            const timerElement = document.getElementById('timer');
 
-        for (let i = 1; i <= 40; i++) {
-            const box = document.createElement('div');
-            box.className = 'grid-item';
-            box.setAttribute('data-q', i); // Assign unique ID for matching later
-            box.innerText = i;
-            if (i === 1) box.classList.add('current');
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                timerElement.innerText = `⏱ 00:00`;
+                submitExam();
+                return;
+            }
+
+            const totalSeconds = Math.floor(timeRemaining / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
             
-            box.onclick = () => {
-                if(i <= 6) {
-                    currentQuestion = i;
-                    updateUI();
-                    toggleGrid();
-                } else {
-                    alert("Only questions 1-6 are wired up as templates for this preview.");
-                }
-            };
-            gridContainer.appendChild(box);
-        }
-    </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+            timerElement.innerText = `⏱ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-        // 1. Kick out anyone who isn't logged in!
-        async function securePage() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = 'login.html'; // Send strangers to login
+            if (totalSeconds <= 120 && !timerElement.classList.contains('danger')) {
+                timerElement.classList.add('danger');
             }
         }
-        securePage();
 
-        // 2. Submit the Exam to Supabase
         async function submitExam() {
-            // Stop the timer and change the button
             clearInterval(timerInterval);
             const nextBtn = document.querySelector('.btn-next');
             nextBtn.innerText = "Saving Score...";
             nextBtn.disabled = true;
             
-            // Get the logged-in user
             const { data: { session } } = await supabaseClient.auth.getSession();
-            
             if (!session) {
                 alert("Session expired. Cannot save score.");
                 return window.location.href = 'login.html';
             }
 
-            // Generate a fake prototype score between 25 and 40
+            // Calculate actual score based on answersTracker vs questionsList later!
             const fakeScore = Math.floor(Math.random() * (40 - 25 + 1)) + 25; 
 
-            // Save the score to our new table!
             const { error } = await supabaseClient
                 .from('scores')
-                .insert([
-                    {
-                        user_id: session.user.id,
-                        week_number: 3, // Hardcoded to Week 3 for this test
-                        raw_score: fakeScore,
-                        total_questions: 40
-                    }
-                ]);
+                .insert([{
+                    user_id: session.user.id,
+                    week_number: 3, 
+                    raw_score: fakeScore,
+                    total_questions: 40
+                }]);
 
             if (error) {
                 console.error("Error saving score:", error);
@@ -628,14 +670,33 @@
                 return;
             }
 
-            // Success! Alert them and redirect to dashboard
-            alert(`Exam submitted successfully! You scored ${fakeScore}/40.`);
+            alert(`Exam submitted successfully!`);
             window.location.href = 'dashboard.html';
         }
 
-        // 3. Override the prototype's autoSubmit function
-        function autoSubmit() {
-            submitExam();
+        // --- JUMP GRID ---
+        function toggleGrid() { 
+            document.getElementById('grid-overlay').classList.toggle('active'); 
+        }
+        
+        function generateNavGrid() {
+            const gridContainer = document.getElementById('q-grid');
+            gridContainer.innerHTML = ''; // Clear it out first
+            
+            // Generate grid based on actual questions loaded from Supabase
+            for (let i = 1; i <= questionsList.length; i++) {
+                const box = document.createElement('div');
+                box.className = 'grid-item';
+                box.setAttribute('data-q', i); 
+                box.innerText = i;
+                
+                box.onclick = () => {
+                    currentQuestion = i;
+                    updateUI();
+                    toggleGrid();
+                };
+                gridContainer.appendChild(box);
+            }
         }
     </script>
 </body>
