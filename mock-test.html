@@ -533,13 +533,38 @@
             gridContainer.appendChild(box);
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-    const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Test the connection!
-    console.log("Supabase connected:", supabase);
-</script>
+        // 1. Kick out anyone who isn't logged in!
+        async function securePage() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html'; // Send strangers to login
+            }
+        }
+        securePage();
+
+        // 2. Prepare the Submit Function (We will wire this to the database next)
+        async function submitExam() {
+            // Stop the timer
+            clearInterval(timerInterval);
+            
+            // For now, just a placeholder alert
+            alert("Exam submitted! Calculating your score...");
+            
+            // Send them back to the dashboard
+            window.location.href = 'dashboard.html';
+        }
+
+        // 3. Override the prototype's autoSubmit function
+        function autoSubmit() {
+            alert("Time is up! Submitting your test...");
+            submitExam();
+        }
+    </script>
 </body>
 </html>
