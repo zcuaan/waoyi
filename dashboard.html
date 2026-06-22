@@ -143,7 +143,6 @@
 
         .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
 
-        /* BLURRED CONTENT OVERLAY */
         .blur-container { position: relative; }
         .blur-content { filter: blur(6px); opacity: 0.5; pointer-events: none; user-select: none; }
         .Reveal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
@@ -254,6 +253,7 @@
         </div>
     </div>
 
+    <!-- UPGRADE MODAL -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -274,6 +274,7 @@
         </div>
     </div>
 
+    <!-- UNLOCKED REPORT MODAL -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
@@ -292,11 +293,12 @@
                 <div class="report-tabs">
                     <div class="tab active" onclick="switchTab('tab-summary', this)">Summary</div>
                     <div class="tab" onclick="switchTab('tab-english', this)">English</div>
-                    <div class="tab" onclick="switchTab('tab-maths', this)">Maths <span>🔒</span></div>
-                    <div class="tab" onclick="switchTab('tab-vr', this)">VR <span>🔒</span></div>
-                    <div class="tab" onclick="switchTab('tab-nvr', this)">NVR <span>🔒</span></div>
+                    <div class="tab" onclick="switchTab('tab-maths', this)">Maths</div>
+                    <div class="tab" onclick="switchTab('tab-vr', this)">VR</div>
+                    <div class="tab" onclick="switchTab('tab-nvr', this)">NVR</div>
                 </div>
 
+                <!-- SUMMARY TAB -->
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         <div style="text-align: center; margin-bottom: 32px;">
@@ -329,139 +331,51 @@
                     </div>
                 </div>
 
+                <!-- ENGLISH TAB -->
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                        <div class="stat-card">
-                            <span>Raw Score</span>
-                            <strong id="tabEngRaw">0 / 10</strong>
-                        </div>
-                        <div class="stat-card">
-                            <span>Accuracy</span>
-                            <strong>70%</strong>
-                        </div>
-                        <div class="stat-card">
-                            <span>Subject Rank</span>
-                            <strong>142 <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong>
-                        </div>
-                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);">
-                            <span style="color: var(--wl-teal);">Percentile</span>
-                            <strong style="color: var(--wl-teal);">Top 28%</strong>
-                        </div>
-                    </div>
-
                     <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
                     <div class="table-responsive">
                         <table class="report-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 50px;">Q#</th>
-                                    <th>Topic / Skill</th>
-                                    <th style="text-align: center;">Your Answer</th>
-                                    <th style="text-align: center;">Correct Answer</th>
-                                    <th>Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="font-weight: 800;">1</td>
-                                    <td>Comprehension - Inference</td>
-                                    <td style="text-align: center;">B</td>
-                                    <td style="text-align: center;">B</td>
-                                    <td style="color: var(--wl-teal); font-weight: 800;">✓ Correct</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 800;">2</td>
-                                    <td>Grammar - Punctuation</td>
-                                    <td style="text-align: center;">A</td>
-                                    <td style="text-align: center; font-weight: 800;">C</td>
-                                    <td style="color: var(--wl-nyoro-pink-text); font-weight: 800;">✗ Incorrect</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 800;">3</td>
-                                    <td>Comprehension - Vocabulary</td>
-                                    <td style="text-align: center;">D</td>
-                                    <td style="text-align: center;">D</td>
-                                    <td style="color: var(--wl-teal); font-weight: 800;">✓ Correct</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 800;">4</td>
-                                    <td>Spelling</td>
-                                    <td style="text-align: center;">B</td>
-                                    <td style="text-align: center; font-weight: 800;">A</td>
-                                    <td style="color: var(--wl-nyoro-pink-text); font-weight: 800;">✗ Incorrect</td>
-                                </tr>
-                            </tbody>
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody><!-- Dynamic Rows Go Here --></tbody>
                         </table>
-                    </div>
-
-                    <div class="focus-area">
-                        <strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> 
-                        <span style="font-weight: 600; font-size: 1.1rem;">Grammar & Punctuation</span>
                     </div>
                 </div>
 
-                <div class="report-content blur-container" id="tab-maths">
-                    <div class="Reveal-overlay">
-                        <div class="angled-wrapper" style="width: 100%; max-width: 450px;">
-                            <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
-                                <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pack Locked</h3>
-                                <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Reveal to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
-                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="blur-content">
-                        <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                            <div class="stat-card"><span>Raw Score</span><strong>? / 10</strong></div>
-                            <div class="stat-card"><span>Accuracy</span><strong>?%</strong></div>
-                            <div class="stat-card"><span>Subject Rank</span><strong>? <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
-                            <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong style="color: var(--wl-teal);">Top ?%</strong></div>
-                        </div>
-                        <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                <!-- MATHS TAB -->
+                <div class="report-content" id="tab-maths">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
                         <table class="report-table">
-                            <thead><tr><th>Q#</th><th>Topic / Skill</th><th>Your Answer</th><th>Correct Answer</th><th>Result</th></tr></thead>
-                            <tbody>
-                                <tr><td>1</td><td>Fractions</td><td>B</td><td>B</td><td>✓ Correct</td></tr>
-                                <tr><td>2</td><td>Algebra</td><td>A</td><td>C</td><td>✗ Incorrect</td></tr>
-                                <tr><td>3</td><td>Geometry</td><td>D</td><td>D</td><td>✓ Correct</td></tr>
-                            </tbody>
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody><!-- Dynamic Rows Go Here --></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="report-content blur-container" id="tab-vr">
-                    <div class="Reveal-overlay">
-                        <div class="angled-wrapper" style="width: 100%; max-width: 450px;">
-                            <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
-                                <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pack Locked</h3>
-                                <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Reveal to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
-                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="blur-content">
-                        <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
-                        <p style="color: var(--wl-text-muted);">Detailed analysis goes here...</p>
+                <!-- VR TAB -->
+                <div class="report-content" id="tab-vr">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody><!-- Dynamic Rows Go Here --></tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="report-content blur-container" id="tab-nvr">
-                    <div class="Reveal-overlay">
-                        <div class="angled-wrapper" style="width: 100%; max-width: 450px;">
-                            <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
-                                <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pack Locked</h3>
-                                <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Reveal to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
-                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="blur-content">
-                        <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
-                        <p style="color: var(--wl-text-muted);">Detailed analysis goes here...</p>
+                <!-- NVR TAB -->
+                <div class="report-content" id="tab-nvr">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody><!-- Dynamic Rows Go Here --></tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -469,6 +383,7 @@
         </div>
     </div>
 
+    <!-- UI Toggles -->
     <script>
         function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
         function closeModal(modalId) {
@@ -479,7 +394,7 @@
             }
         }
         function switchTab(tabId, element) {
-            if (element.classList.contains('locked')) return; // Stop them from switching to locked tabs normally
+            if (element.classList.contains('locked')) return; 
             
             const contents = document.querySelectorAll('.report-content');
             contents.forEach(content => content.classList.remove('active'));
@@ -496,6 +411,7 @@
         }
     </script>
 
+    <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
@@ -605,7 +521,6 @@
                     document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
                 }
                 
-                // Update Free Account Badge
                 const badge = document.getElementById('accountBadge');
                 if (profileData.has_review_pass) {
                     badge.innerText = 'REVIEW PASS ACTIVE';
@@ -642,10 +557,8 @@
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
-                    // ACTUAL DATABASE PURCHASE CHECKS!
                     const hasGlobalRank = userProfile?.has_rank_pass;
                     const hasGlobalReport = userProfile?.has_review_pass;
-                    
                     const canSeeRank = hasGlobalRank || weekScore.rank_unlocked;
                     const canSeeReport = hasGlobalReport || weekScore.report_unlocked;
 
@@ -690,22 +603,74 @@
             }
         }
 
-        function viewReport(weekNum, rankPercentile) {
+        async function viewReport(weekNum, rankPercentile) {
             const scoreData = userScores.find(s => s.week_number === weekNum);
             if (!scoreData) return;
 
             document.getElementById('reportWeekNum').innerText = weekNum;
             document.getElementById('upgradeWeekNum').innerText = weekNum;
             
-            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
+            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score}/${scoreData.total_questions}`;
             document.getElementById('modalSummaryRank').innerText = rankPercentile;
 
-            document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0} / 10`;
-            document.getElementById('tabEngRaw').innerText = `${scoreData.english_score || 0} / 10`;
+            // Fetch original questions for this exact week to build the table!
+            const { data: qData, error } = await supabaseClient
+                .from('questions')
+                .select('question_number, topic_tag, correct_answer')
+                .eq('exam_id', `week-${weekNum}`)
+                .order('question_number', { ascending: true });
 
-            document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0} / 10`;
-            document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0} / 10`;
-            document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0} / 10`;
+            if (qData) {
+                const userAns = scoreData.user_answers || {};
+                
+                let engRows = '', mathRows = '', vrRows = '', nvrRows = '';
+
+                qData.forEach(q => {
+                    const qNum = q.question_number;
+                    const topic = q.topic_tag || 'General';
+                    const correctAns = q.correct_answer;
+                    const rawUser = userAns[qNum];
+                    
+                    const userStr = Array.isArray(rawUser) ? rawUser.sort().join(', ') : (rawUser || '-');
+                    const correctStr = correctAns.split(',').map(s=>s.trim()).sort().join(', ');
+
+                    const isCorrect = userStr === correctStr;
+                    const resultText = isCorrect ? '✓ Correct' : (userStr === '-' ? '– Skipped' : '✗ Incorrect');
+                    const resultStyle = isCorrect ? 'color: var(--wl-teal); font-weight: 800;' : (userStr === '-' ? 'color: var(--wl-text-muted);' : 'color: var(--wl-nyoro-pink-text); font-weight: 800;');
+                    const rowStyle = isCorrect ? '' : 'background-color: var(--wl-soft-pink);';
+
+                    const rowHtml = `
+                        <tr style="${rowStyle}">
+                            <td style="font-weight: 800;">${qNum}</td>
+                            <td>${topic}</td>
+                            <td style="text-align: center;">${userStr}</td>
+                            <td style="text-align: center; font-weight: 800;">${correctStr}</td>
+                            <td style="${resultStyle}">${resultText}</td>
+                        </tr>
+                    `;
+
+                    const tLower = topic.toLowerCase();
+                    if (tLower.includes('english') || tLower.includes('spag') || tLower.includes('comprehension') || tLower.includes('spelling') || tLower.includes('grammar')) {
+                        engRows += rowHtml;
+                    } else if (tLower.includes('math')) {
+                        mathRows += rowHtml;
+                    } else if (tLower.includes('non') || tLower.includes('nvr')) {
+                        nvrRows += rowHtml;
+                    } else if (tLower.includes('verbal') || tLower.includes('vr')) {
+                        vrRows += rowHtml;
+                    }
+                });
+
+                document.querySelector('#tab-english tbody').innerHTML = engRows || '<tr><td colspan="5" style="text-align:center; color:#999;">No questions found.</td></tr>';
+                document.querySelector('#tab-maths tbody').innerHTML = mathRows || '<tr><td colspan="5" style="text-align:center; color:#999;">No questions found.</td></tr>';
+                document.querySelector('#tab-vr tbody').innerHTML = vrRows || '<tr><td colspan="5" style="text-align:center; color:#999;">No questions found.</td></tr>';
+                document.querySelector('#tab-nvr tbody').innerHTML = nvrRows || '<tr><td colspan="5" style="text-align:center; color:#999;">No questions found.</td></tr>';
+            }
+
+            document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}`;
+            document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}`;
+            document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}`;
+            document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0}`;
 
             openModal('report-modal');
         }
