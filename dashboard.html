@@ -714,6 +714,9 @@
                 btnEl.disabled = false;
                 btnEl.style.opacity = "1";
                 btnEl.style.cursor = "pointer";
+                
+                // ADD THIS LINE RIGHT HERE 👇
+                btnEl.onclick = function() { window.location.href = 'mock-test.html'; };
             } else {
                 titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⏳</span> Week ${currentWeek} opens Friday at 4 PM`;
                 btnEl.innerText = `Week ${currentWeek} Locked`;
