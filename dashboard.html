@@ -7,45 +7,21 @@
     <link rel="icon" type="image/png" href="Asset 2.png">
     <style>
         :root {
-            --wl-yellow: #ffcb05;
-            --wl-soft-yellow: #fff9e6;
-            --wl-teal: #16a085;
-            --wl-teal-dark: #12826c;
-            --wl-soft-teal: #e8f6f3;
-            --wl-blue: #0065b3;
-            --wl-soft-blue: #e5f0f9;
-            
-            --wl-black: #1f2227; 
-            --wl-text-main: #2c3e50; 
-            --wl-text-muted: #64748b;
-            --wl-bg-main: #f2f2f2; 
-            --wl-white: #ffffff;
-            --wl-border: #e2e8f0;
-
-            --wl-nyoro-aqua: #bcedea;
-            --wl-nyoro-navy: #15325b;
-            --wl-nyoro-pink-text: #ea005e;
-            --wl-nyoro-pink-bg: #fce8ef;
-            --wl-soft-pink: #fdf2f8;
-            
+            --wl-yellow: #ffcb05; --wl-soft-yellow: #fff9e6;
+            --wl-teal: #16a085; --wl-teal-dark: #12826c; --wl-soft-teal: #e8f6f3;
+            --wl-blue: #0065b3; --wl-soft-blue: #e5f0f9;
+            --wl-black: #1f2227; --wl-text-main: #2c3e50; --wl-text-muted: #64748b;
+            --wl-bg-main: #f2f2f2; --wl-white: #ffffff; --wl-border: #e2e8f0;
+            --wl-nyoro-aqua: #bcedea; --wl-nyoro-navy: #15325b;
+            --wl-nyoro-pink-text: #ea005e; --wl-nyoro-pink-bg: #fce8ef; --wl-soft-pink: #fdf2f8;
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background-color: var(--wl-bg-main); 
-            color: var(--wl-text-main); 
-            line-height: 1.6; 
-            font-family: var(--font-main); 
-            -webkit-font-smoothing: antialiased;
-            padding-bottom: 80px;
-        }
-
+        body { background-color: var(--wl-bg-main); color: var(--wl-text-main); line-height: 1.6; font-family: var(--font-main); -webkit-font-smoothing: antialiased; padding-bottom: 80px; }
         h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.5px; color: var(--wl-black); }
 
         .container { max-width: 1050px; margin: 0 auto; padding: 0 20px; }
-
         .angled-wrapper { background-color: var(--wl-black); padding: 4px; clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); margin-bottom: 32px; }
         .angled-inner { background-color: var(--wl-white); padding: 32px; clip-path: polygon(17px 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%, 0 17px); height: 100%; }
 
@@ -67,12 +43,665 @@
         .btn-action { background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); }
         .btn-action:hover { background-color: #e6b700; }
         .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+        .btn-full { width: 100%; }
 
         .header-section { margin: 40px 0 24px; display: flex; justify-content: space-between; align-items: flex-end; }
         .header-section h1 { font-size: 2.4rem; margin-bottom: 4px; }
         .header-section p { font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; }
         
-        .active-week-card { display: flex; justify-content: space-between; align-items: center; }
-        .active-info h2 { font-size: 1.8rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-        .active-info .sub-info { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
-        .btn-start-
+        .section-title { font-size: 1.6rem; margin: 40px 0 16px; color: var(--wl-black); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        
+        /* --- NEW PATHWAY UI --- */
+        .path-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 32px; }
+        .week-tile { background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; display: flex; flex-direction: column; gap: 8px;}
+        .week-tile:hover { border-color: var(--wl-blue); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .week-tile.active-tile { border-color: var(--wl-blue); background-color: var(--wl-soft-blue); box-shadow: 0 0 0 1px var(--wl-blue); }
+        .tile-header { font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; }
+        .tile-body { font-size: 0.9rem; font-weight: 600; color: var(--wl-text-muted); display: flex; flex-direction: column; gap: 2px; }
+        .tile-score { color: var(--wl-blue); font-weight: 800; font-size: 1.1rem; }
+        .tile-rank { color: var(--wl-teal); font-weight: 800; }
+
+        .detail-panel { background: var(--wl-bg-main); border: 1px solid var(--wl-border); border-radius: 8px; padding: 32px; display: none; }
+        .detail-panel.active { display: block; }
+        .detail-header { margin-bottom: 24px; border-bottom: 2px solid var(--wl-border); padding-bottom: 16px; }
+        .detail-header h2 { font-size: 1.8rem; margin-bottom: 4px; }
+        .detail-header p { color: var(--wl-text-muted); font-weight: 600; font-size: 1.1rem; }
+        
+        .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .detail-card { background: var(--wl-white); padding: 24px; border-radius: 8px; border: 1px solid var(--wl-border); display: flex; flex-direction: column; }
+        .detail-card h4 { font-size: 0.9rem; text-transform: uppercase; color: var(--wl-text-muted); letter-spacing: 0.5px; margin-bottom: 12px; border-bottom: 1px solid var(--wl-border); padding-bottom: 8px;}
+        .detail-val { font-size: 1.8rem; font-weight: 800; color: var(--wl-black); margin-bottom: 16px; line-height: 1.1; flex-grow: 1; }
+        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); margin-bottom: 16px; font-weight: 500; flex-grow: 1; }
+
+        /* --- UPGRADES --- */
+        .bundle-wrapper { background-color: var(--wl-nyoro-navy); margin-bottom: 0; }
+        .bundle-card { background-color: var(--wl-nyoro-aqua); }
+        .bundle-card h3 { color: var(--wl-nyoro-navy); margin-bottom: 12px; }
+        .bundle-card .btn-outline { border-color: var(--wl-nyoro-navy); color: var(--wl-nyoro-navy); }
+        .bundle-card .btn-outline:hover { background-color: rgba(21, 50, 91, 0.05); }
+
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 34, 39, 0.8); backdrop-filter: blur(4px); z-index: 100; display: none; justify-content: center; align-items: center; padding: 20px; overflow-y: auto;}
+        .modal-overlay.active { display: flex; }
+
+        .modal-upgrade { background: var(--wl-white); width: 100%; padding: 32px; position: relative; }
+        .modal-upgrade h2 { font-size: 1.8rem; margin-bottom: 8px; }
+        .modal-upgrade .price { font-size: 1.3rem; color: var(--wl-blue); font-weight: 800; margin-bottom: 20px; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--wl-text-muted); font-weight: bold;}
+
+        .modal-report { background: var(--wl-bg-main); width: 100%; height: 90vh; display: flex; flex-direction: column; overflow: hidden; position: relative;}
+        .report-header { background: var(--wl-white); padding: 24px 32px; border-bottom: 2px solid var(--wl-border); display: flex; justify-content: space-between; align-items: center; }
+        
+        .report-tabs { display: flex; background: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 0 32px; overflow-x: auto;}
+        .tab { padding: 16px 20px; font-weight: 700; color: var(--wl-text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.2s;}
+        .tab.active { color: var(--wl-black); border-bottom-color: var(--wl-yellow); }
+        .tab.locked { color: #cbd5e1; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        
+        .report-content { padding: 32px; overflow-y: auto; flex: 1; display: none; }
+        .report-content.active { display: block; }
+        
+        .stat-card { background: var(--wl-white); padding: 20px; border-radius: 8px; border: 2px solid var(--wl-border); text-align: center; }
+        .stat-card span { display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
+        .stat-card strong { font-size: 1.8rem; color: var(--wl-black); font-weight: 800; line-height: 1.2; }
+        
+        .subject-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--wl-border); align-items: center;}
+        .subject-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .subject-row span { font-weight: 600; color: var(--wl-text-main); }
+        .subject-row strong { font-weight: 800; font-size: 1.1rem; color: var(--wl-black); }
+
+        .report-table { width: 100%; border-collapse: collapse; background: var(--wl-white); border: 1px solid var(--wl-border); border-radius: 8px; overflow: hidden; }
+        .report-table th { background: var(--wl-black); color: var(--wl-white); padding: 12px 16px; text-align: left; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .report-table td { padding: 16px; border-bottom: 1px solid var(--wl-border); font-size: 0.95rem; font-weight: 500; }
+        .report-table tr:last-child td { border-bottom: none; }
+
+        .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
+
+        @media (max-width: 768px) {
+            .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .path-grid { grid-template-columns: 1fr; }
+            .nav-content { flex-direction: column; gap: 15px;}
+            .nav-links { margin-left: 0; }
+            .report-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .modal-close { top: 10px; right: 15px; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="dash-nav">
+        <div class="container nav-content">
+            <div class="nav-brand">
+                <img src="Asset 2.png" alt="Mascot">
+                The 11+ Weekend League
+            </div>
+            <div class="nav-links">
+                <a href="#">Support</a>
+                <a href="#" id="logoutBtn">Log Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-section">
+            <div>
+                <h1><span id="childNameDisplay">Student</span>'s Dashboard</h1>
+                <p>Summer League 2026</p>
+            </div>
+            <div id="accountBadge" style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 6px 14px; font-weight: 800; font-size: 0.85rem; border-radius: 4px; text-transform: uppercase;">
+                Free Account
+            </div>
+        </div>
+
+        <div class="angled-wrapper">
+            <div class="angled-inner" style="padding: 32px;">
+                
+                <div class="path-grid" id="path-grid">
+                    </div>
+
+                <div class="detail-panel active" id="detail-panel">
+                    </div>
+
+            </div>
+        </div>
+
+        <h2 class="section-title">Want the full summer unlocked?</h2>
+        <div class="grid-2">
+            <div class="angled-wrapper bundle-wrapper">
+                <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
+                    <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Rank Pass (£19.99)</h3>
+                    <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.</p>
+                    <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 24px; font-style: italic;">Weekly rankings can also be revealed individually for £3.99 each.</p>
+                    <button class="btn btn-outline btn-square" style="padding: 10px 24px; font-size: 1.05rem; margin-top: auto;">Upgrade to Rank Pass</button>
+                </div>
+            </div>
+
+            <div class="angled-wrapper bundle-wrapper">
+                <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
+                    <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pass (£99)</h3>
+                    <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 review packs, including the papers, answers and explanations.</p>
+                    <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 24px; font-style: italic;">Weekly review packs can also be bought individually for £19.99 each.</p>
+                    <button class="btn btn-outline btn-square" style="padding: 10px 24px; font-size: 1.05rem; margin-top: auto;">Upgrade to Review Pass</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="upgrade-modal">
+        <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
+            <div class="angled-inner modal-upgrade" style="padding: 40px;">
+                <button class="modal-close" onclick="closeModal('upgrade-modal')">&times;</button>
+                <h2 id="upgradeTitle">Get Review Pack</h2>
+                <div class="price">Week <span id="upgradeWeekNum">X</span> — <span id="upgradePrice">£19.99</span></div>
+                <div id="upgradeDesc">
+                    <ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);">
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Your child’s answers vs correct answers</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks & Focus areas</li>
+                    </ul>
+                </div>
+                <button class="btn btn-primary btn-square btn-full">Purchase</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="report-modal">
+        <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
+            <div class="angled-inner modal-report" style="padding: 0;">
+                
+                <div class="report-header">
+                    <div>
+                        <h2 style="margin-bottom: 4px;">Week <span id="reportWeekNum">X</span> Results</h2>
+                    </div>
+                    <div style="display: flex; gap: 16px; align-items: center; padding-right: 40px;">
+                        <button class="btn btn-outline btn-sm btn-square" id="btnDownload" style="border-color: var(--wl-black); color: var(--wl-black);">Download PDF</button>
+                        <button class="btn btn-primary btn-sm btn-square" id="btnPaper">View Paper</button>
+                        <button class="modal-close" style="position: absolute; top: 15px; right: 20px;" onclick="closeModal('report-modal')">&times;</button>
+                    </div>
+                </div>
+                
+                <div class="report-tabs">
+                    <div class="tab active" onclick="switchTab('tab-summary', this)">Summary</div>
+                    <div class="tab" id="nav-english" onclick="switchTab('tab-english', this)">English</div>
+                    <div class="tab" id="nav-maths" onclick="switchTab('tab-maths', this)">Maths</div>
+                    <div class="tab" id="nav-vr" onclick="switchTab('tab-vr', this)">VR</div>
+                    <div class="tab" id="nav-nvr" onclick="switchTab('tab-nvr', this)">NVR</div>
+                </div>
+
+                <div class="report-content active" id="tab-summary">
+                    <div style="max-width: 650px; margin: 0 auto;">
+                        <div style="text-align: center; margin-bottom: 32px;">
+                            <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Benchmark Position</h3>
+                            <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">Top <span id="modalSummaryRank">X</span>%</strong>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
+                            <div style="text-align: center;">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span>
+                                <strong id="modalSummaryScore" style="font-size: 1.6rem; color: var(--wl-black);">0/0</strong>
+                            </div>
+                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Cohort Avg</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">61%</strong>
+                            </div>
+                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Top Score</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">95%</strong>
+                            </div>
+                        </div>
+
+                        <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 24px;">
+                            <h3 style="margin-bottom: 16px; font-size: 1.2rem; text-align: center;">Subject Breakdown</h3>
+                            <div class="subject-row"><span>English</span><strong id="modalEngScore">0/10</strong></div>
+                            <div class="subject-row"><span>Maths</span><strong id="modalMathScore">0/10</strong></div>
+                            <div class="subject-row"><span>Verbal Reasoning</span><strong id="modalVrScore">0/10</strong></div>
+                            <div class="subject-row"><span>Non-Verbal Reasoning</span><strong id="modalNvrScore">0/10</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-content" id="tab-english">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabEngRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabEngAcc">0%</strong></div>
+                    </div>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusEng" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
+                </div>
+
+                <div class="report-content" id="tab-maths">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabMathRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabMathAcc">0%</strong></div>
+                    </div>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusMath" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
+                </div>
+
+                <div class="report-content" id="tab-vr">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabVrRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabVrAcc">0%</strong></div>
+                    </div>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusVr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
+                </div>
+
+                <div class="report-content" id="tab-nvr">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabNvrRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Accuracy</span><strong id="tabNvrAcc">0%</strong></div>
+                    </div>
+                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
+                    <div class="table-responsive">
+                        <table class="report-table">
+                            <thead><tr><th style="width: 50px;">Q#</th><th>Topic / Skill</th><th style="text-align: center;">Your Answer</th><th style="text-align: center;">Correct Answer</th><th>Result</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusNvr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            if(modalId === 'report-modal') {
+                switchTab('tab-summary', document.querySelector('.report-tabs .tab'));
+            }
+        }
+        function switchTab(tabId, element) {
+            if (element.classList.contains('locked')) {
+                triggerUpgradeModal(element.getAttribute('data-week'), 'review');
+                return; 
+            }
+            const contents = document.querySelectorAll('.report-content');
+            contents.forEach(content => content.classList.remove('active'));
+            const tabs = document.querySelectorAll('.report-tabs .tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) event.target.classList.remove('active');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let userScores = [];
+        let userProfile = null;
+        let activeWeekSelection = 1;
+
+        document.getElementById('logoutBtn').addEventListener('click', async function(event) {
+            event.preventDefault(); 
+            await supabaseClient.auth.signOut(); 
+            window.location.href = 'index.html'; 
+        });
+
+        // May/June 2026 Schedule
+        const schedule = [
+            { week: 1, start: new Date(2026, 4, 1), end: new Date(2026, 4, 3) },
+            { week: 2, start: new Date(2026, 4, 8), end: new Date(2026, 4, 10) },
+            { week: 3, start: new Date(2026, 4, 15), end: new Date(2026, 4, 17) },
+            { week: 4, start: new Date(2026, 5, 26, 16, 0), end: new Date(2026, 5, 28, 22, 0) },
+            { week: 5, start: new Date(2026, 6, 3, 16, 0), end: new Date(2026, 6, 5, 22, 0) },
+            { week: 6, start: new Date(2026, 6, 10, 16, 0), end: new Date(2026, 6, 12, 22, 0) }
+        ];
+
+        const ageAdjustments = {"6Y 2M": 0.25, "6Y 3M": 0.25, "6Y 4M": 0.24, "6Y 5M": 0.24, "6Y 6M": 0.23, "6Y 7M": 0.23, "6Y 8M": 0.22, "6Y 9M": 0.22, "6Y 10M": 0.21, "6Y 11M": 0.21, "7Y 0M": 0.2, "7Y 1M": 0.2, "7Y 2M": 0.19, "7Y 3M": 0.19, "7Y 4M": 0.19, "7Y 5M": 0.18, "7Y 6M": 0.18, "7Y 7M": 0.17, "7Y 8M": 0.17, "7Y 9M": 0.16, "7Y 10M": 0.16, "7Y 11M": 0.15, "8Y 0M": 0.15, "8Y 1M": 0.14, "8Y 2M": 0.14, "8Y 3M": 0.13, "8Y 4M": 0.13, "8Y 5M": 0.12, "8Y 6M": 0.12, "8Y 7M": 0.11, "8Y 8M": 0.11, "8Y 9M": 0.1, "8Y 10M": 0.1, "8Y 11M": 0.09, "9Y 0M": 0.09, "9Y 1M": 0.08, "9Y 2M": 0.08, "9Y 3M": 0.07, "9Y 4M": 0.07, "9Y 5M": 0.06, "9Y 6M": 0.06, "9Y 7M": 0.05, "9Y 8M": 0.05, "9Y 9M": 0.04, "9Y 10M": 0.04, "9Y 11M": 0.03, "10Y 0M": 0.03, "10Y 1M": 0.02, "10Y 2M": 0.02, "10Y 3M": 0.01, "10Y 4M": 0.01, "10Y 5M": 0.0, "10Y 6M": 0.0, "10Y 7M": -0.01, "10Y 8M": -0.01, "10Y 9M": -0.02, "10Y 10M": -0.02, "10Y 11M": -0.03, "11Y 0M": -0.03, "11Y 1M": -0.04, "11Y 2M": -0.05, "11Y 3M": -0.05, "11Y 4M": -0.06, "11Y 5M": -0.06, "11Y 6M": -0.07, "11Y 7M": -0.07, "11Y 8M": -0.08, "11Y 9M": -0.08, "11Y 10M": -0.09, "11Y 11M": -0.09, "12Y 0M": -0.1, "12Y 1M": -0.1, "12Y 2M": -0.11, "12Y 3M": -0.11, "12Y 4M": -0.12, "12Y 5M": -0.12, "12Y 6M": -0.13, "12Y 7M": -0.13, "12Y 8M": -0.13, "12Y 9M": -0.14, "12Y 10M": -0.14, "12Y 11M": -0.15, "13Y 0M": -0.15, "13Y 1M": -0.16, "13Y 2M": -0.16, "13Y 3M": -0.17, "13Y 4M": -0.17, "13Y 5M": -0.18, "13Y 6M": -0.18, "13Y 7M": -0.19, "13Y 8M": -0.19, "13Y 9M": -0.2, "13Y 10M": -0.2, "13Y 11M": -0.21, "14Y 0M": -0.21, "14Y 1M": -0.22, "14Y 2M": -0.22, "14Y 3M": -0.23, "14Y 4M": -0.23, "14Y 5M": -0.24, "14Y 6M": -0.24, "14Y 7M": -0.25};
+        const monthMap = {"january": 0, "jan": 0, "1": 0, "01": 0, "february": 1, "feb": 1, "2": 1, "02": 1, "march": 2, "mar": 2, "3": 2, "03": 2, "april": 3, "apr": 3, "4": 3, "04": 3, "may": 4, "5": 4, "05": 4, "june": 5, "jun": 5, "6": 5, "06": 5, "july": 6, "jul": 6, "7": 6, "07": 6, "august": 7, "aug": 7, "8": 7, "08": 7, "september": 8, "sep": 8, "9": 8, "09": 8, "october": 9, "oct": 9, "10": 9, "november": 10, "nov": 10, "11": 10, "december": 11, "dec": 11, "12": 11};
+
+        function calculateAgeString(bMonth, bYear, examDate) {
+            if (!bMonth || !bYear) return "10Y 5M"; 
+            const monthInt = monthMap[bMonth.toString().toLowerCase().trim()];
+            if (monthInt === undefined) return "10Y 5M"; 
+            let years = examDate.getFullYear() - bYear;
+            let months = examDate.getMonth() - monthInt;
+            if (months < 0) { years--; months += 12; }
+            return `${years}Y ${months}M`;
+        }
+
+        function calculateRankPercentile(rawScore, totalQs, examDate) {
+            const rawPercentage = rawScore / totalQs;
+            const ageString = calculateAgeString(userProfile?.child_birth_month, userProfile?.child_birth_year, examDate);
+            const adjustment = ageAdjustments[ageString] || 0.0; 
+            const standardisedScoreDec = (rawPercentage + adjustment + 1) / 2;
+            const rankPercentile = 100 - Math.round(standardisedScoreDec * 100);
+            return Math.max(1, Math.min(rankPercentile, 99)); 
+        }
+
+        function getWeekState(weekNum) {
+            const now = new Date();
+            const sched = schedule[weekNum - 1];
+            if (now < sched.start) return 'future';
+            if (now >= sched.start && now <= sched.end) return 'current';
+            return 'past';
+        }
+
+        function determineActiveWeek() {
+            for (let i = 1; i <= 6; i++) {
+                if (getWeekState(i) === 'current') return i;
+            }
+            return 1; // Default if none open
+        }
+
+        async function loadDashboard() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) return window.location.href = 'login.html';
+
+            const { data: profileData } = await supabaseClient
+                .from('profiles').select('*').eq('id', session.user.id).single();
+
+            if (profileData) {
+                userProfile = profileData;
+                if (profileData.child_first_name) document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
+                
+                const badge = document.getElementById('accountBadge');
+                if (profileData.has_review_pass) {
+                    badge.innerText = 'REVIEW PASS ACTIVE';
+                    badge.style.backgroundColor = 'var(--wl-nyoro-aqua)';
+                    badge.style.color = 'var(--wl-nyoro-navy)';
+                } else if (profileData.has_rank_pass) {
+                    badge.innerText = 'RANK PASS ACTIVE';
+                    badge.style.backgroundColor = 'var(--wl-teal)';
+                    badge.style.color = 'var(--wl-white)';
+                }
+            }
+
+            const { data: scoreData } = await supabaseClient.from('scores').select('*').eq('user_id', session.user.id);
+            userScores = scoreData || [];
+            
+            activeWeekSelection = determineActiveWeek();
+            renderPath();
+            renderDetailPanel(activeWeekSelection);
+        }
+
+        // --- RENDER PATHWAY TILES ---
+        function renderPath() {
+            const grid = document.getElementById('path-grid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= 6; i++) {
+                const state = getWeekState(i);
+                const score = userScores.find(s => s.week_number === i);
+                
+                let tileClass = (i === activeWeekSelection) ? 'week-tile active-tile' : 'week-tile';
+                let icon = ''; let title = `Week ${i}`; let b1 = ''; let b2 = '';
+
+                if (state === 'past' && score) {
+                    icon = '✓'; 
+                    b1 = `<span class="tile-score">${score.raw_score}/${score.total_questions}</span>`;
+                    const hasRank = userProfile?.has_rank_pass || score.rank_unlocked;
+                    if (hasRank) {
+                        const r = calculateRankPercentile(score.raw_score, score.total_questions, schedule[i-1].start);
+                        b2 = `<span class="tile-rank">Top ${r}%</span>`;
+                    } else {
+                        b2 = `Rank locked`;
+                    }
+                } else if (state === 'past' && !score) {
+                    icon = '✗'; b1 = `Missed`; b2 = ``;
+                } else if (state === 'current') {
+                    icon = '⚡'; b1 = `Open now`; b2 = score ? `Submitted` : `Start mock`;
+                } else {
+                    icon = '🔒'; 
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    b1 = `Opens ${monthNames[schedule[i-1].start.getMonth()]} ${schedule[i-1].start.getDate()}`; b2 = ``;
+                }
+
+                grid.innerHTML += `
+                    <div class="${tileClass}" onclick="selectWeek(${i})">
+                        <div class="tile-header"><span>${icon}</span> ${title}</div>
+                        <div class="tile-body">
+                            <div>${b1}</div>
+                            <div>${b2}</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function selectWeek(w) {
+            activeWeekSelection = w;
+            renderPath();
+            renderDetailPanel(w);
+        }
+
+        // --- RENDER DETAIL PANEL ---
+        function renderDetailPanel(weekNum) {
+            const panel = document.getElementById('detail-panel');
+            const state = getWeekState(weekNum);
+            const score = userScores.find(s => s.week_number === weekNum);
+            const sched = schedule[weekNum - 1];
+
+            let html = '';
+
+            if (state === 'future') {
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                html = `
+                    <div class="detail-header">
+                        <h2>Week ${weekNum}</h2>
+                        <p>Opens ${monthNames[sched.start.getMonth()]} ${sched.start.getDate()}</p>
+                    </div>
+                    <p style="color: var(--wl-text-muted); font-size: 1.1rem; font-weight: 500;">This week's mock will appear here when the test window opens.</p>
+                `;
+            } 
+            else if (state === 'current') {
+                html = `
+                    <div class="detail-header">
+                        <h2>Week ${weekNum} Mock Exam</h2>
+                        <p style="color: var(--wl-teal);">Open now</p>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="detail-card">
+                            <h4>Main Mock</h4>
+                            <div class="detail-desc">Core league path. 40 questions spanning all subjects. Takes 25 minutes.</div>
+                            ${score ? `<button class="btn btn-locked btn-square btn-full" disabled>Submitted</button>` : `<button class="btn btn-action btn-square btn-full" onclick="window.location.href='mock-test.html'">Start Week ${weekNum} Mock</button>`}
+                        </div>
+                        <div class="detail-card">
+                            <h4>Writing Challenge</h4>
+                            <div class="detail-desc">Optional tutor-marked task. Download the prompt, write your response, and upload.</div>
+                            <button class="btn btn-outline btn-square btn-full">Join Writing Challenge — £29.99</button>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (state === 'past' && !score) {
+                html = `
+                    <div class="detail-header"><h2>Week ${weekNum} Results</h2><p>Missed</p></div>
+                    <p style="color: var(--wl-text-muted); font-size: 1.1rem; font-weight: 500;">You did not submit an entry for this week.</p>
+                `;
+            }
+            else if (state === 'past' && score) {
+                const hasRank = userProfile?.has_rank_pass || score.rank_unlocked;
+                const hasReview = userProfile?.has_review_pass || score.report_unlocked;
+                const rank = calculateRankPercentile(score.raw_score, score.total_questions, sched.start);
+
+                let rankBox = hasRank 
+                    ? `<div class="detail-val" style="color: var(--wl-teal);">Top ${rank}%</div><button class="btn btn-outline btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank}, 'rank')">View Rank Report</button>`
+                    : `<div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.4rem; padding-top: 5px;">Locked</div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'rank')">Reveal Rank — £3.99</button>`;
+                
+                let reviewBox = hasReview
+                    ? `<div class="detail-val" style="color: var(--wl-blue); font-size: 1.4rem; padding-top: 5px;">Available</div><button class="btn btn-primary btn-square btn-full" onclick="openReportModal(${weekNum}, ${rank}, 'review')">Open Review Pack</button>`
+                    : `<div class="detail-val" style="font-size: 1rem; font-weight: 500; color: var(--wl-text-muted);">Get the paper, answers and explanations.</div><button class="btn btn-outline btn-square btn-full" onclick="triggerUpgradeModal(${weekNum}, 'review')">Get Review Pack — £19.99</button>`;
+
+                html = `
+                    <div class="detail-header">
+                        <h2>Week ${weekNum} Results</h2>
+                        <p>${score.raw_score}/${score.total_questions}</p>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="detail-card"><h4>Score</h4><div class="detail-val">${score.raw_score}/${score.total_questions}</div><div class="detail-desc">Raw total</div></div>
+                        <div class="detail-card"><h4>Benchmark Position</h4>${rankBox}</div>
+                        <div class="detail-card"><h4>Review Pack</h4>${reviewBox}</div>
+                        <div class="detail-card"><h4>Writing Challenge</h4><div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.2rem; padding-top: 10px;">Missed</div></div>
+                    </div>
+                `;
+            }
+            panel.innerHTML = html;
+        }
+
+        // --- UPGRADE MODAL TRIGGER ---
+        function triggerUpgradeModal(weekNum, type) {
+            document.getElementById('upgradeWeekNum').innerText = weekNum;
+            if (type === 'rank') {
+                document.getElementById('upgradeTitle').innerText = "Reveal Rank";
+                document.getElementById('upgradePrice').innerText = "£3.99";
+                document.getElementById('upgradeDesc').innerHTML = `<p style="margin-bottom: 24px;">See exactly where your child places against the cohort this week.</p>`;
+            } else {
+                document.getElementById('upgradeTitle').innerText = "Get Review Pack";
+                document.getElementById('upgradePrice').innerText = "£19.99";
+                document.getElementById('upgradeDesc').innerHTML = `
+                    <ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);">
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Your child’s answers vs correct answers</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li>
+                        <li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks & Focus areas</li>
+                    </ul>`;
+            }
+            openModal('upgrade-modal');
+        }
+
+        // --- MAIN FOCUS AREA LOGIC (MODE) ---
+        function calculateModeFocus(wrongTopicsArray) {
+            if (!wrongTopicsArray || wrongTopicsArray.length === 0) return "None - Perfect!";
+            let counts = {}; let maxCount = 0; let modeTopic = "General";
+            wrongTopicsArray.forEach(t => {
+                counts[t] = (counts[t] || 0) + 1;
+                if(counts[t] > maxCount) { maxCount = counts[t]; modeTopic = t; }
+            });
+            return modeTopic;
+        }
+
+        // --- REPORT MODAL ---
+        async function openReportModal(weekNum, rankPercentile, accessLevel) {
+            const scoreData = userScores.find(s => s.week_number === weekNum);
+            if (!scoreData) return;
+
+            document.getElementById('reportWeekNum').innerText = weekNum;
+            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
+            document.getElementById('modalSummaryRank').innerText = rankPercentile;
+
+            // Handle Access Level Locks
+            const isReview = (accessLevel === 'review');
+            const subTabs = ['nav-english', 'nav-maths', 'nav-vr', 'nav-nvr'];
+            subTabs.forEach(id => {
+                const el = document.getElementById(id);
+                el.setAttribute('data-week', weekNum);
+                if(isReview) {
+                    el.classList.remove('locked');
+                    el.innerHTML = el.innerText.replace(' 🔒', ''); 
+                } else {
+                    el.classList.add('locked');
+                    if(!el.innerHTML.includes('🔒')) el.innerHTML += ' <span>🔒</span>';
+                }
+            });
+            
+            document.getElementById('btnDownload').style.display = isReview ? 'inline-flex' : 'none';
+            document.getElementById('btnPaper').style.display = isReview ? 'inline-flex' : 'none';
+
+            // Fetch Data
+            const { data: qData } = await supabaseClient.from('questions').select('question_number, topic_tag, correct_answer').eq('exam_id', `week-${weekNum}`).order('question_number', { ascending: true });
+
+            let engTot=0, mathTot=0, vrTot=0, nvrTot=0;
+
+            if (qData) {
+                const userAns = scoreData.user_answers || {};
+                let engRows = '', mathRows = '', vrRows = '', nvrRows = '';
+                let engWrong=[], mathWrong=[], vrWrong=[], nvrWrong=[];
+
+                qData.forEach(q => {
+                    const qNum = q.question_number; const topic = q.topic_tag || 'General'; const correctAns = q.correct_answer;
+                    const rawUser = userAns[qNum];
+                    const userStr = Array.isArray(rawUser) ? rawUser.sort().join(', ') : (rawUser || '-');
+                    const correctStr = correctAns.split(',').map(s=>s.trim()).sort().join(', ');
+
+                    const isCorrect = userStr === correctStr;
+                    const resultText = isCorrect ? '✓ Correct' : (userStr === '-' ? '– Skipped' : '✗ Incorrect');
+                    const resultStyle = isCorrect ? 'color: var(--wl-teal); font-weight: 800;' : (userStr === '-' ? 'color: var(--wl-text-muted);' : 'color: var(--wl-nyoro-pink-text); font-weight: 800;');
+                    const rowStyle = isCorrect ? '' : 'background-color: var(--wl-soft-pink);';
+
+                    const rowHtml = `<tr style="${rowStyle}"><td style="font-weight: 800;">${qNum}</td><td>${topic}</td><td style="text-align: center;">${userStr}</td><td style="text-align: center; font-weight: 800;">${correctStr}</td><td style="${resultStyle}">${resultText}</td></tr>`;
+
+                    const tLower = topic.toLowerCase();
+                    if (tLower.includes('english') || tLower.includes('spag') || tLower.includes('comprehension') || tLower.includes('spelling') || tLower.includes('grammar') || tLower.includes('cloze')) {
+                        engTot++; engRows += rowHtml; if(!isCorrect) engWrong.push(topic);
+                    } else if (tLower.includes('math')) {
+                        mathTot++; mathRows += rowHtml; if(!isCorrect) mathWrong.push(topic);
+                    } else if (tLower.includes('non') || tLower.includes('nvr')) {
+                        nvrTot++; nvrRows += rowHtml; if(!isCorrect) nvrWrong.push(topic);
+                    } else if (tLower.includes('verbal') || tLower.includes('vr')) {
+                        vrTot++; vrRows += rowHtml; if(!isCorrect) vrWrong.push(topic);
+                    }
+                });
+
+                document.querySelector('#tab-english tbody').innerHTML = engRows;
+                document.querySelector('#tab-maths tbody').innerHTML = mathRows;
+                document.querySelector('#tab-vr tbody').innerHTML = vrRows;
+                document.querySelector('#tab-nvr tbody').innerHTML = nvrRows;
+
+                document.getElementById('focusEng').innerText = calculateModeFocus(engWrong);
+                document.getElementById('focusMath').innerText = calculateModeFocus(mathWrong);
+                document.getElementById('focusVr').innerText = calculateModeFocus(vrWrong);
+                document.getElementById('focusNvr').innerText = calculateModeFocus(nvrWrong);
+            }
+
+            // Provide fallback totals if qData is empty (prototype safety)
+            engTot = engTot || 10; mathTot = mathTot || 10; vrTot = vrTot || 10; nvrTot = nvrTot || 10;
+
+            document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}/${engTot}`;
+            document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}/${mathTot}`;
+            document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}/${vrTot}`;
+            document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0}/${nvrTot}`;
+
+            document.getElementById('tabEngRaw').innerText = `${scoreData.english_score || 0}/${engTot}`;
+            document.getElementById('tabEngAcc').innerText = `${Math.round(((scoreData.english_score || 0) / engTot) * 100)}%`;
+            document.getElementById('tabMathRaw').innerText = `${scoreData.maths_score || 0}/${mathTot}`;
+            document.getElementById('tabMathAcc').innerText = `${Math.round(((scoreData.maths_score || 0) / mathTot) * 100)}%`;
+            document.getElementById('tabVrRaw').innerText = `${scoreData.vr_score || 0}/${vrTot}`;
+            document.getElementById('tabVrAcc').innerText = `${Math.round(((scoreData.vr_score || 0) / vrTot) * 100)}%`;
+            document.getElementById('tabNvrRaw').innerText = `${scoreData.nvr_score || 0}/${nvrTot}`;
+            document.getElementById('tabNvrAcc').innerText = `${Math.round(((scoreData.nvr_score || 0) / nvrTot) * 100)}%`;
+
+            openModal('report-modal');
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>
