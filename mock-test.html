@@ -680,29 +680,42 @@
         }
 
         function calculateScore() {
-            let score = 0;
-            // Loop through our questionsList (0-indexed)
+            let breakdown = {
+                total: 0,
+                english: 0,
+                maths: 0,
+                vr: 0,
+                nvr: 0
+            };
+
             for (let i = 0; i < totalQuestions; i++) {
                 const questionRecord = questionsList[i];
-                const userAns = answersTracker[i + 1]; // answersTracker is 1-indexed
+                const userAns = answersTracker[i + 1]; 
                 const correctAns = questionRecord.correct_answer;
+                const tag = (questionRecord.topic_tag || '').toLowerCase();
 
-                if (!userAns) continue; // Skipped question
+                if (!userAns) continue; 
 
-                // If it's a multiple choice (Array of answers like ['A', 'D'])
+                let isCorrect = false;
+
                 if (Array.isArray(userAns)) {
-                    // Split the DB string "A,D" into an array, sort both, and compare
                     const correctArr = correctAns.split(',').map(s => s.trim()).sort();
                     const userArr = [...userAns].sort();
-                    if (JSON.stringify(correctArr) === JSON.stringify(userArr)) score++;
+                    if (JSON.stringify(correctArr) === JSON.stringify(userArr)) isCorrect = true;
                 } else {
-                    // Standard single choice
-                    if (userAns === correctAns) score++;
+                    if (userAns === correctAns) isCorrect = true;
+                }
+
+                if (isCorrect) {
+                    breakdown.total++;
+                    if (tag.includes('english') || tag.includes('spag')) breakdown.english++;
+                    else if (tag.includes('math')) breakdown.maths++;
+                    else if (tag.includes('non') || tag.includes('nvr')) breakdown.nvr++;
+                    else if (tag.includes('verbal') || tag.includes('vr')) breakdown.vr++;
                 }
             }
-            return score;
+            return breakdown;
         }
-
         async function handleManualSubmit() {
             const timeRemaining = endTime - Date.now();
             if (timeRemaining > 0) {
@@ -729,17 +742,21 @@
                 return window.location.href = 'login.html';
             }
 
-            // Grade the test!
-            const finalScore = calculateScore(); 
+            // Get the detailed breakdown!
+            const scores = calculateScore(); 
 
             const { error } = await supabaseClient
                 .from('scores')
-                .insert([{
+                .upsert([{
                     user_id: session.user.id,
-                    week_number: 3, 
-                    raw_score: finalScore,
-                    total_questions: totalQuestions
-                }]);
+                    week_number: 3, // We will make this dynamic later
+                    raw_score: scores.total,
+                    total_questions: totalQuestions,
+                    english_score: scores.english,
+                    maths_score: scores.maths,
+                    vr_score: scores.vr,
+                    nvr_score: scores.nvr
+                }], { onConflict: 'user_id, week_number' });
 
             if (error) {
                 console.error("Error saving score:", error);
@@ -749,7 +766,6 @@
                 return;
             }
 
-            // Clear their local storage so they can't resume a submitted test
             localStorage.removeItem(`exam_endTime_${CURRENT_EXAM_ID}`);
             localStorage.removeItem(`exam_state_${CURRENT_EXAM_ID}`);
 
