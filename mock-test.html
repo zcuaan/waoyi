@@ -756,6 +756,7 @@
                     maths_score: scores.maths,
                     vr_score: scores.vr,
                     nvr_score: scores.nvr
+                    user_answers: answersTracker
                 }], { onConflict: 'user_id, week_number' });
 
             if (error) {
