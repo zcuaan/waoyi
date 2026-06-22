@@ -374,7 +374,7 @@
         let timerInterval;
         let currentQuestion = 1;
         let totalQuestions = 0; 
-        const answersTracker = {};
+        let answersTracker = {}; // Changed to let so we can overwrite it from storage
 
         // --- FETCH DATA ---
         async function fetchQuestions() {
@@ -401,14 +401,13 @@
             return true;
         }
 
-        // --- START EXAM ---
+        // --- START EXAM & CRASH RECOVERY ---
         async function startExam() {
             const startBtn = document.querySelector('.btn-start');
             startBtn.innerText = "Loading Exam...";
             startBtn.disabled = true;
 
             const success = await fetchQuestions();
-            
             if (!success) {
                 startBtn.innerText = "Begin Exam";
                 startBtn.disabled = false;
@@ -418,7 +417,22 @@
             document.getElementById('splash-screen').style.display = 'none';
             document.getElementById('exam-ui').style.display = 'flex';
             
-            endTime = Date.now() + (25 * 60 * 1000);
+            // CRASH RECOVERY: Check if an active exam already exists in local storage
+            const savedEndTime = localStorage.getItem(`exam_endTime_${CURRENT_EXAM_ID}`);
+            const savedAnswers = localStorage.getItem(`exam_state_${CURRENT_EXAM_ID}`);
+            
+            if (savedEndTime && parseInt(savedEndTime) > Date.now()) {
+                // Resume existing session!
+                endTime = parseInt(savedEndTime);
+                if (savedAnswers) answersTracker = JSON.parse(savedAnswers);
+            } else {
+                // Start a brand new session
+                endTime = Date.now() + (25 * 60 * 1000);
+                localStorage.setItem(`exam_endTime_${CURRENT_EXAM_ID}`, endTime);
+                localStorage.removeItem(`exam_state_${CURRENT_EXAM_ID}`);
+                answersTracker = {};
+            }
+
             updateTimer();
             timerInterval = setInterval(updateTimer, 1000);
 
@@ -431,25 +445,24 @@
             document.getElementById('current-q-num').innerText = currentQuestion;
             document.getElementById('progress-bar').style.width = `${(currentQuestion / totalQuestions) * 100}%`;
 
-            // Hide all layouts
             for(let i = 1; i <= 6; i++) {
                 document.getElementById('layout-' + i).classList.remove('active');
             }
             
-            // Inject and show correct layout
             renderQuestionData();
 
-            // Setup buttons
             const nextBtn = document.querySelector('.btn-next');
             if (currentQuestion === totalQuestions) {
                 nextBtn.innerText = "Submit Exam";
                 nextBtn.style.backgroundColor = "var(--wl-teal)";
+                // Update the onclick to hit our new manual submit function
+                nextBtn.onclick = handleManualSubmit; 
             } else {
                 nextBtn.innerText = "Next";
                 nextBtn.style.backgroundColor = "var(--wl-blue)";
+                nextBtn.onclick = nextQuestion;
             }
 
-            // Sync grid highlights
             const gridItems = document.querySelectorAll('.grid-item');
             gridItems.forEach((item) => {
                 const itemQNum = item.getAttribute('data-q');
@@ -475,20 +488,15 @@
             if (!container) return console.error("Missing layout template: " + layoutId);
             container.classList.add('active');
 
-            // --- LAYOUT 1: Split Screen Reading ---
             if (layoutId === '1') {
                 container.querySelector('.passage-title').innerHTML = qData.passage_title || '';
                 container.querySelector('.passage-author').innerHTML = qData.passage_author || '';
                 container.querySelector('.passage-text').innerHTML = qData.passage_text || '';
-                
                 container.querySelector('.question-quote').innerHTML = qData.question_quote || '';
                 container.querySelector('.question-quote').style.display = qData.question_quote ? 'block' : 'none';
                 container.querySelector('.question-text').innerHTML = qData.question_text || '';
-                
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
-
-            // --- LAYOUT 2: Standard Single Column (MCQ, SPAG, Cloze, Multi-select, Image+MCQ) ---
             else if (layoutId === '2') {
                 let textHtml = '';
                 if (qData.instruction_text) textHtml += `<div style="font-size: 1.1rem; color: #555; margin-bottom: 16px;">${qData.instruction_text}</div>`;
@@ -496,27 +504,20 @@
                 if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.3rem; margin-bottom: 24px;">${qData.cloze_sentence}</div>`;
                 if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 if (qData.question_image_url) textHtml += `<img src="${qData.question_image_url}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
-                
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
-
-            // --- LAYOUT 3: Split Screen (Image Left, Options Right) ---
             else if (layoutId === '3') {
                 container.querySelector('.graph-box').innerHTML = `<img src="${qData.side_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
                 let textHtml = '';
                 if (qData.instruction_text) textHtml += `<div style="font-size: 1.1rem; color: #555; margin-bottom: 16px;">${qData.instruction_text}</div>`;
                 textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
-                
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
-
-            // --- LAYOUT 4: NVR (Image Options) ---
             else if (layoutId === '4') {
                 container.querySelector('.question-text').innerHTML = qData.question_text;
                 container.querySelector('.diagram-box').innerHTML = `<img src="${qData.question_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
-                
                 const optionsContainer = container.querySelector('.options-horizontal');
                 optionsContainer.innerHTML = '';
                 qData.options.forEach(opt => {
@@ -528,20 +529,15 @@
                         </div>`;
                 });
             }
-
-            // --- LAYOUT 5: Reference Text + Question ---
             else if (layoutId === '5') {
                 container.querySelector('.alphabet-strip').innerHTML = qData.reference_text;
                 container.querySelector('.question-text').innerHTML = qData.question_text;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
-
-            // --- LAYOUT 6: Compound Words / Grouped Options ---
             else if (layoutId === '6') {
                 container.querySelector('.question-text').innerHTML = qData.question_text;
                 const msContainer = container.querySelector('.multi-select-container');
                 msContainer.innerHTML = '';
-
                 qData.option_groups.forEach(group => {
                     let groupHtml = `<div class="options-group" id="${group.group_id}">`;
                     group.options.forEach(opt => {
@@ -582,6 +578,11 @@
             return currentAns === letter;
         }
 
+        // Saves current state to Local Storage
+        function saveProgress() {
+            localStorage.setItem(`exam_state_${CURRENT_EXAM_ID}`, JSON.stringify(answersTracker));
+        }
+
         function selectOption(element, layoutId, chosenLetter, maxSelections = 1) {
             if (maxSelections === 1) {
                 const container = document.getElementById('layout-' + layoutId);
@@ -602,6 +603,8 @@
                 }
             }
 
+            saveProgress(); // Backup to hard drive
+
             const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
             if (isQuestionAnswered(currentQuestion) && gridItem && !gridItem.classList.contains('current')) {
                 gridItem.classList.add('answered');
@@ -619,6 +622,8 @@
             const allSelected = document.querySelectorAll('#layout-6 .option-item.selected');
             const selectedLetters = Array.from(allSelected).map(el => el.querySelector('.option-letter').innerText);
             answersTracker[currentQuestion] = selectedLetters;
+
+            saveProgress(); // Backup to hard drive
 
             if (selectedLetters.length >= 2) {
                 const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
@@ -640,8 +645,6 @@
             if (currentQuestion < totalQuestions) {
                 currentQuestion++;
                 updateUI();
-            } else {
-                submitExam();
             }
         }
 
@@ -661,7 +664,7 @@
             if (timeRemaining <= 0) {
                 clearInterval(timerInterval);
                 timerElement.innerText = `⏱ 00:00`;
-                submitExam();
+                handleTimeoutSubmit(); // Auto Submit!
                 return;
             }
 
@@ -676,7 +679,45 @@
             }
         }
 
-        async function submitExam() {
+        function calculateScore() {
+            let score = 0;
+            // Loop through our questionsList (0-indexed)
+            for (let i = 0; i < totalQuestions; i++) {
+                const questionRecord = questionsList[i];
+                const userAns = answersTracker[i + 1]; // answersTracker is 1-indexed
+                const correctAns = questionRecord.correct_answer;
+
+                if (!userAns) continue; // Skipped question
+
+                // If it's a multiple choice (Array of answers like ['A', 'D'])
+                if (Array.isArray(userAns)) {
+                    // Split the DB string "A,D" into an array, sort both, and compare
+                    const correctArr = correctAns.split(',').map(s => s.trim()).sort();
+                    const userArr = [...userAns].sort();
+                    if (JSON.stringify(correctArr) === JSON.stringify(userArr)) score++;
+                } else {
+                    // Standard single choice
+                    if (userAns === correctAns) score++;
+                }
+            }
+            return score;
+        }
+
+        async function handleManualSubmit() {
+            const timeRemaining = endTime - Date.now();
+            if (timeRemaining > 0) {
+                const isSure = confirm("You still have time remaining! Are you sure you want to submit your exam early?");
+                if (!isSure) return; // Go back to test
+            }
+            executeSubmission();
+        }
+
+        async function handleTimeoutSubmit() {
+            alert("Time's up! Your exam will now be submitted automatically.");
+            executeSubmission();
+        }
+
+        async function executeSubmission() {
             clearInterval(timerInterval);
             const nextBtn = document.querySelector('.btn-next');
             nextBtn.innerText = "Saving Score...";
@@ -684,28 +725,33 @@
             
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) {
-                alert("Session expired. Cannot save score.");
+                alert("Session expired. Please log in again.");
                 return window.location.href = 'login.html';
             }
 
-            const fakeScore = Math.floor(Math.random() * (totalQuestions - 25 + 1)) + 25; 
+            // Grade the test!
+            const finalScore = calculateScore(); 
 
             const { error } = await supabaseClient
                 .from('scores')
                 .insert([{
                     user_id: session.user.id,
                     week_number: 3, 
-                    raw_score: fakeScore,
+                    raw_score: finalScore,
                     total_questions: totalQuestions
                 }]);
 
             if (error) {
                 console.error("Error saving score:", error);
-                alert("There was an error saving your score.");
+                alert("There was an error saving your score. Check your internet connection.");
                 nextBtn.innerText = "Submit Exam";
                 nextBtn.disabled = false;
                 return;
             }
+
+            // Clear their local storage so they can't resume a submitted test
+            localStorage.removeItem(`exam_endTime_${CURRENT_EXAM_ID}`);
+            localStorage.removeItem(`exam_state_${CURRENT_EXAM_ID}`);
 
             alert(`Exam submitted successfully!`);
             window.location.href = 'dashboard.html';
