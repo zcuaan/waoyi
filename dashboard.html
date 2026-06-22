@@ -26,6 +26,7 @@
             --wl-nyoro-navy: #15325b;
             --wl-nyoro-pink-text: #ea005e;
             --wl-nyoro-pink-bg: #fce8ef;
+            --wl-soft-pink: #fdf2f8;
             
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
@@ -121,7 +122,7 @@
         .report-tabs { display: flex; background: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 0 32px; overflow-x: auto;}
         .tab { padding: 16px 20px; font-weight: 700; color: var(--wl-text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.2s;}
         .tab.active { color: var(--wl-black); border-bottom-color: var(--wl-yellow); }
-        .tab span { font-size: 0.9rem; margin-left: 4px; }
+        .tab.locked { color: #cbd5e1; cursor: not-allowed; display: flex; align-items: center; gap: 6px; }
         
         .report-content { padding: 32px; overflow-y: auto; flex: 1; display: none; }
         .report-content.active { display: block; }
@@ -179,7 +180,7 @@
                 <h1><span id="childNameDisplay">Student</span>'s Dashboard</h1>
                 <p>Summer League 2026</p>
             </div>
-            <div style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 6px 14px; font-weight: 800; font-size: 0.85rem; border-radius: 4px; text-transform: uppercase;">
+            <div id="accountBadge" style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 6px 14px; font-weight: 800; font-size: 0.85rem; border-radius: 4px; text-transform: uppercase;">
                 Free Account
             </div>
         </div>
@@ -227,13 +228,11 @@
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3 style="margin-bottom: 24px; font-size: 1.4rem;">Summer League Passes</h3>
-                    
                     <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px dashed rgba(21, 50, 91, 0.2);">
                         <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Rank Pass (£19.99)</h4>
                         <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.</p>
                         <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Upgrade to Rank Pass</button>
                     </div>
-
                     <div style="flex-grow: 1;">
                         <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Review Pass (£99)</h4>
                         <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 review packs, including the papers, answers and explanations.</p>
@@ -480,9 +479,11 @@
             }
         }
         function switchTab(tabId, element) {
+            if (element.classList.contains('locked')) return; // Stop them from switching to locked tabs normally
+            
             const contents = document.querySelectorAll('.report-content');
             contents.forEach(content => content.classList.remove('active'));
-            const tabs = document.querySelectorAll('.report-tabs .tab');
+            const tabs = document.querySelectorAll('.report-tabs .tab:not(.locked)');
             tabs.forEach(tab => tab.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
@@ -502,6 +503,7 @@
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         let userScores = [];
+        let userProfile = null;
 
         document.getElementById('logoutBtn').addEventListener('click', async function(event) {
             event.preventDefault(); 
@@ -509,11 +511,6 @@
             window.location.href = 'index.html'; 
         });
 
-        // -------------------------------------------------------------
-        // TESTING SCENARIO SETUP:
-        // By setting the dates in the past, we force the UI to pretend
-        // that Weeks 1, 2, and 3 are already over. Week 4 opens next.
-        // -------------------------------------------------------------
         const schedule = [
             { week: 1, start: new Date(2026, 4, 1), end: new Date(2026, 4, 3) }, // May 2026
             { week: 2, start: new Date(2026, 4, 8), end: new Date(2026, 4, 10) }, // May 2026
@@ -523,12 +520,8 @@
             { week: 6, start: new Date(2026, 6, 10, 16, 0), end: new Date(2026, 6, 12, 22, 0) }
         ];
 
-        // Standardisation Adjustments
+        // --- 11+ STANDARDISATION DATA ---
         const ageAdjustments = {"6Y 2M": 0.25, "6Y 3M": 0.25, "6Y 4M": 0.24, "6Y 5M": 0.24, "6Y 6M": 0.23, "6Y 7M": 0.23, "6Y 8M": 0.22, "6Y 9M": 0.22, "6Y 10M": 0.21, "6Y 11M": 0.21, "7Y 0M": 0.2, "7Y 1M": 0.2, "7Y 2M": 0.19, "7Y 3M": 0.19, "7Y 4M": 0.19, "7Y 5M": 0.18, "7Y 6M": 0.18, "7Y 7M": 0.17, "7Y 8M": 0.17, "7Y 9M": 0.16, "7Y 10M": 0.16, "7Y 11M": 0.15, "8Y 0M": 0.15, "8Y 1M": 0.14, "8Y 2M": 0.14, "8Y 3M": 0.13, "8Y 4M": 0.13, "8Y 5M": 0.12, "8Y 6M": 0.12, "8Y 7M": 0.11, "8Y 8M": 0.11, "8Y 9M": 0.1, "8Y 10M": 0.1, "8Y 11M": 0.09, "9Y 0M": 0.09, "9Y 1M": 0.08, "9Y 2M": 0.08, "9Y 3M": 0.07, "9Y 4M": 0.07, "9Y 5M": 0.06, "9Y 6M": 0.06, "9Y 7M": 0.05, "9Y 8M": 0.05, "9Y 9M": 0.04, "9Y 10M": 0.04, "9Y 11M": 0.03, "10Y 0M": 0.03, "10Y 1M": 0.02, "10Y 2M": 0.02, "10Y 3M": 0.01, "10Y 4M": 0.01, "10Y 5M": 0.0, "10Y 6M": 0.0, "10Y 7M": -0.01, "10Y 8M": -0.01, "10Y 9M": -0.02, "10Y 10M": -0.02, "10Y 11M": -0.03, "11Y 0M": -0.03, "11Y 1M": -0.04, "11Y 2M": -0.05, "11Y 3M": -0.05, "11Y 4M": -0.06, "11Y 5M": -0.06, "11Y 6M": -0.07, "11Y 7M": -0.07, "11Y 8M": -0.08, "11Y 9M": -0.08, "11Y 10M": -0.09, "11Y 11M": -0.09, "12Y 0M": -0.1, "12Y 1M": -0.1, "12Y 2M": -0.11, "12Y 3M": -0.11, "12Y 4M": -0.12, "12Y 5M": -0.12, "12Y 6M": -0.13, "12Y 7M": -0.13, "12Y 8M": -0.13, "12Y 9M": -0.14, "12Y 10M": -0.14, "12Y 11M": -0.15, "13Y 0M": -0.15, "13Y 1M": -0.16, "13Y 2M": -0.16, "13Y 3M": -0.17, "13Y 4M": -0.17, "13Y 5M": -0.18, "13Y 6M": -0.18, "13Y 7M": -0.19, "13Y 8M": -0.19, "13Y 9M": -0.2, "13Y 10M": -0.2, "13Y 11M": -0.21, "14Y 0M": -0.21, "14Y 1M": -0.22, "14Y 2M": -0.22, "14Y 3M": -0.23, "14Y 4M": -0.23, "14Y 5M": -0.24, "14Y 6M": -0.24, "14Y 7M": -0.25};
-
-        let childBirthMonth = null; 
-        let childBirthYear = null;
-        let childGender = null; 
 
         const monthMap = {
             "january": 0, "jan": 0, "1": 0, "01": 0, "february": 1, "feb": 1, "2": 1, "02": 1, "march": 2, "mar": 2, "3": 2, "03": 2, "april": 3, "apr": 3, "4": 3, "04": 3, "may": 4, "5": 4, "05": 4, "june": 5, "jun": 5, "6": 5, "06": 5, "july": 6, "jul": 6, "7": 6, "07": 6, "august": 7, "aug": 7, "8": 7, "08": 7, "september": 8, "sep": 8, "9": 8, "09": 8, "october": 9, "oct": 9, "10": 9, "november": 10, "nov": 10, "11": 10, "december": 11, "dec": 11, "12": 11
@@ -546,7 +539,7 @@
 
         function calculateRankPercentile(rawScore, totalQs, examDate) {
             const rawPercentage = rawScore / totalQs;
-            const ageString = calculateAgeString(childBirthMonth, childBirthYear, examDate);
+            const ageString = calculateAgeString(userProfile?.child_birth_month, userProfile?.child_birth_year, examDate);
             const adjustment = ageAdjustments[ageString] || 0.0; 
             const standardisedScoreDec = (rawPercentage + adjustment + 1) / 2;
             const standardisedScore = Math.round(standardisedScoreDec * 100);
@@ -602,15 +595,27 @@
 
             const { data: profileData } = await supabaseClient
                 .from('profiles')
-                .select('child_first_name, child_birth_month, child_birth_year, child_gender')
+                .select('child_first_name, child_birth_month, child_birth_year, child_gender, has_rank_pass, has_review_pass')
                 .eq('id', session.user.id)
                 .single();
 
             if (profileData) {
-                if (profileData.child_first_name) document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
-                childBirthMonth = profileData.child_birth_month;
-                childBirthYear = profileData.child_birth_year;
-                childGender = profileData.child_gender;
+                userProfile = profileData;
+                if (profileData.child_first_name) {
+                    document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
+                }
+                
+                // Update Free Account Badge
+                const badge = document.getElementById('accountBadge');
+                if (profileData.has_review_pass) {
+                    badge.innerText = 'REVIEW PASS ACTIVE';
+                    badge.style.backgroundColor = 'var(--wl-nyoro-aqua)';
+                    badge.style.color = 'var(--wl-nyoro-navy)';
+                } else if (profileData.has_rank_pass) {
+                    badge.innerText = 'RANK PASS ACTIVE';
+                    badge.style.backgroundColor = 'var(--wl-teal)';
+                    badge.style.color = 'var(--wl-white)';
+                }
             }
 
             const { data: scoreData, error: scoreError } = await supabaseClient
@@ -624,7 +629,6 @@
             renderResultsTable(userScores);
         }
 
-        // --- PROTOTYPE SIMULATION LOGIC ---
         function renderResultsTable(scores) {
             const tbody = document.querySelector('.results-table tbody');
             tbody.innerHTML = ''; 
@@ -632,33 +636,32 @@
 
             for (let i = 1; i <= 6; i++) {
                 const weekSchedule = schedule[i - 1];
-                
-                // Fetch the EXACT score for this specific week from Supabase
                 const weekScore = scores.find(s => s.week_number === i); 
                 
                 let tr = document.createElement('tr');
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
-                    // Calculate rank based on this specific week's real database score
+                    // ACTUAL DATABASE PURCHASE CHECKS!
+                    const hasGlobalRank = userProfile?.has_rank_pass;
+                    const hasGlobalReport = userProfile?.has_review_pass;
+                    
+                    const canSeeRank = hasGlobalRank || weekScore.rank_unlocked;
+                    const canSeeReport = hasGlobalReport || weekScore.report_unlocked;
+
                     const rank = calculateRankPercentile(weekScore.raw_score, weekScore.total_questions, weekSchedule.start);
                     scoreHtml = `<td class="td-score">${weekScore.raw_score}/${weekScore.total_questions}</td>`;
                     
-                    // --- PURCHASE SIMULATION ---
-                    if (i === 1) {
-                        // Week 1: Did not buy Rank, did not buy Report
+                    if (canSeeRank) {
+                        rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`;
+                    } else {
                         rankHtml = `<td><button class="btn btn-locked btn-sm btn-square">Reveal Rank £3.99</button></td>`; 
-                        packHtml = `<td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>`;
-                    } 
-                    else if (i === 2) {
-                        // Week 2: Bought Rank, did NOT buy Report
-                        rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`;
-                        packHtml = `<td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>`;
-                    } 
-                    else {
-                        // Week 3+: Bought Rank AND Report
-                        rankHtml = `<td><div class="td-rank">Top ${rank}%</div></td>`;
+                    }
+                    
+                    if (canSeeReport) {
                         packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i}, ${rank})">View Report</button></td>`;
+                    } else {
+                        packHtml = `<td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>`;
                     }
                     
                     feedbackHtml = `<td><span class="td-muted">Feedback pending</span></td>`;
@@ -687,18 +690,16 @@
             }
         }
 
-        function viewReport(weekNum, rankPercentile, engScore) {
+        function viewReport(weekNum, rankPercentile) {
+            const scoreData = userScores.find(s => s.week_number === weekNum);
+            if (!scoreData) return;
+
             document.getElementById('reportWeekNum').innerText = weekNum;
             document.getElementById('upgradeWeekNum').innerText = weekNum;
             
-            // Reusing your most recent score payload for the prototype
-            const scoreData = userScores.length > 0 ? userScores[0] : null; 
-            if(!scoreData) return;
-
             document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
             document.getElementById('modalSummaryRank').innerText = rankPercentile;
 
-            // Updated to show X / 10 formatting
             document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0} / 10`;
             document.getElementById('tabEngRaw').innerText = `${scoreData.english_score || 0} / 10`;
 
