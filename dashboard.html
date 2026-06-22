@@ -7,7 +7,6 @@
     <link rel="icon" type="image/png" href="Asset 2.png">
     <style>
         :root {
-            /* Hybrid Palette: Homepage bold + Dashboard soft */
             --wl-yellow: #ffcb05;
             --wl-soft-yellow: #fff9e6;
             --wl-teal: #16a085;
@@ -23,7 +22,6 @@
             --wl-white: #ffffff;
             --wl-border: #e2e8f0;
 
-            /* TCG "Nyoro Nyoro" Inspired Palette */
             --wl-nyoro-aqua: #bcedea;
             --wl-nyoro-navy: #15325b;
             --wl-nyoro-pink-text: #ea005e;
@@ -106,11 +104,7 @@
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
         
-        /* Utility class to remove diagonals */
-        .btn-square {
-            clip-path: none !important;
-            border-radius: 6px;
-        }
+        .btn-square { clip-path: none !important; border-radius: 6px; }
 
         .btn-primary { background-color: var(--wl-blue); color: var(--wl-white); }
         .btn-primary:hover { background-color: #005299; transform: translateY(-1px); }
@@ -151,7 +145,6 @@
         .active-info h2 { font-size: 1.8rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         .active-info .sub-info { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
 
-        /* Button Hover Effects */
         .btn-start-mock:hover {
             transform: translateY(-2px);
             box-shadow: 4px 5px 0px var(--wl-black) !important;
@@ -163,10 +156,8 @@
         .results-table th { padding: 16px 20px; text-align: left; font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 3px solid var(--wl-black); }
         .results-table td { padding: 20px; border-bottom: 2px solid var(--wl-white); vertical-align: middle; }
         
-        /* Zebra Striping */
         .results-table tbody tr:nth-child(odd) { background-color: var(--wl-white); }
         .results-table tbody tr:nth-child(even) { background-color: #f8fafc; }
-        
         .results-table tr:last-child td { border-bottom: none; }
         
         .td-week { font-weight: 800; font-size: 1.1rem; color: var(--wl-black); text-align: center; }
@@ -205,13 +196,11 @@
         }
         .modal-overlay.active { display: flex; }
 
-        /* Upgrade Modal */
         .modal-upgrade { background: var(--wl-white); width: 100%; padding: 32px; position: relative; }
         .modal-upgrade h2 { font-size: 1.8rem; margin-bottom: 8px; }
         .modal-upgrade .price { font-size: 1.3rem; color: var(--wl-blue); font-weight: 800; margin-bottom: 20px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--wl-text-muted); font-weight: bold;}
 
-        /* In-App Report Drawer/Modal */
         .modal-report { background: var(--wl-bg-main); width: 100%; height: 90vh; display: flex; flex-direction: column; overflow: hidden; position: relative;}
         .report-header { background: var(--wl-white); padding: 24px 32px; border-bottom: 2px solid var(--wl-border); display: flex; justify-content: space-between; align-items: center; }
         
@@ -223,7 +212,6 @@
         .report-content { padding: 32px; overflow-y: auto; flex: 1; display: none; }
         .report-content.active { display: block; }
         
-        /* Modal Content Styles */
         .stat-card { background: var(--wl-white); padding: 20px; border-radius: 8px; border: 2px solid var(--wl-border); text-align: center; }
         .stat-card span { display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
         .stat-card strong { font-size: 1.8rem; color: var(--wl-black); font-weight: 800; line-height: 1.2; }
@@ -233,7 +221,6 @@
         .subject-row span { font-weight: 600; color: var(--wl-text-main); }
         .subject-row strong { font-weight: 800; font-size: 1.1rem; color: var(--wl-black); }
 
-        /* Report Tables */
         .report-table { width: 100%; border-collapse: collapse; background: var(--wl-white); border: 1px solid var(--wl-border); border-radius: 8px; overflow: hidden; }
         .report-table th { background: var(--wl-black); color: var(--wl-white); padding: 12px 16px; text-align: left; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .report-table td { padding: 16px; border-bottom: 1px solid var(--wl-border); font-size: 0.95rem; font-weight: 500; }
@@ -241,7 +228,6 @@
 
         .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
 
-        /* Blurred Content Overlay */
         .blur-container { position: relative; }
         .blur-content { filter: blur(6px); opacity: 0.5; pointer-events: none; user-select: none; }
         .Reveal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
@@ -262,7 +248,7 @@
     <nav class="dash-nav">
         <div class="container nav-content">
             <div class="nav-brand">
-                <img src="Asset 2.png" alt="Shiba Mascot">
+                <img src="Asset 2.png" alt="Mascot">
                 The 11+ Weekend League
             </div>
             <div class="nav-links">
@@ -275,7 +261,7 @@
     <div class="container">
         <div class="header-section">
             <div>
-          <h1><span id="childNameDisplay">Leo</span>'s Dashboard</h1>
+                <h1><span id="childNameDisplay">Student</span>'s Dashboard</h1>
                 <p>Summer League 2026</p>
             </div>
             <div style="background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); box-shadow: 3px 3px 0px var(--wl-black); padding: 6px 14px; font-weight: 800; font-size: 0.85rem; border-radius: 4px; text-transform: uppercase;">
@@ -313,54 +299,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="td-week">1</td>
-                                <td class="td-score">28/40</td>
-                                <td><button class="btn btn-locked btn-sm btn-square">Reveal Rank £3.99</button></td>
-                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>
-                                <td><span class="td-muted">Missed</span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="td-week">2</td>
-                                <td class="td-score">31/40</td>
-                                <td>
-                                    <div class="td-rank">Top 36%</div>
-                                    <button class="btn btn-outline btn-sm btn-square" style="margin-top: 6px; border-color: var(--wl-black); color: var(--wl-black);" onclick="openModal('report-modal')">View Report</button>
-                                </td>
-                                <td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>
-                                <td><span class="td-muted">Feedback pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td class="td-week">3</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                                <td><span class="td-muted">Not submitted</span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="td-week">4</td>
-                                <td class="td-muted">Opens Aug 14</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="td-week">5</td>
-                                <td class="td-muted">Opens Aug 21</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="td-week">6</td>
-                                <td class="td-muted">Opens Aug 28</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
-                                <td class="td-empty">—</td>
+                                <td colspan="5" style="text-align:center; color: var(--wl-text-muted);">Loading results...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -446,184 +385,6 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="report-modal">
-        <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
-            <div class="angled-inner modal-report" style="padding: 0;">
-                
-                <div class="report-header">
-                    <div>
-                        <h2 style="margin-bottom: 4px;">Week 2 Results</h2>
-                        <p style="color: var(--wl-text-muted); font-weight: 600;">31 July – 2 August 2026</p>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: center; padding-right: 40px;">
-                        <button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);">Download PDF</button>
-                        <button class="btn btn-primary btn-sm btn-square">View Paper</button>
-                        <button class="modal-close" style="position: absolute; top: 15px; right: 20px;" onclick="closeModal('report-modal')">&times;</button>
-                    </div>
-                </div>
-                
-                <div class="report-tabs">
-                    <div class="tab active" onclick="switchTab('tab-summary', this)">Summary</div>
-                    <div class="tab" onclick="switchTab('tab-english', this)">English</div>
-                    <div class="tab" onclick="switchTab('tab-maths', this)">Maths (Locked)</div>
-                    <div class="tab" onclick="switchTab('tab-maths', this)">VR (Locked)</div>
-                    <div class="tab" onclick="switchTab('tab-maths', this)">NVR (Locked)</div>
-                </div>
-
-                <div class="report-content active" id="tab-summary">
-                    <div style="max-width: 650px; margin: 0 auto;">
-                        
-                        <div style="text-align: center; margin-bottom: 32px;">
-                            <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Overall League Rank</h3>
-                            <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">184 <span style="font-size: 1.6rem; color: var(--wl-text-muted);">/ 512</span></strong>
-                            <div style="color: var(--wl-teal); font-weight: 800; font-size: 1.2rem; margin-top: 4px;">Top 36% Percentile</div>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
-                            <div style="text-align: center;">
-                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span>
-                                <strong style="font-size: 1.6rem; color: var(--wl-black);">31/40</strong>
-                            </div>
-                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
-                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Cohort Avg</span>
-                                <strong style="font-size: 1.6rem; color: var(--wl-black);">61%</strong>
-                            </div>
-                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
-                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Top Score</span>
-                                <strong style="font-size: 1.6rem; color: var(--wl-black);">95%</strong>
-                            </div>
-                        </div>
-
-                        <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 24px;">
-                            <h3 style="margin-bottom: 16px; font-size: 1.2rem; text-align: center;">Subject Breakdown</h3>
-                            <div class="subject-row"><span>English</span><strong>7 / 10</strong></div>
-                            <div class="subject-row"><span>Maths</span><strong>8 / 10</strong></div>
-                            <div class="subject-row"><span>Verbal Reasoning</span><strong>6 / 10</strong></div>
-                            <div class="subject-row"><span>Non-Verbal Reasoning</span><strong>10 / 10</strong></div>
-                        </div>
-
-                        <div class="angled-wrapper" style="margin-top: 40px; margin-bottom: 0;">
-                            <div class="angled-inner" style="background-color: var(--wl-soft-yellow); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                                <div>
-                                    <h4 style="color: #b48500; margin-bottom: 4px;">Reveal Detailed Insights</h4>
-                                    <p style="font-size: 0.95rem; color: var(--wl-text-main); font-weight: 500;">See subject rankings, question-by-topic analysis, and access the full paper.</p>
-                                </div>
-                                <button class="btn btn-square" style="background-color: var(--wl-white); color: #b48500; border: 2px solid #fde68a;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="report-content" id="tab-english">
-                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                        <div class="stat-card">
-                            <span>Raw Score</span>
-                            <strong>7 / 10</strong>
-                        </div>
-                        <div class="stat-card">
-                            <span>Accuracy</span>
-                            <strong>70%</strong>
-                        </div>
-                        <div class="stat-card">
-                            <span>Subject Rank</span>
-                            <strong>142 <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong>
-                        </div>
-                        <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);">
-                            <span style="color: var(--wl-teal);">Percentile</span>
-                            <strong style="color: var(--wl-teal);">Top 28%</strong>
-                        </div>
-                    </div>
-
-                    <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
-                    <div class="table-responsive">
-                        <table class="report-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 50px;">Q#</th>
-                                    <th>Topic / Skill</th>
-                                    <th style="text-align: center;">Your Answer</th>
-                                    <th style="text-align: center;">Correct Answer</th>
-                                    <th>Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="font-weight: 800;">1</td>
-                                    <td>Comprehension - Inference</td>
-                                    <td style="text-align: center;">B</td>
-                                    <td style="text-align: center;">B</td>
-                                    <td style="color: var(--wl-teal); font-weight: 800;">✓ Correct</td>
-                                </tr>
-                                <tr style="background-color: var(--wl-soft-pink);">
-                                    <td style="font-weight: 800;">2</td>
-                                    <td>Grammar - Punctuation</td>
-                                    <td style="text-align: center;">A</td>
-                                    <td style="text-align: center; font-weight: 800;">C</td>
-                                    <td style="color: #ea005e; font-weight: 800;">✗ Incorrect</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 800;">3</td>
-                                    <td>Comprehension - Vocabulary</td>
-                                    <td style="text-align: center;">D</td>
-                                    <td style="text-align: center;">D</td>
-                                    <td style="color: var(--wl-teal); font-weight: 800;">✓ Correct</td>
-                                </tr>
-                                <tr style="background-color: var(--wl-soft-pink);">
-                                    <td style="font-weight: 800;">4</td>
-                                    <td>Spelling</td>
-                                    <td style="text-align: center;">B</td>
-                                    <td style="text-align: center; font-weight: 800;">A</td>
-                                    <td style="color: #ea005e; font-weight: 800;">✗ Incorrect</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="focus-area">
-                        <strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> 
-                        <span style="font-weight: 600; font-size: 1.1rem;">Grammar & Punctuation</span>
-                    </div>
-                </div>
-
-                <div class="report-content blur-container" id="tab-maths">
-                    
-                    <div class="Reveal-overlay">
-                        <div class="angled-wrapper" style="width: 100%; max-width: 450px;">
-                            <div class="angled-inner" style="padding: 40px; text-align: center; background-color: var(--wl-white);">
-                                <h3 style="margin-bottom: 12px; font-size: 1.5rem;">Review Pack Locked</h3>
-                                <p style="margin-bottom: 24px; color: var(--wl-text-muted); font-weight: 500;">Reveal to see subject rankings, complete question-by-question topic analysis, and access the full mock paper.</p>
-                                <button class="btn btn-primary btn-square" style="width: 100%; font-size: 1.1rem; padding: 14px;" onclick="openModal('upgrade-modal')">Get Review Pack (£19.99)</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="blur-content">
-                        <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                            <div class="stat-card"><span>Raw Score</span><strong>? / 10</strong></div>
-                            <div class="stat-card"><span>Accuracy</span><strong>?%</strong></div>
-                            <div class="stat-card"><span>Subject Rank</span><strong>? <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ 512</span></strong></div>
-                            <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong style="color: var(--wl-teal);">Top ?%</strong></div>
-                        </div>
-                        <h4 style="margin-bottom: 12px; font-size: 1.1rem;">Question Analysis</h4>
-                        <table class="report-table">
-                            <thead><tr><th>Q#</th><th>Topic / Skill</th><th>Your Answer</th><th>Correct Answer</th><th>Result</th></tr></thead>
-                            <tbody>
-                                <tr><td>1</td><td>Fractions</td><td>B</td><td>B</td><td>✓ Correct</td></tr>
-                                <tr><td>2</td><td>Algebra</td><td>A</td><td>C</td><td>✗ Incorrect</td></tr>
-                                <tr><td>3</td><td>Geometry</td><td>D</td><td>D</td><td>✓ Correct</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -631,23 +392,15 @@
         
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-            // Reset to summary tab when closing
-            if(modalId === 'report-modal') {
-                const firstTab = document.querySelector('.report-tabs .tab');
-                switchTab('tab-summary', firstTab);
-            }
         }
         
         function switchTab(tabId, element) {
-            // Hide all contents
             const contents = document.querySelectorAll('.report-content');
             contents.forEach(content => content.classList.remove('active'));
             
-            // Remove active class from all tabs
             const tabs = document.querySelectorAll('.report-tabs .tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected content and activate tab
             document.getElementById(tabId).classList.add('active');
             element.classList.add('active');
         }
@@ -658,8 +411,8 @@
             }
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
@@ -671,7 +424,7 @@
             window.location.href = 'index.html'; 
         });
 
-        // Your exact Summer 2026 schedule
+        // The Official Schedule
         const schedule = [
             { week: 1, start: new Date(2026, 6, 24, 16, 0), end: new Date(2026, 6, 26, 22, 0) },
             { week: 2, start: new Date(2026, 6, 31, 16, 0), end: new Date(2026, 7, 2, 22, 0) },
@@ -728,7 +481,7 @@
                 return;
             }
 
-            // 1. Fetch Profile Data
+            // 1. Fetch Profile Data (if they have one)
             const { data: profileData } = await supabaseClient
                 .from('profiles')
                 .select('child_first_name')
@@ -765,27 +518,23 @@
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
-                    // Test Completed
+                    // Test Completed!
                     scoreHtml = `<td class="td-score">${weekScore.raw_score}/${weekScore.total_questions}</td>`;
                     rankHtml = `<td><button class="btn btn-locked btn-sm btn-square">Reveal Rank £3.99</button></td>`;
                     packHtml = `<td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>`;
                     feedbackHtml = `<td><span class="td-muted">Feedback pending</span></td>`;
                     
-                    // Note: If you want to populate the Subject breakdown modal later, you can pass the 'weekScore' object into your openModal function!
                 } else if (now > weekSchedule.end) {
-                    // Test Missed
                     scoreHtml = `<td class="td-empty">—</td>`;
                     rankHtml = `<td class="td-empty">—</td>`;
                     packHtml = `<td class="td-empty">—</td>`;
                     feedbackHtml = `<td><span class="td-muted">Missed</span></td>`;
                 } else if (now >= weekSchedule.start && now <= weekSchedule.end) {
-                    // Test Currently Open
                     scoreHtml = `<td class="td-empty">—</td>`;
                     rankHtml = `<td class="td-empty">—</td>`;
                     packHtml = `<td class="td-empty">—</td>`;
                     feedbackHtml = `<td><span class="td-muted">Not submitted</span></td>`;
                 } else {
-                    // Test Not Open Yet
                     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                     const startStr = `${monthNames[weekSchedule.start.getMonth()]} ${weekSchedule.start.getDate()}`;
                     scoreHtml = `<td class="td-muted">Opens ${startStr}</td>`;
@@ -805,6 +554,9 @@
             }
         }
 
+        // Initialize!
         loadDashboard();
         updateSchedule();
     </script>
+</body>
+</html>
