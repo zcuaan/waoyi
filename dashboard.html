@@ -45,7 +45,6 @@
 
         .container { max-width: 1050px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- DYNAMIC ANGLED CORNERS --- */
         .angled-wrapper {
             background-color: var(--wl-black);
             padding: 4px;
@@ -60,102 +59,39 @@
             height: 100%;
         }
 
-        /* --- NAVIGATION --- */
-        .dash-nav {
-            background-color: var(--wl-white);
-            border-bottom: 2px solid var(--wl-border);
-            padding: 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
+        .dash-nav { background-color: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 16px 0; position: sticky; top: 0; z-index: 50; }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
         
-        .nav-brand { 
-            font-weight: 800; 
-            font-size: 1.2rem; 
-            color: var(--wl-black); 
-            display: flex; 
-            align-items: center; 
-            gap: 12px;
-        }
-        .nav-brand img { 
-            height: 35px; 
-            width: auto; 
-            display: block; 
-        }
-
+        .nav-brand { font-weight: 800; font-size: 1.2rem; color: var(--wl-black); display: flex; align-items: center; gap: 12px; }
+        .nav-brand img { height: 35px; width: auto; display: block; }
         .nav-links a { color: var(--wl-text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-left: 24px; transition: color 0.2s; }
         .nav-links a:hover { color: var(--wl-blue); }
 
-        /* --- BUTTONS --- */
-        .btn {
-            padding: 10px 18px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            transition: all 0.2s;
-            font-family: var(--font-main);
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-        }
-        
+        .btn { padding: 10px 18px; font-weight: 700; font-size: 0.9rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; border: none; transition: all 0.2s; font-family: var(--font-main); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
         .btn-square { clip-path: none !important; border-radius: 6px; }
-
         .btn-primary { background-color: var(--wl-blue); color: var(--wl-white); }
         .btn-primary:hover { background-color: #005299; transform: translateY(-1px); }
-        
         .btn-outline { background-color: transparent; color: var(--wl-blue); border: 2px solid var(--wl-blue); }
         .btn-outline:hover { background-color: var(--wl-soft-blue); }
-
         .btn-locked { background-color: var(--wl-bg-main); color: var(--wl-text-muted); border: 2px solid #cbd5e1; }
         .btn-locked:hover { background-color: #e2e8f0; color: var(--wl-text-main); }
-        
         .btn-action { background-color: var(--wl-yellow); color: var(--wl-black); border: 2px solid var(--wl-black); }
         .btn-action:hover { background-color: #e6b700; }
-
         .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
 
-        /* --- HEADER SECTION --- */
         .header-section { margin: 40px 0 24px; display: flex; justify-content: space-between; align-items: flex-end; }
         .header-section h1 { font-size: 2.4rem; margin-bottom: 4px; }
         .header-section p { font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; }
         
-        .tier-badge { 
-            background-color: var(--wl-yellow); 
-            color: var(--wl-black); 
-            border: 2px solid var(--wl-black); 
-            padding: 6px 14px; 
-            font-weight: 800; 
-            font-size: 0.85rem; 
-            border-radius: 6px; 
-            text-transform: uppercase;
-        }
-
-        /* --- ACTIVE WEEK CARD --- */
-        .active-week-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .active-week-card { display: flex; justify-content: space-between; align-items: center; }
         .active-info h2 { font-size: 1.8rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         .active-info .sub-info { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
+        .btn-start-mock:hover { transform: translateY(-2px); box-shadow: 4px 5px 0px var(--wl-black) !important; }
 
-        .btn-start-mock:hover {
-            transform: translateY(-2px);
-            box-shadow: 4px 5px 0px var(--wl-black) !important;
-        }
-
-        /* --- RESULTS TABLE --- */
         .table-responsive { overflow-x: auto; }
         .results-table { width: 100%; border-collapse: collapse; min-width: 850px; }
         .results-table th { padding: 16px 20px; text-align: left; font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 3px solid var(--wl-black); }
         .results-table td { padding: 20px; border-bottom: 2px solid var(--wl-white); vertical-align: middle; }
-        
         .results-table tbody tr:nth-child(odd) { background-color: var(--wl-white); }
         .results-table tbody tr:nth-child(even) { background-color: #f8fafc; }
         .results-table tr:last-child td { border-bottom: none; }
@@ -166,7 +102,6 @@
         .td-empty { color: #cbd5e1; font-weight: 600; }
         .td-muted { color: var(--wl-text-muted); font-weight: 600; font-size: 0.95rem; }
 
-        /* --- BUNDLES & WRITING GRID --- */
         .section-title { font-size: 1.6rem; margin: 40px 0 16px; color: var(--wl-black); }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         
@@ -184,16 +119,7 @@
         .writing-card .btn-outline:hover { background-color: rgba(234, 0, 94, 0.05); }
 
         /* --- MODALS --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(31, 34, 39, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 34, 39, 0.8); backdrop-filter: blur(4px); z-index: 100; display: none; justify-content: center; align-items: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
 
         .modal-upgrade { background: var(--wl-white); width: 100%; padding: 32px; position: relative; }
@@ -207,7 +133,6 @@
         .report-tabs { display: flex; background: var(--wl-white); border-bottom: 2px solid var(--wl-border); padding: 0 32px; overflow-x: auto;}
         .tab { padding: 16px 20px; font-weight: 700; color: var(--wl-text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.2s;}
         .tab.active { color: var(--wl-black); border-bottom-color: var(--wl-yellow); }
-        .tab.locked { color: #cbd5e1; cursor: not-allowed; display: flex; align-items: center; gap: 6px; }
         
         .report-content { padding: 32px; overflow-y: auto; flex: 1; display: none; }
         .report-content.active { display: block; }
@@ -225,12 +150,6 @@
         .report-table th { background: var(--wl-black); color: var(--wl-white); padding: 12px 16px; text-align: left; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .report-table td { padding: 16px; border-bottom: 1px solid var(--wl-border); font-size: 0.95rem; font-weight: 500; }
         .report-table tr:last-child td { border-bottom: none; }
-
-        .focus-area { margin-top: 24px; padding: 16px 24px; background-color: var(--wl-white); border-radius: 8px; border: 2px solid var(--wl-blue); display: flex; gap: 12px; align-items: center; }
-
-        .blur-container { position: relative; }
-        .blur-content { filter: blur(6px); opacity: 0.5; pointer-events: none; user-select: none; }
-        .Reveal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -309,39 +228,20 @@
 
         <h2 class="section-title">Upgrades & Add-ons</h2>
         <div class="grid-2">
-            
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3 style="margin-bottom: 24px; font-size: 1.4rem;">Summer League Passes</h3>
                     
                     <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px dashed rgba(21, 50, 91, 0.2);">
-                        <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">
-                            Rank Pass (£19.99)
-                        </h4>
-                        <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">
-                            Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.
-                        </p>
-                        <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 12px;">
-                            Weekly rankings can also be revealed individually for £3.99 each.
-                        </p>
-                        <button class="btn btn-outline btn-square" style="padding: 8px 24px;">
-                            Upgrade to Rank Pass
-                        </button>
+                        <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Rank Pass (£19.99)</h4>
+                        <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly rankings. Best if you want to track your child’s position across the summer.</p>
+                        <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Upgrade to Rank Pass</button>
                     </div>
 
                     <div style="flex-grow: 1;">
-                        <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">
-                            Review Pass (£99)
-                        </h4>
-                        <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">
-                            Get all 6 review packs, including the papers, answers and explanations.
-                        </p>
-                        <p style="font-size: 0.85rem; color: var(--wl-text-muted); margin-bottom: 12px;">
-                            Weekly review packs can also be bought individually for £19.99 each.
-                        </p>
-                        <button class="btn btn-outline btn-square" style="padding: 8px 24px;">
-                            Upgrade to Review Pass
-                        </button>
+                        <h4 style="font-size: 1.15rem; color: var(--wl-nyoro-navy); margin-bottom: 6px;">Review Pass (£99)</h4>
+                        <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 review packs, including the papers, answers and explanations.</p>
+                        <button class="btn btn-outline btn-square" style="padding: 8px 24px;">Upgrade to Review Pass</button>
                     </div>
                 </div>
             </div>
@@ -356,67 +256,101 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
+    <!-- Upgrade Modal -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
                 <button class="modal-close" onclick="closeModal('upgrade-modal')">&times;</button>
                 <h2>Get Review Pack</h2>
-                <div class="price">Week 2 — £19.99</div>
-                
+                <div class="price">Week <span id="upgradeWeekNum">X</span> — £19.99</div>
                 <ul style="list-style: none; margin-bottom: 24px; color: var(--wl-text-main);">
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Full mixed paper access</li>
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Answer key</li>
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Your child’s answers vs correct answers</li>
-                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Correct / incorrect review</li>
                     <li style="margin-bottom: 8px; font-weight: 500;">✓ Subject ranks</li>
-                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Skill and topic tags</li>
-                    <li style="margin-bottom: 8px; font-weight: 500;">✓ Main focus area</li>
                 </ul>
-
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <button class="btn btn-primary btn-square" style="width: 100%;">Get Review Pack</button>
-                </div>
+                <button class="btn btn-primary btn-square" style="width: 100%;">Get Review Pack</button>
             </div>
         </div>
     </div>
 
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-        
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-        
-        function switchTab(tabId, element) {
-            const contents = document.querySelectorAll('.report-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const tabs = document.querySelectorAll('.report-tabs .tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
-        }
-        
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('active');
-            }
-        }
-    </script>
+    <!-- Unlocked Report Modal -->
+    <div class="modal-overlay" id="report-modal">
+        <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
+            <div class="angled-inner modal-report" style="padding: 0;">
+                
+                <div class="report-header">
+                    <div>
+                        <h2 style="margin-bottom: 4px;">Week <span id="reportWeekNum">X</span> Results</h2>
+                    </div>
+                    <div style="display: flex; gap: 16px; align-items: center; padding-right: 40px;">
+                        <button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);">Download PDF</button>
+                        <button class="btn btn-primary btn-sm btn-square">View Paper</button>
+                        <button class="modal-close" style="position: absolute; top: 15px; right: 20px;" onclick="closeModal('report-modal')">&times;</button>
+                    </div>
+                </div>
+                
+                <div class="report-tabs">
+                    <div class="tab active" onclick="switchTab('tab-summary', this)">Summary</div>
+                    <div class="tab" onclick="switchTab('tab-english', this)">English</div>
+                    <div class="tab" onclick="switchTab('tab-maths', this)">Maths</div>
+                </div>
+
+                <div class="report-content active" id="tab-summary">
+                    <div style="max-width: 650px; margin: 0 auto;">
+                        <div style="text-align: center; margin-bottom: 32px;">
+                            <h3 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 8px;">Overall League Rank</h3>
+                            <strong style="font-size: 3.5rem; color: var(--wl-teal); font-weight: 800; line-height: 1.1;">TBD <span style="font-size: 1.6rem; color: var(--wl-text-muted);">/ 512</span></strong>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
+                            <div style="text-align: center;">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span>
+                                <strong id="modalSummaryScore" style="font-size: 1.6rem; color: var(--wl-black);">0/0</strong>
+                            </div>
+                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Cohort Avg</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">61%</strong>
+                            </div>
+                            <div style="text-align: center; border-left: 1px solid var(--wl-border);">
+                                <span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Top Score</span>
+                                <strong style="font-size: 1.6rem; color: var(--wl-black);">95%</strong>
+                            </div>
+                        </div>
+
+                        <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 24px;">
+                            <h3 style="margin-bottom: 16px; font-size: 1.2rem; text-align: center;">Subject Breakdown</h3>
+                            <div class="subject-row"><span>English</span><strong id="modalEngScore">0</strong></div>
+                            <div class="subject-row"><span>Maths</span><strong id="modalMathScore">0</strong></div>
+                            <div class="subject-row"><span>Verbal Reasoning</span><strong id="modalVrScore">0</strong></div>
+                            <div class="subject-row"><span>Non-Verbal Reasoning</span><strong id="modalNvrScore">0</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-content" id="tab-english">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
+                    <p style="color: var(--wl-text-muted);">Detailed question analysis will appear here.</p>
+                </div>
+
+                <div class="report-content" id="tab-maths">
+                    <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
+                    <p style="color: var(--wl-text-muted);">Detailed question analysis will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let userScores = [];
 
         document.getElementById('logoutBtn').addEventListener('click', async function(event) {
             event.preventDefault(); 
@@ -481,7 +415,6 @@
                 return;
             }
 
-            // 1. Fetch Profile Data (if they have one)
             const { data: profileData } = await supabaseClient
                 .from('profiles')
                 .select('child_first_name')
@@ -492,21 +425,20 @@
                 document.getElementById('childNameDisplay').innerText = profileData.child_first_name;
             }
 
-            // 2. Fetch User's Scores
             const { data: scoreData, error: scoreError } = await supabaseClient
                 .from('scores')
                 .select('*')
                 .eq('user_id', session.user.id);
             
             if (scoreError) console.error("Error fetching scores", scoreError);
-
-            // 3. Render the Results Table Dynamically
-            renderResultsTable(scoreData || []);
+            
+            userScores = scoreData || [];
+            renderResultsTable(userScores);
         }
 
         function renderResultsTable(scores) {
             const tbody = document.querySelector('.results-table tbody');
-            tbody.innerHTML = ''; // Clear hardcoded rows
+            tbody.innerHTML = ''; 
 
             const now = new Date();
 
@@ -518,12 +450,10 @@
                 let scoreHtml, rankHtml, packHtml, feedbackHtml;
 
                 if (weekScore) {
-                    // Test Completed!
                     scoreHtml = `<td class="td-score">${weekScore.raw_score}/${weekScore.total_questions}</td>`;
-                    rankHtml = `<td><button class="btn btn-locked btn-sm btn-square">Reveal Rank £3.99</button></td>`;
-                    packHtml = `<td><button class="btn btn-locked btn-sm btn-square" onclick="openModal('upgrade-modal')">Get Review Pack £19.99</button></td>`;
+                    rankHtml = `<td><div class="td-rank">Top 36%</div></td>`; // Placeholder Rank
+                    packHtml = `<td><button class="btn btn-outline btn-sm btn-square" style="border-color: var(--wl-black); color: var(--wl-black);" onclick="viewReport(${i})">View Report</button></td>`;
                     feedbackHtml = `<td><span class="td-muted">Feedback pending</span></td>`;
-                    
                 } else if (now > weekSchedule.end) {
                     scoreHtml = `<td class="td-empty">—</td>`;
                     rankHtml = `<td class="td-empty">—</td>`;
@@ -543,18 +473,53 @@
                     feedbackHtml = `<td class="td-empty">—</td>`;
                 }
 
-                tr.innerHTML = `
-                    <td class="td-week">${i}</td>
-                    ${scoreHtml}
-                    ${rankHtml}
-                    ${packHtml}
-                    ${feedbackHtml}
-                `;
+                tr.innerHTML = `<td class="td-week">${i}</td>${scoreHtml}${rankHtml}${packHtml}${feedbackHtml}`;
                 tbody.appendChild(tr);
             }
         }
 
-        // Initialize!
+        // Triggered when "View Report" is clicked
+        function viewReport(weekNum) {
+            const scoreData = userScores.find(s => s.week_number === weekNum);
+            if (!scoreData) return;
+
+            document.getElementById('reportWeekNum').innerText = weekNum;
+            document.getElementById('modalSummaryScore').innerText = `${scoreData.raw_score} / ${scoreData.total_questions}`;
+            
+            // Assume 10 questions per subject for this prototype display
+            document.getElementById('modalEngScore').innerText = `${scoreData.english_score || 0}`;
+            document.getElementById('modalMathScore').innerText = `${scoreData.maths_score || 0}`;
+            document.getElementById('modalVrScore').innerText = `${scoreData.vr_score || 0}`;
+            document.getElementById('modalNvrScore').innerText = `${scoreData.nvr_score || 0}`;
+
+            openModal('report-modal');
+        }
+
+        // --- Modal Control Logic ---
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            if(modalId === 'report-modal') {
+                const firstTab = document.querySelector('.report-tabs .tab');
+                switchTab('tab-summary', firstTab);
+            }
+        }
+        function switchTab(tabId, element) {
+            const contents = document.querySelectorAll('.report-content');
+            contents.forEach(content => content.classList.remove('active'));
+            const tabs = document.querySelectorAll('.report-tabs .tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) event.target.classList.remove('active');
+        }
+
+        // Initialize
         loadDashboard();
         updateSchedule();
     </script>
