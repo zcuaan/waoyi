@@ -118,10 +118,27 @@
         .question-content-single { max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center;}
 
         /* Common Question Elements */
+        .instruction-box {
+            background-color: var(--wl-soft-blue);
+            border-left: 5px solid var(--wl-blue);
+            color: var(--wl-blue-hover);
+            padding: 16px 24px;
+            margin-bottom: 32px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 0 8px 8px 0;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+            line-height: 1.4;
+        }
+
         .question-box { margin-bottom: 32px; width: 100%; }
-        .question-text { font-size: 1.3rem; font-weight: 600; color: var(--wl-black); line-height: 1.5; }
+        .question-text { font-size: 1.3rem; font-weight: 600; color: var(--wl-black); line-height: 1.5; text-align: left;}
         .question-quote { font-size: 1.1rem; color: #555; margin-bottom: 16px; font-style: italic; border-left: 3px solid var(--wl-border); padding-left: 16px; }
-        .question-box.centered { text-align: center; font-size: 1.4rem; }
+        .question-box.centered { text-align: center; }
 
         /* Reference Strip */
         .alphabet-strip {
@@ -222,7 +239,6 @@
 
         <div class="exam-body">
             
-            <!-- LAYOUT 1: Split Screen Reading Comprehension -->
             <div class="layout-wrapper" id="layout-1">
                 <div class="panel-left">
                     <div class="passage-content">
@@ -245,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 2: Standard Single View -->
             <div class="layout-wrapper" id="layout-2">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -255,7 +270,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 3: Split Screen (Image Left) -->
             <div class="layout-wrapper" id="layout-3">
                 <div class="panel-left" style="background: var(--wl-bg-main);">
                     <div class="graph-box"></div>
@@ -268,39 +282,30 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 4: Single View (NVR Image Options) -->
             <div class="layout-wrapper" id="layout-4">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="question-box centered" style="margin-bottom: 16px;">
-                            <div class="question-text"></div>
-                        </div>
+                        <div class="question-box centered" style="margin-bottom: 16px;"></div>
                         <div class="diagram-box"></div>
                         <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- LAYOUT 5: Single View (Reference String) -->
             <div class="layout-wrapper" id="layout-5">
                 <div class="panel-single">
                     <div class="question-content-single">
                         <div class="alphabet-strip"></div>
-                        <div class="question-box centered" style="margin-bottom: 40px;">
-                            <div class="question-text"></div>
-                        </div>
+                        <div class="question-box centered" style="margin-bottom: 40px;"></div>
                         <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- LAYOUT 6: Single View (Compound Groups) -->
             <div class="layout-wrapper" id="layout-6">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="question-box centered" style="margin-bottom: 40px;">
-                            <div class="question-text"></div>
-                        </div>
+                        <div class="question-box centered" style="margin-bottom: 40px;"></div>
                         <div class="multi-select-container"></div>
                     </div>
                 </div>
@@ -334,13 +339,11 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // --- DYNAMIC EXAM PARAMS ---
         const urlParams = new URLSearchParams(window.location.search);
         const CURRENT_EXAM_ID = urlParams.get('exam') || 'week-1'; 
         const weekNumDisplay = CURRENT_EXAM_ID.split('-')[1] || '1';
         const EXAM_TIME_MINUTES = 25; 
 
-        // Update UI dynamically
         document.getElementById('splash-title').innerText = `Week ${weekNumDisplay} Mock Exam`;
         document.getElementById('header-exam-title').innerText = `Week ${weekNumDisplay} 11+ Mock Exam`;
         document.getElementById('splash-time').innerText = `${EXAM_TIME_MINUTES} minutes`;
@@ -352,7 +355,7 @@
         securePage();
 
         let questionsList = []; 
-        let passagesMap = {}; // Maps passage_id to passage data
+        let passagesMap = {}; 
         let endTime;
         let timerInterval;
         let currentQuestion = 1;
@@ -376,7 +379,6 @@
             totalQuestions = questionsList.length;
             document.getElementById('total-q-count').innerText = totalQuestions;
 
-            // Pre-fetch passages if any question relies on passage_id
             const passageIds = [...new Set(questionsList.map(q => q.passage_id).filter(id => id))];
             if (passageIds.length > 0) {
                 const { data: pData, error: pError } = await supabaseClient
@@ -386,7 +388,6 @@
                 
                 if (pError) console.error("Database blocked passage fetch! Check RLS policies:", pError);
                 if (!pError && pData) {
-                    console.log("Successfully fetched passages from DB:", pData);
                     pData.forEach(p => { passagesMap[p.id] = p; });
                 }
             }
@@ -432,6 +433,24 @@
             document.getElementById('current-q-num').innerText = currentQuestion;
             document.getElementById('progress-bar').style.width = `${(currentQuestion / totalQuestions) * 100}%`;
 
+            const currentData = questionsList[currentQuestion - 1];
+            if (currentData) {
+                const tag = (currentData.topic_tag || '').toLowerCase();
+                let subj = 'General';
+                
+                if (tag.includes('english') || tag.includes('spag') || tag.includes('comprehension') || tag.includes('grammar') || tag.includes('cloze') || tag.includes('spelling')) {
+                    subj = 'English';
+                } else if (tag.includes('math')) {
+                    subj = 'Maths';
+                } else if (tag.includes('non') || tag.includes('nvr')) {
+                    subj = 'Non-Verbal Reasoning';
+                } else if (tag.includes('verbal') || tag.includes('vr')) {
+                    subj = 'Verbal Reasoning';
+                }
+                
+                document.getElementById('current-subject').innerText = subj;
+            }
+
             for(let i = 1; i <= 6; i++) {
                 const layoutEl = document.getElementById('layout-' + i);
                 if(layoutEl) layoutEl.classList.remove('active');
@@ -467,21 +486,21 @@
             if (!currentData) return;
 
             const layoutId = currentData.layout_template; 
-            // AUTO-FIX BROKEN URLS ON THE FLY
+            
             let qDataStr = JSON.stringify(currentData.question_data || {});
-            // 1. Replace placeholder text with your real project ID
             qDataStr = qDataStr.replace(/YOUR_PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
-            
-            // Parse it back into an object
             const qData = JSON.parse(qDataStr);
-            const container = document.getElementById('layout-' + layoutId);
             
+            const container = document.getElementById('layout-' + layoutId);
             if (!container) return console.error("Missing layout template: " + layoutId);
             container.classList.add('active');
 
-            // NEW: Universal left-aligned instruction block for all layouts
+            // NEW: Prominent Instruction Box
             const instructionHtml = qData.instruction_text 
-                ? `<div style="text-align: left; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; margin-bottom: 24px; width: 100%; display: block;">${qData.instruction_text}</div>` 
+                ? `<div class="instruction-box">
+                       <span style="font-size: 1.2rem;">ℹ️</span> 
+                       <span>${qData.instruction_text}</span>
+                   </div>` 
                 : '';
 
             if (layoutId === '1') {
@@ -505,18 +524,28 @@
                 qQuoteEl.style.display = qData.question_quote ? 'block' : 'none';
                 
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += qData.question_text;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 const qTextEl = container.querySelector('.question-text');
-                qTextEl.innerHTML = textHtml;
-                qTextEl.style.textAlign = 'left';
+                
+                // If it already existed from split layout HTML, override it
+                if(qTextEl) {
+                    // Replace the container contents
+                    container.querySelector('.question-box').innerHTML = textHtml;
+                    if(qData.question_quote) {
+                       container.querySelector('.question-box').prepend(qQuoteEl); 
+                    }
+                }
                 
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '2') {
                 let textHtml = instructionHtml;
-                if (qData.spag_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.spag_sentence}</div>`;
-                if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.cloze_sentence}</div>`;
-                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                if (qData.spag_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black); text-align: center;">${qData.spag_sentence}</div>`;
+                if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black); text-align: center;">${qData.cloze_sentence}</div>`;
+                if (qData.question_text) {
+                    let formattedText = qData.question_text.replace(/([.?!])\s+(?=[A-Z])/g, "$1<br><br>");
+                    textHtml += `<div class="question-text" style="text-align: center;">${formattedText}</div>`;
+                }
                 if (qData.question_image_url) textHtml += `<img src="${qData.question_image_url}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
@@ -526,14 +555,17 @@
                 container.querySelector('.graph-box').innerHTML = `<img src="${qData.side_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
                 
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                if (qData.question_text) {
+                    let formattedText = qData.question_text.replace(/([.?!])\s+(?=[A-Z])/g, "$1<br><br>");
+                    textHtml += `<div class="question-text">${formattedText}</div>`;
+                }
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '4') {
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const diagramBox = container.querySelector('.diagram-box');
@@ -561,14 +593,14 @@
                 container.querySelector('.alphabet-strip').innerHTML = qData.reference_text || '';
                 
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${qData.question_text}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '6') {
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const msContainer = container.querySelector('.multi-select-container');
@@ -590,6 +622,7 @@
                 }
             }
         }
+
         function renderStandardOptions(container, qData, layoutId, defaultClass) {
             let optionsContainer = container.querySelector('.options-horizontal') || container.querySelector('.options-vertical');
             optionsContainer.className = defaultClass; 
@@ -736,7 +769,6 @@
 
                 if (isCorrect) {
                     breakdown.total++;
-                    // Strict ordering to ensure NVR doesn't get flagged as VR
                     if (tag.includes('english') || tag.includes('spag') || tag.includes('comprehension')) {
                         breakdown.english++;
                     } else if (tag.includes('math')) {
