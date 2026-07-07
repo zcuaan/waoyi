@@ -27,29 +27,22 @@
             --test-timer-danger: #fee2e2;
             --test-timer-danger-text: #dc2626;
             
-            /* Updated Selection Colors (Blue) */
+            /* Selection Colors */
             --option-hover: #f8fafc;
             --option-selected-bg: var(--wl-soft-blue);
             --option-selected-border: var(--wl-blue);
 
-            /* Default to sans-serif for readability */
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            background-color: var(--wl-bg-main); 
-            color: var(--wl-text-main); 
-            line-height: 1.6; 
-            font-family: var(--font-main); 
-            -webkit-font-smoothing: antialiased;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow: hidden;
+            background-color: var(--wl-bg-main); color: var(--wl-text-main); 
+            line-height: 1.6; font-family: var(--font-main); 
+            -webkit-font-smoothing: antialiased; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; overflow: hidden;
         }
 
         h1, h2, h3, h4 { font-weight: 800; color: var(--wl-black); }
@@ -58,7 +51,7 @@
         .splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('unnamed-2.jpg') center/cover no-repeat;
-            background-color: var(--wl-teal); /* Fallback */
+            background-color: var(--wl-teal);
             z-index: 1000; display: flex; align-items: center; justify-content: center;
         }
         .splash-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 34, 39, 0.85); }
@@ -101,7 +94,7 @@
         @keyframes pulse-danger { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
 
         .progress-container { width: 100%; height: 4px; background-color: var(--wl-bg-main); }
-        .progress-bar { height: 100%; background-color: var(--wl-blue); width: 2.5%; transition: width 0.3s; }
+        .progress-bar { height: 100%; background-color: var(--wl-blue); width: 0%; transition: width 0.3s; }
 
         /* --- MAIN CONTENT AREAS --- */
         .exam-body { flex: 1; display: flex; overflow: hidden; position: relative; background: var(--wl-white);}
@@ -116,7 +109,6 @@
         .passage-author { font-size: 1.2rem; color: #555; margin-bottom: 24px; font-style: italic;}
         .passage-text { font-size: 1.1rem; line-height: 1.8; color: #333; }
         .passage-text p { margin-bottom: 20px; }
-        .highlight-word { font-weight: bold; text-decoration: underline; background-color: rgba(255, 203, 5, 0.3); }
 
         .panel-right { flex: 1; padding: 40px 60px; overflow-y: auto; display: flex; flex-direction: column; background-color: var(--wl-white); }
         .question-content-split { max-width: 600px; margin: 0 auto; width: 100%; }
@@ -131,45 +123,28 @@
         .question-quote { font-size: 1.1rem; color: #555; margin-bottom: 16px; font-style: italic; border-left: 3px solid var(--wl-border); padding-left: 16px; }
         .question-box.centered { text-align: center; font-size: 1.4rem; }
 
-        /* Reference Strip (Updated for normal font & size) */
+        /* Reference Strip */
         .alphabet-strip {
-            font-family: var(--font-main);
-            font-size: 1.15rem;
-            letter-spacing: normal;
-            text-align: center;
-            margin-bottom: 32px;
-            color: var(--wl-text-main);
-            background: var(--wl-bg-main);
-            padding: 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            width: 100%;
-            line-height: 1.6;
+            font-family: var(--font-main); font-size: 1.15rem; text-align: center; margin-bottom: 32px;
+            color: var(--wl-text-main); background: var(--wl-bg-main); padding: 24px; border-radius: 8px;
+            font-weight: 600; width: 100%; line-height: 1.6;
         }
 
         /* Diagrams & Graphs */
         .diagram-box { width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px;}
         .graph-box { width: 100%; height: 100%; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; background-color: var(--wl-white); color: var(--wl-text-muted); font-weight: 600;}
 
-        /* Options Vertical */
+        /* Options */
         .options-vertical { display: flex; flex-direction: column; gap: 12px; width: 100%;}
-        
-        /* Options Horizontal */
         .options-horizontal { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; width: 100%; }
-        
-        /* Multi-Select Columns */
         .multi-select-container { display: flex; gap: 40px; width: 100%; justify-content: center; }
         .options-group { flex: 1; display: flex; flex-direction: column; gap: 12px; max-width: 300px; }
 
-        /* Option Item Container (Updated to use gap and remove tight margins) */
         .option-item { display: flex; align-items: center; padding: 12px 20px 12px 16px; border: 2px solid var(--wl-border); border-radius: 8px; cursor: pointer; transition: all 0.2s; background-color: var(--wl-white); gap: 16px; }
         .option-item:hover { background-color: var(--option-hover); border-color: #cbd5e1; }
         .option-item.selected { background-color: var(--option-selected-bg); border-color: var(--option-selected-border); }
         
-        /* Option Letters (Updated to remove strict margin-right) */
         .option-letter { width: 32px; height: 32px; background-color: var(--wl-bg-main); color: var(--wl-text-main); display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; flex-shrink: 0; border: 1px solid var(--wl-border); transition: all 0.2s; }
-        
-        /* Blue active states */
         .option-item.selected .option-letter { background-color: var(--wl-blue); color: var(--wl-white); border-color: var(--wl-blue); }
         .option-text { font-size: 1.15rem; font-weight: 500; }
 
@@ -216,10 +191,10 @@
     <div class="splash-screen" id="splash-screen">
         <div class="splash-overlay"></div>
         <div class="splash-content">
-            <h1>Week 3 Mock Exam</h1>
+            <h1 id="splash-title">Mock Exam</h1>
             
             <ul class="rules-box">
-                <li>You have <b>25 minutes</b> to complete the exam.</li>
+                <li>You have <b id="splash-time">25 minutes</b> to complete the exam.</li>
                 <li>Once the time is up, your exam will be <b>submitted automatically</b>.</li>
                 <li>You will be able to jump back and forth between questions.</li>
             </ul>
@@ -233,8 +208,8 @@
         <div class="exam-header">
             <div class="header-left"><img src="Asset 2.png" alt="Logo"><span>The 11+ Weekend League</span></div>
             <div class="header-center">
-                <div class="exam-title">Week 3 11+ Mock Exam</div>
-                <div class="question-selector" onclick="toggleGrid()">Question <span id="current-q-num">1</span>/ <span id="total-q-count">40</span> <span>▼</span></div>
+                <div class="exam-title" id="header-exam-title">11+ Mock Exam</div>
+                <div class="question-selector" onclick="toggleGrid()">Question <span id="current-q-num">1</span>/ <span id="total-q-count">0</span> <span>▼</span></div>
             </div>
             <div class="header-right"><div class="timer-box" id="timer">⏱ 25:00</div></div>
         </div>
@@ -265,7 +240,7 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 2: Standard Single View (Text, Math, SPAG, Cloze) -->
+            <!-- LAYOUT 2: Standard Single View -->
             <div class="layout-wrapper" id="layout-2">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -275,7 +250,7 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 3: Split Screen (Image Left, Options Right) -->
+            <!-- LAYOUT 3: Split Screen (Image Left) -->
             <div class="layout-wrapper" id="layout-3">
                 <div class="panel-left" style="background: var(--wl-bg-main);">
                     <div class="graph-box"></div>
@@ -301,7 +276,7 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 5: Single View (Reference String/Alphabet at Top) -->
+            <!-- LAYOUT 5: Single View (Reference String) -->
             <div class="layout-wrapper" id="layout-5">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -348,35 +323,37 @@
 
     </div>
 
-    <!-- 1. Load Supabase Library First -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <!-- 2. All App Logic -->
     <script>
-        // --- SUPABASE INITIALIZATION ---
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnZ2JxcGZrcXdtcnJ0em5nYXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDIxMzQsImV4cCI6MjA5NzYxODEzNH0.fn7KG2-A92TeH32h6Lff949j81Y0RPpQiw_MKVZih8o';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Kick out anyone who isn't logged in
+        // --- DYNAMIC EXAM PARAMS ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const CURRENT_EXAM_ID = urlParams.get('exam') || 'week-1'; 
+        const weekNumDisplay = CURRENT_EXAM_ID.split('-')[1] || '1';
+        const EXAM_TIME_MINUTES = 25; 
+
+        // Update UI dynamically
+        document.getElementById('splash-title').innerText = `Week ${weekNumDisplay} Mock Exam`;
+        document.getElementById('header-exam-title').innerText = `Week ${weekNumDisplay} 11+ Mock Exam`;
+        document.getElementById('splash-time').innerText = `${EXAM_TIME_MINUTES} minutes`;
+
         async function securePage() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = 'login.html';
-            }
+            if (!session) { window.location.href = 'login.html'; }
         }
         securePage();
 
-        // --- GLOBAL EXAM VARIABLES ---
         let questionsList = []; 
-        const CURRENT_EXAM_ID = 'week-3'; 
+        let passagesMap = {}; // Maps passage_id to passage data
         let endTime;
         let timerInterval;
         let currentQuestion = 1;
         let totalQuestions = 0; 
-        let answersTracker = {}; // Changed to let so we can overwrite it from storage
+        let answersTracker = {}; 
 
-        // --- FETCH DATA ---
         async function fetchQuestions() {
             const { data, error } = await supabaseClient
                 .from('questions')
@@ -384,24 +361,32 @@
                 .eq('exam_id', CURRENT_EXAM_ID)
                 .order('question_number', { ascending: true });
 
-            if (error) {
+            if (error || !data || data.length === 0) {
                 console.error("Error fetching questions:", error);
-                alert("Failed to load exam. Please check your connection.");
-                return false;
-            }
-
-            if (!data || data.length === 0) {
-                alert("No questions found for this exam!");
+                alert("Failed to load exam. Please check your connection or exam ID.");
                 return false;
             }
 
             questionsList = data;
             totalQuestions = questionsList.length;
             document.getElementById('total-q-count').innerText = totalQuestions;
+
+            // Pre-fetch passages if any question relies on passage_id
+            const passageIds = [...new Set(questionsList.map(q => q.passage_id).filter(id => id))];
+            if (passageIds.length > 0) {
+                const { data: pData, error: pError } = await supabaseClient
+                    .from('passages')
+                    .select('*')
+                    .in('id', passageIds);
+                
+                if (!pError && pData) {
+                    pData.forEach(p => { passagesMap[p.id] = p; });
+                }
+            }
+
             return true;
         }
 
-        // --- START EXAM & CRASH RECOVERY ---
         async function startExam() {
             const startBtn = document.querySelector('.btn-start');
             startBtn.innerText = "Loading Exam...";
@@ -417,17 +402,14 @@
             document.getElementById('splash-screen').style.display = 'none';
             document.getElementById('exam-ui').style.display = 'flex';
             
-            // CRASH RECOVERY: Check if an active exam already exists in local storage
             const savedEndTime = localStorage.getItem(`exam_endTime_${CURRENT_EXAM_ID}`);
             const savedAnswers = localStorage.getItem(`exam_state_${CURRENT_EXAM_ID}`);
             
             if (savedEndTime && parseInt(savedEndTime) > Date.now()) {
-                // Resume existing session!
                 endTime = parseInt(savedEndTime);
                 if (savedAnswers) answersTracker = JSON.parse(savedAnswers);
             } else {
-                // Start a brand new session
-                endTime = Date.now() + (25 * 60 * 1000);
+                endTime = Date.now() + (EXAM_TIME_MINUTES * 60 * 1000);
                 localStorage.setItem(`exam_endTime_${CURRENT_EXAM_ID}`, endTime);
                 localStorage.removeItem(`exam_state_${CURRENT_EXAM_ID}`);
                 answersTracker = {};
@@ -435,18 +417,17 @@
 
             updateTimer();
             timerInterval = setInterval(updateTimer, 1000);
-
             generateNavGrid();
             updateUI(); 
         }
 
-        // --- UI & DATA INJECTION ---
         function updateUI() {
             document.getElementById('current-q-num').innerText = currentQuestion;
             document.getElementById('progress-bar').style.width = `${(currentQuestion / totalQuestions) * 100}%`;
 
             for(let i = 1; i <= 6; i++) {
-                document.getElementById('layout-' + i).classList.remove('active');
+                const layoutEl = document.getElementById('layout-' + i);
+                if(layoutEl) layoutEl.classList.remove('active');
             }
             
             renderQuestionData();
@@ -455,7 +436,6 @@
             if (currentQuestion === totalQuestions) {
                 nextBtn.innerText = "Submit Exam";
                 nextBtn.style.backgroundColor = "var(--wl-teal)";
-                // Update the onclick to hit our new manual submit function
                 nextBtn.onclick = handleManualSubmit; 
             } else {
                 nextBtn.innerText = "Next";
@@ -463,11 +443,9 @@
                 nextBtn.onclick = nextQuestion;
             }
 
-            const gridItems = document.querySelectorAll('.grid-item');
-            gridItems.forEach((item) => {
+            document.querySelectorAll('.grid-item').forEach((item) => {
                 const itemQNum = item.getAttribute('data-q');
                 item.classList.remove('current');
-                
                 if (itemQNum == currentQuestion) {
                     item.classList.add('current');
                     item.classList.remove('answered');
@@ -482,18 +460,33 @@
             if (!currentData) return;
 
             const layoutId = currentData.layout_template; 
-            const qData = currentData.question_data; 
+            const qData = currentData.question_data || {}; 
             const container = document.getElementById('layout-' + layoutId);
             
             if (!container) return console.error("Missing layout template: " + layoutId);
             container.classList.add('active');
 
             if (layoutId === '1') {
-                container.querySelector('.passage-title').innerHTML = qData.passage_title || '';
-                container.querySelector('.passage-author').innerHTML = qData.passage_author || '';
-                container.querySelector('.passage-text').innerHTML = qData.passage_text || '';
-                container.querySelector('.question-quote').innerHTML = qData.question_quote || '';
-                container.querySelector('.question-quote').style.display = qData.question_quote ? 'block' : 'none';
+                let pTitle = qData.passage_title || '';
+                let pAuthor = qData.passage_author || '';
+                let pText = qData.passage_text || '';
+
+                // Dynamically stitch in passage data if passage_id exists
+                if (currentData.passage_id && passagesMap[currentData.passage_id]) {
+                    const linkedPassage = passagesMap[currentData.passage_id];
+                    pTitle = linkedPassage.title || pTitle;
+                    pAuthor = linkedPassage.author || pAuthor;
+                    pText = linkedPassage.content || pText;
+                }
+
+                container.querySelector('.passage-title').innerHTML = pTitle;
+                container.querySelector('.passage-author').innerHTML = pAuthor;
+                container.querySelector('.passage-text').innerHTML = pText;
+                
+                const qQuoteEl = container.querySelector('.question-quote');
+                qQuoteEl.innerHTML = qData.question_quote || '';
+                qQuoteEl.style.display = qData.question_quote ? 'block' : 'none';
+                
                 container.querySelector('.question-text').innerHTML = qData.question_text || '';
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
@@ -516,41 +509,54 @@
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '4') {
-                container.querySelector('.question-text').innerHTML = qData.question_text;
-                container.querySelector('.diagram-box').innerHTML = `<img src="${qData.question_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                container.querySelector('.question-text').innerHTML = qData.question_text || '';
+                
+                const diagramBox = container.querySelector('.diagram-box');
+                // NVR Safety Check: Hide diagram box if no main image exists
+                if (qData.question_image_url) {
+                    diagramBox.innerHTML = `<img src="${qData.question_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                    diagramBox.style.display = 'flex';
+                } else {
+                    diagramBox.style.display = 'none';
+                }
+                
                 const optionsContainer = container.querySelector('.options-horizontal');
                 optionsContainer.innerHTML = '';
-                qData.options.forEach(opt => {
-                    const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
-                    optionsContainer.innerHTML += `
-                        <div class="option-item nvr-box ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', 1)">
-                            <div class="nvr-img-placeholder" style="background: url('${opt.image_url}') center/contain no-repeat; background-color: var(--wl-white);"></div>
-                            <div class="option-letter">${opt.letter}</div>
-                        </div>`;
-                });
+                if(qData.options) {
+                    qData.options.forEach(opt => {
+                        const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
+                        optionsContainer.innerHTML += `
+                            <div class="option-item nvr-box ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', 1)">
+                                <div class="nvr-img-placeholder" style="background: url('${opt.image_url}') center/contain no-repeat; background-color: var(--wl-white);"></div>
+                                <div class="option-letter">${opt.letter}</div>
+                            </div>`;
+                    });
+                }
             }
             else if (layoutId === '5') {
-                container.querySelector('.alphabet-strip').innerHTML = qData.reference_text;
-                container.querySelector('.question-text').innerHTML = qData.question_text;
+                container.querySelector('.alphabet-strip').innerHTML = qData.reference_text || '';
+                container.querySelector('.question-text').innerHTML = qData.question_text || '';
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '6') {
-                container.querySelector('.question-text').innerHTML = qData.question_text;
+                container.querySelector('.question-text').innerHTML = qData.question_text || '';
                 const msContainer = container.querySelector('.multi-select-container');
                 msContainer.innerHTML = '';
-                qData.option_groups.forEach(group => {
-                    let groupHtml = `<div class="options-group" id="${group.group_id}">`;
-                    group.options.forEach(opt => {
-                        const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
-                        groupHtml += `
-                            <div class="option-item ${isSelected}" onclick="selectGroupedOption(this, '${group.group_id}', '${opt.letter}')">
-                                <div class="option-letter">${opt.letter}</div>
-                                <div class="option-text">${opt.text}</div>
-                            </div>`;
+                if(qData.option_groups) {
+                    qData.option_groups.forEach(group => {
+                        let groupHtml = `<div class="options-group" id="${group.group_id}">`;
+                        group.options.forEach(opt => {
+                            const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
+                            groupHtml += `
+                                <div class="option-item ${isSelected}" onclick="selectGroupedOption(this, '${group.group_id}', '${opt.letter}')">
+                                    <div class="option-letter">${opt.letter}</div>
+                                    <div class="option-text">${opt.text}</div>
+                                </div>`;
+                        });
+                        groupHtml += `</div>`;
+                        msContainer.innerHTML += groupHtml;
                     });
-                    groupHtml += `</div>`;
-                    msContainer.innerHTML += groupHtml;
-                });
+                }
             }
         }
 
@@ -560,17 +566,18 @@
             optionsContainer.innerHTML = '';
             const maxSelections = qData.selection_count || 1; 
 
-            qData.options.forEach(opt => {
-                const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
-                optionsContainer.innerHTML += `
-                    <div class="option-item ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', ${maxSelections})">
-                        <div class="option-letter">${opt.letter}</div>
-                        <div class="option-text">${opt.text}</div>
-                    </div>`;
-            });
+            if(qData.options) {
+                qData.options.forEach(opt => {
+                    const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
+                    optionsContainer.innerHTML += `
+                        <div class="option-item ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', ${maxSelections})">
+                            <div class="option-letter">${opt.letter}</div>
+                            <div class="option-text">${opt.text}</div>
+                        </div>`;
+                });
+            }
         }
 
-        // --- SELECTION & NAVIGATION ---
         function checkIsSelected(letter) {
             const currentAns = answersTracker[currentQuestion];
             if (!currentAns) return false;
@@ -578,7 +585,6 @@
             return currentAns === letter;
         }
 
-        // Saves current state to Local Storage
         function saveProgress() {
             localStorage.setItem(`exam_state_${CURRENT_EXAM_ID}`, JSON.stringify(answersTracker));
         }
@@ -602,9 +608,8 @@
                     element.classList.add('selected');
                 }
             }
-
-            saveProgress(); // Backup to hard drive
-
+            saveProgress();
+            
             const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
             if (isQuestionAnswered(currentQuestion) && gridItem && !gridItem.classList.contains('current')) {
                 gridItem.classList.add('answered');
@@ -623,7 +628,7 @@
             const selectedLetters = Array.from(allSelected).map(el => el.querySelector('.option-letter').innerText);
             answersTracker[currentQuestion] = selectedLetters;
 
-            saveProgress(); // Backup to hard drive
+            saveProgress(); 
 
             if (selectedLetters.length >= 2) {
                 const gridItem = document.querySelector(`.grid-item[data-q="${currentQuestion}"]`);
@@ -633,6 +638,7 @@
 
         function isQuestionAnswered(qNum) {
             const currentData = questionsList[qNum - 1];
+            if (!currentData) return false;
             const maxSelections = currentData?.question_data?.selection_count || (currentData?.layout_template === '6' ? 2 : 1);
             const currentAns = answersTracker[qNum];
 
@@ -655,7 +661,6 @@
             }
         }
 
-        // --- TIMER & SUBMIT ---
         function updateTimer() {
             const now = Date.now();
             const timeRemaining = endTime - now;
@@ -664,7 +669,7 @@
             if (timeRemaining <= 0) {
                 clearInterval(timerInterval);
                 timerElement.innerText = `⏱ 00:00`;
-                handleTimeoutSubmit(); // Auto Submit!
+                handleTimeoutSubmit(); 
                 return;
             }
 
@@ -680,13 +685,7 @@
         }
 
         function calculateScore() {
-            let breakdown = {
-                total: 0,
-                english: 0,
-                maths: 0,
-                vr: 0,
-                nvr: 0
-            };
+            let breakdown = { total: 0, english: 0, maths: 0, vr: 0, nvr: 0 };
 
             for (let i = 0; i < totalQuestions; i++) {
                 const questionRecord = questionsList[i];
@@ -695,7 +694,6 @@
                 const tag = (questionRecord.topic_tag || '').toLowerCase();
 
                 if (!userAns) continue; 
-
                 let isCorrect = false;
 
                 if (Array.isArray(userAns)) {
@@ -708,19 +706,33 @@
 
                 if (isCorrect) {
                     breakdown.total++;
-                    if (tag.includes('english') || tag.includes('spag')) breakdown.english++;
-                    else if (tag.includes('math')) breakdown.maths++;
-                    else if (tag.includes('non') || tag.includes('nvr')) breakdown.nvr++;
-                    else if (tag.includes('verbal') || tag.includes('vr')) breakdown.vr++;
+                    // Strict ordering to ensure NVR doesn't get flagged as VR
+                    if (tag.includes('english') || tag.includes('spag') || tag.includes('comprehension')) {
+                        breakdown.english++;
+                    } else if (tag.includes('math')) {
+                        breakdown.maths++;
+                    } else if (tag.includes('non') || tag.includes('nvr')) {
+                        breakdown.nvr++;
+                    } else if (tag.includes('verbal') || tag.includes('vr')) {
+                        breakdown.vr++;
+                    }
                 }
             }
             return breakdown;
         }
+        
         async function handleManualSubmit() {
-            const timeRemaining = endTime - Date.now();
-            if (timeRemaining > 0) {
-                const isSure = confirm("You still have time remaining! Are you sure you want to submit your exam early?");
-                if (!isSure) return; // Go back to test
+            let unanswered = 0;
+            for(let i=1; i<=totalQuestions; i++) {
+                if(!isQuestionAnswered(i)) unanswered++;
+            }
+            
+            if (unanswered > 0) {
+                const isSure = confirm(`You still have ${unanswered} unanswered questions! Are you sure you want to submit?`);
+                if (!isSure) return; 
+            } else {
+                const isSure = confirm("Are you sure you want to submit your exam?");
+                if (!isSure) return; 
             }
             executeSubmission();
         }
@@ -742,14 +754,13 @@
                 return window.location.href = 'login.html';
             }
 
-            // Get the detailed breakdown!
             const scores = calculateScore(); 
 
             const { error } = await supabaseClient
                 .from('scores')
                 .upsert([{
                     user_id: session.user.id,
-                    week_number: 3, // We will make this dynamic later
+                    week_number: parseInt(weekNumDisplay), 
                     raw_score: scores.total,
                     total_questions: totalQuestions,
                     english_score: scores.english,
@@ -774,7 +785,6 @@
             window.location.href = 'dashboard.html';
         }
 
-        // --- JUMP GRID ---
         function toggleGrid() { 
             document.getElementById('grid-overlay').classList.toggle('active'); 
         }
