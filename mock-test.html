@@ -229,7 +229,7 @@
                 <div class="question-selector" onclick="toggleGrid()">
                     Question <span id="current-q-num">1</span> / <span id="total-q-count">0</span> 
                     <span style="color: #cbd5e1; margin: 0 6px;">|</span> 
-                    <span id="current-subject" style="color: var(--wl-blue); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">SUBJECT</span> 
+                    <span id="current-subject" style="color: var(--wl-blue); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">GENERAL</span> 
                     <span style="margin-left: 6px;">▼</span>
                 </div>
             </div>
@@ -362,6 +362,26 @@
         let totalQuestions = 0; 
         let answersTracker = {}; 
 
+        // Subject Detection Helper
+        function getSubject(topicTag) {
+            const tag = String(topicTag || '').toLowerCase();
+
+            if (tag.includes('english') || tag.includes('spag') || tag.includes('grammar')) {
+                return 'English';
+            }
+            if (tag.includes('maths') || tag.includes('math')) {
+                return 'Maths';
+            }
+            // IMPORTANT: check NVR before VR
+            if (tag.includes('non-verbal') || tag.includes('non verbal') || tag.includes('nvr')) {
+                return 'NVR';
+            }
+            if (tag.includes('verbal reasoning') || tag.includes('vr')) {
+                return 'VR';
+            }
+            return 'Other';
+        }
+
         async function fetchQuestions() {
             const { data, error } = await supabaseClient
                 .from('questions')
@@ -435,20 +455,9 @@
 
             const currentData = questionsList[currentQuestion - 1];
             if (currentData) {
-                const tag = (currentData.topic_tag || '').toLowerCase();
-                let subj = 'General';
-                
-                if (tag.includes('english') || tag.includes('spag') || tag.includes('comprehension') || tag.includes('grammar') || tag.includes('cloze') || tag.includes('spelling')) {
-                    subj = 'English';
-                } else if (tag.includes('math')) {
-                    subj = 'Maths';
-                } else if (tag.includes('non') || tag.includes('nvr')) {
-                    subj = 'Non-Verbal Reasoning';
-                } else if (tag.includes('verbal') || tag.includes('vr')) {
-                    subj = 'Verbal Reasoning';
-                }
-                
-                document.getElementById('current-subject').innerText = subj;
+                const subj = getSubject(currentData.topic_tag);
+                const subjEl = document.getElementById('current-subject');
+                if (subjEl) subjEl.innerText = subj === 'Other' ? 'GENERAL' : subj;
             }
 
             for(let i = 1; i <= 6; i++) {
@@ -488,14 +497,14 @@
             const layoutId = currentData.layout_template; 
             
             let qDataStr = JSON.stringify(currentData.question_data || {});
-            qDataStr = qDataStr.replace(/YOUR_PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
+            // Catch both possible placeholder variables
+            qDataStr = qDataStr.replace(/YOUR_PROJECT_REF|PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
             const qData = JSON.parse(qDataStr);
             
             const container = document.getElementById('layout-' + layoutId);
             if (!container) return console.error("Missing layout template: " + layoutId);
             container.classList.add('active');
 
-            // NEW: Prominent Instruction Box
             const instructionHtml = qData.instruction_text 
                 ? `<div class="instruction-box">
                        <span style="font-size: 1.2rem;">ℹ️</span> 
@@ -527,9 +536,7 @@
                 if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 const qTextEl = container.querySelector('.question-text');
                 
-                // If it already existed from split layout HTML, override it
                 if(qTextEl) {
-                    // Replace the container contents
                     container.querySelector('.question-box').innerHTML = textHtml;
                     if(qData.question_quote) {
                        container.querySelector('.question-box').prepend(qQuoteEl); 
@@ -754,7 +761,9 @@
                 const questionRecord = questionsList[i];
                 const userAns = answersTracker[i + 1]; 
                 const correctAns = questionRecord.correct_answer;
-                const tag = (questionRecord.topic_tag || '').toLowerCase();
+                
+                // Use strict subject parser
+                const subj = getSubject(questionRecord.topic_tag);
 
                 if (!userAns) continue; 
                 let isCorrect = false;
@@ -769,15 +778,10 @@
 
                 if (isCorrect) {
                     breakdown.total++;
-                    if (tag.includes('english') || tag.includes('spag') || tag.includes('comprehension')) {
-                        breakdown.english++;
-                    } else if (tag.includes('math')) {
-                        breakdown.maths++;
-                    } else if (tag.includes('non') || tag.includes('nvr')) {
-                        breakdown.nvr++;
-                    } else if (tag.includes('verbal') || tag.includes('vr')) {
-                        breakdown.vr++;
-                    }
+                    if (subj === 'English') breakdown.english++;
+                    else if (subj === 'Maths') breakdown.maths++;
+                    else if (subj === 'NVR') breakdown.nvr++;
+                    else if (subj === 'VR') breakdown.vr++;
                 }
             }
             return breakdown;
