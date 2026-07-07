@@ -379,7 +379,9 @@
                     .select('*')
                     .in('id', passageIds);
                 
+                if (pError) console.error("Database blocked passage fetch! Check RLS policies:", pError);
                 if (!pError && pData) {
+                    console.log("Successfully fetched passages from DB:", pData);
                     pData.forEach(p => { passagesMap[p.id] = p; });
                 }
             }
@@ -474,9 +476,10 @@
                 // Dynamically stitch in passage data if passage_id exists
                 if (currentData.passage_id && passagesMap[currentData.passage_id]) {
                     const linkedPassage = passagesMap[currentData.passage_id];
-                    pTitle = linkedPassage.title || pTitle;
-                    pAuthor = linkedPassage.author || pAuthor;
-                    pText = linkedPassage.content || pText;
+                    // Very forgiving column checks! 
+                    pTitle = linkedPassage.title || linkedPassage.passage_title || pTitle;
+                    pAuthor = linkedPassage.author || linkedPassage.passage_author || pAuthor;
+                    pText = linkedPassage.content || linkedPassage.passage_text || linkedPassage.text || pText;
                 }
 
                 container.querySelector('.passage-title').innerHTML = pTitle;
@@ -512,7 +515,6 @@
                 container.querySelector('.question-text').innerHTML = qData.question_text || '';
                 
                 const diagramBox = container.querySelector('.diagram-box');
-                // NVR Safety Check: Hide diagram box if no main image exists
                 if (qData.question_image_url) {
                     diagramBox.innerHTML = `<img src="${qData.question_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
                     diagramBox.style.display = 'flex';
@@ -559,7 +561,6 @@
                 }
             }
         }
-
         function renderStandardOptions(container, qData, layoutId, defaultClass) {
             let optionsContainer = container.querySelector('.options-horizontal') || container.querySelector('.options-vertical');
             optionsContainer.className = defaultClass; 
