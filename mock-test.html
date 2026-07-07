@@ -467,7 +467,13 @@
             if (!currentData) return;
 
             const layoutId = currentData.layout_template; 
-            const qData = currentData.question_data || {}; 
+            // AUTO-FIX BROKEN URLS ON THE FLY
+            let qDataStr = JSON.stringify(currentData.question_data || {});
+            // 1. Replace placeholder text with your real project ID
+            qDataStr = qDataStr.replace(/YOUR_PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
+            
+            // Parse it back into an object
+            const qData = JSON.parse(qDataStr);
             const container = document.getElementById('layout-' + layoutId);
             
             if (!container) return console.error("Missing layout template: " + layoutId);
