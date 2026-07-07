@@ -468,15 +468,18 @@
             if (!container) return console.error("Missing layout template: " + layoutId);
             container.classList.add('active');
 
+            // NEW: Universal left-aligned instruction block for all layouts
+            const instructionHtml = qData.instruction_text 
+                ? `<div style="text-align: left; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; margin-bottom: 24px; width: 100%; display: block;">${qData.instruction_text}</div>` 
+                : '';
+
             if (layoutId === '1') {
                 let pTitle = qData.passage_title || '';
                 let pAuthor = qData.passage_author || '';
                 let pText = qData.passage_text || '';
 
-                // Dynamically stitch in passage data if passage_id exists
                 if (currentData.passage_id && passagesMap[currentData.passage_id]) {
                     const linkedPassage = passagesMap[currentData.passage_id];
-                    // Very forgiving column checks! 
                     pTitle = linkedPassage.title || linkedPassage.passage_title || pTitle;
                     pAuthor = linkedPassage.author || linkedPassage.passage_author || pAuthor;
                     pText = linkedPassage.content || linkedPassage.passage_text || linkedPassage.text || pText;
@@ -490,29 +493,37 @@
                 qQuoteEl.innerHTML = qData.question_quote || '';
                 qQuoteEl.style.display = qData.question_quote ? 'block' : 'none';
                 
-                container.querySelector('.question-text').innerHTML = qData.question_text || '';
+                let textHtml = instructionHtml;
+                if (qData.question_text) textHtml += qData.question_text;
+                const qTextEl = container.querySelector('.question-text');
+                qTextEl.innerHTML = textHtml;
+                qTextEl.style.textAlign = 'left';
+                
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '2') {
-                let textHtml = '';
-                if (qData.instruction_text) textHtml += `<div style="font-size: 1.1rem; color: #555; margin-bottom: 16px;">${qData.instruction_text}</div>`;
-                if (qData.spag_sentence) textHtml += `<div style="font-size: 1.3rem; margin-bottom: 24px;">${qData.spag_sentence}</div>`;
-                if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.3rem; margin-bottom: 24px;">${qData.cloze_sentence}</div>`;
+                let textHtml = instructionHtml;
+                if (qData.spag_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.spag_sentence}</div>`;
+                if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.cloze_sentence}</div>`;
                 if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 if (qData.question_image_url) textHtml += `<img src="${qData.question_image_url}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
+                
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '3') {
                 container.querySelector('.graph-box').innerHTML = `<img src="${qData.side_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
-                let textHtml = '';
-                if (qData.instruction_text) textHtml += `<div style="font-size: 1.1rem; color: #555; margin-bottom: 16px;">${qData.instruction_text}</div>`;
-                textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                
+                let textHtml = instructionHtml;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '4') {
-                container.querySelector('.question-text').innerHTML = qData.question_text || '';
+                let textHtml = instructionHtml;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const diagramBox = container.querySelector('.diagram-box');
                 if (qData.question_image_url) {
@@ -537,11 +548,18 @@
             }
             else if (layoutId === '5') {
                 container.querySelector('.alphabet-strip').innerHTML = qData.reference_text || '';
-                container.querySelector('.question-text').innerHTML = qData.question_text || '';
+                
+                let textHtml = instructionHtml;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                
+                container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '6') {
-                container.querySelector('.question-text').innerHTML = qData.question_text || '';
+                let textHtml = instructionHtml;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
+                container.querySelector('.question-box').innerHTML = textHtml;
+                
                 const msContainer = container.querySelector('.multi-select-container');
                 msContainer.innerHTML = '';
                 if(qData.option_groups) {
