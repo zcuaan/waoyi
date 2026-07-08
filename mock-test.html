@@ -582,7 +582,7 @@
                 const diagramBox = container.querySelector('.diagram-box');
                 if (qData.question_image_url) {
                     // STRICT MAX-HEIGHT to prevent NVR images from taking over the screen
-                    diagramBox.innerHTML = `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; max-height: 280px; object-fit: contain;">`;
+                    diagramBox.innerHTML = `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; max-height: 200px; object-fit: contain;">`;
                     diagramBox.style.display = 'flex';
                 } else {
                     diagramBox.style.display = 'none';
