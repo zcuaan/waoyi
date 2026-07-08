@@ -117,11 +117,9 @@
 
         /* SINGLE LAYOUT */
         .panel-single { flex: 1; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; background-color: var(--wl-white); }
-        .question-content-single { max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center;}
+        .question-content-single { max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: flex-start;}
 
         /* Common Question Elements */
-        
-        /* NEW: CLEAN CONTENT BOX (Replaces the garish blue instruction box & grey alphabet strip) */
         .content-box {
             background-color: var(--wl-white);
             border: 1px solid #cbd5e1;
@@ -134,8 +132,8 @@
             color: var(--wl-text-main);
         }
 
-        .question-box { margin-bottom: 40px; width: 100%; text-align: center; }
-        .question-text { font-size: 1.25rem; font-weight: 600; color: var(--wl-black); line-height: 1.6; }
+        .question-box { margin-bottom: 40px; width: 100%; text-align: left; }
+        .question-text { font-size: 1.25rem; font-weight: 600; color: var(--wl-black); line-height: 1.6; text-align: left; width: 100%;}
         
         .question-quote { 
             font-size: 1.15rem; 
@@ -151,13 +149,13 @@
         }
 
         /* Diagrams & Graphs */
-        .diagram-box { width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px;}
+        .diagram-box { width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: flex-start; margin-bottom: 40px;}
         .graph-box { width: 100%; height: 100%; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; background-color: var(--wl-white); color: var(--wl-text-muted); font-weight: 600;}
 
         /* Options */
         .options-vertical { display: flex; flex-direction: column; gap: 12px; width: 100%;}
-        .options-horizontal { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; width: 100%; }
-        .multi-select-container { display: flex; gap: 40px; width: 100%; justify-content: center; }
+        .options-horizontal { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 16px; width: 100%; }
+        .multi-select-container { display: flex; gap: 40px; width: 100%; justify-content: flex-start; }
         .options-group { flex: 1; display: flex; flex-direction: column; gap: 12px; max-width: 300px; }
 
         .option-item { display: flex; align-items: center; padding: 12px 20px 12px 12px; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; transition: all 0.2s; background-color: var(--wl-white); gap: 16px; }
@@ -380,9 +378,24 @@
 
         function getSafeImageUrl(url) {
             if (!url) return '';
+            
+            // If they provided a full external link, fix the project ID if needed
             if (url.startsWith('http')) return url.replace(/YOUR_PROJECT_REF|PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
-            const cleanPath = url.startsWith('/') ? url.substring(1) : url;
-            return `https://tggbqpfkqwmrrtzngaqw.supabase.co/storage/v1/object/public/${cleanPath}`;
+            
+            // If they provided a relative path
+            let cleanPath = url.startsWith('/') ? url.substring(1) : url;
+            
+            // SMART GUESSER: If it's just a filename (e.g. "q25-a.png"), build the full NVR path automatically
+            if (!cleanPath.includes('/')) {
+                cleanPath = `exam-assets/${CURRENT_EXAM_ID}/nvr/${cleanPath}`;
+            } else if (!cleanPath.startsWith('exam-assets')) {
+                // If they typed "week-1/nvr/q25-a.png" but missed the root folder
+                cleanPath = `exam-assets/${cleanPath}`;
+            }
+
+            const finalUrl = `https://tggbqpfkqwmrrtzngaqw.supabase.co/storage/v1/object/public/${cleanPath}`;
+            console.log('Loading NVR Image:', finalUrl); // Helps debug if the bucket is private
+            return finalUrl;
         }
 
         async function fetchQuestions() {
@@ -512,7 +525,7 @@
             // Clean unified content box replacing old heavy instruction elements
             let instructionHtml = '';
             if (layoutId !== '5' && qData.instruction_text) {
-                instructionHtml = `<div class="content-box">${qData.instruction_text}</div>`;
+                instructionHtml = `<div class="content-box" style="text-align: left;">${qData.instruction_text}</div>`;
             }
 
             if (layoutId === '1') {
@@ -532,7 +545,12 @@
                 container.querySelector('.passage-text').innerHTML = pText;
                 
                 let textHtml = instructionHtml;
-                if (qData.question_quote) textHtml += `<div class="question-quote">${qData.question_quote}</div>`;
+                
+                // Strictly require actual text to show the quote box
+                if (qData.question_quote && qData.question_quote.trim() !== '') {
+                    textHtml += `<div class="question-quote">${qData.question_quote}</div>`;
+                }
+                
                 if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
@@ -540,9 +558,9 @@
             }
             else if (layoutId === '2') {
                 let textHtml = instructionHtml;
-                if (qData.spag_sentence) textHtml += `<div class="question-text" style="text-align: center; font-size: 1.4rem;">${qData.spag_sentence}</div>`;
-                if (qData.cloze_sentence) textHtml += `<div class="question-text" style="text-align: center; font-size: 1.4rem;">${qData.cloze_sentence}</div>`;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${formatText(qData.question_text)}</div>`;
+                if (qData.spag_sentence) textHtml += `<div class="question-text" style="text-align: left; font-size: 1.4rem;">${qData.spag_sentence}</div>`;
+                if (qData.cloze_sentence) textHtml += `<div class="question-text" style="text-align: left; font-size: 1.4rem;">${qData.cloze_sentence}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
                 if (qData.question_image_url) textHtml += `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
@@ -559,7 +577,7 @@
             }
             else if (layoutId === '4') {
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const diagramBox = container.querySelector('.diagram-box');
@@ -592,7 +610,7 @@
             else if (layoutId === '5') {
                 let textHtml = '';
                 if (qData.instruction_text || qData.reference_text) {
-                    textHtml += `<div class="content-box" style="text-align: center;">`;
+                    textHtml += `<div class="content-box" style="text-align: left;">`;
                     if (qData.instruction_text) textHtml += `<div style="margin-bottom: ${qData.reference_text ? '24px' : '0'}; color: var(--wl-text-muted);">${qData.instruction_text}</div>`;
                     if (qData.reference_text) {
                         const refText = qData.reference_text.replace(/\n/g, '<br>');
@@ -600,14 +618,14 @@
                     }
                     textHtml += `</div>`;
                 }
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${formatText(qData.question_text)}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '6') {
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const msContainer = container.querySelector('.multi-select-container');
