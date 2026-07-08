@@ -116,8 +116,8 @@
         .question-content-split { max-width: 600px; margin: 0 auto; width: 100%; text-align: left; }
 
         /* SINGLE LAYOUT */
-        .panel-single { flex: 1; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; background-color: var(--wl-white); }
-        .question-content-single { max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: flex-start;}
+        .panel-single { flex: 1; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: flex-start; background-color: var(--wl-white); }
+        .question-content-single { max-width: 800px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start;}
 
         /* Common Question Elements */
         .content-box {
@@ -241,7 +241,6 @@
 
         <div class="exam-body">
             
-            <!-- LAYOUT 1: Split Screen Reading Comprehension -->
             <div class="layout-wrapper" id="layout-1">
                 <div class="panel-left">
                     <div class="passage-content">
@@ -261,7 +260,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 2: Standard Single View -->
             <div class="layout-wrapper" id="layout-2">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -271,7 +269,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 3: Split Screen (Image Left) -->
             <div class="layout-wrapper" id="layout-3">
                 <div class="panel-left" style="background: var(--wl-bg-main);">
                     <div class="graph-box"></div>
@@ -284,7 +281,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 4: Single View (NVR Image Options) -->
             <div class="layout-wrapper" id="layout-4">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -295,7 +291,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 5: Single View (Reference String) -->
             <div class="layout-wrapper" id="layout-5">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -305,7 +300,6 @@
                 </div>
             </div>
 
-            <!-- LAYOUT 6: Single View (Compound Groups) -->
             <div class="layout-wrapper" id="layout-6">
                 <div class="panel-single">
                     <div class="question-content-single">
@@ -379,22 +373,23 @@
         function getSafeImageUrl(url) {
             if (!url) return '';
             
-            // If they provided a full external link, fix the project ID if needed
-            if (url.startsWith('http')) return url.replace(/YOUR_PROJECT_REF|PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
+            // Forcibly strip any brackets or typos around the project ref if they exist
+            url = url.replace(/[<\[{]?(YOUR_)?PROJECT_REF[>\]}]?/gi, 'tggbqpfkqwmrrtzngaqw');
+
+            // If it's already a full valid HTTP link, return it
+            if (url.startsWith('http')) return url;
             
-            // If they provided a relative path
+            // If they provided a relative path, rebuild it correctly
             let cleanPath = url.startsWith('/') ? url.substring(1) : url;
             
-            // SMART GUESSER: If it's just a filename (e.g. "q25-a.png"), build the full NVR path automatically
             if (!cleanPath.includes('/')) {
                 cleanPath = `exam-assets/${CURRENT_EXAM_ID}/nvr/${cleanPath}`;
             } else if (!cleanPath.startsWith('exam-assets')) {
-                // If they typed "week-1/nvr/q25-a.png" but missed the root folder
                 cleanPath = `exam-assets/${cleanPath}`;
             }
 
             const finalUrl = `https://tggbqpfkqwmrrtzngaqw.supabase.co/storage/v1/object/public/${cleanPath}`;
-            console.log('Loading NVR Image:', finalUrl); // Helps debug if the bucket is private
+            console.log('Loading Image:', finalUrl);
             return finalUrl;
         }
 
@@ -513,7 +508,10 @@
             const layoutId = currentData.layout_template; 
             
             let qDataStr = JSON.stringify(currentData.question_data || {});
-            qDataStr = qDataStr.replace(/YOUR_PROJECT_REF|PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
+            
+            // Bruteforce clean any typos with the Project ID that could fail DNS resolution
+            qDataStr = qDataStr.replace(/[<\[{]?(YOUR_)?PROJECT_REF[>\]}]?/gi, 'tggbqpfkqwmrrtzngaqw');
+            
             const qData = JSON.parse(qDataStr);
             
             const container = document.getElementById('layout-' + layoutId);
@@ -522,10 +520,9 @@
 
             const formatText = (text) => text ? text.replace(/([.?!])\s+(?=[A-Z])/g, "$1<br><br>") : '';
 
-            // Clean unified content box replacing old heavy instruction elements
             let instructionHtml = '';
             if (layoutId !== '5' && qData.instruction_text) {
-                instructionHtml = `<div class="content-box" style="text-align: left;">${qData.instruction_text}</div>`;
+                instructionHtml = `<div class="content-box">${qData.instruction_text}</div>`;
             }
 
             if (layoutId === '1') {
@@ -546,21 +543,21 @@
                 
                 let textHtml = instructionHtml;
                 
-                // Strictly require actual text to show the quote box
+                // If you deleted the quote from Supabase, this safely hides it!
                 if (qData.question_quote && qData.question_quote.trim() !== '') {
                     textHtml += `<div class="question-quote">${qData.question_quote}</div>`;
                 }
                 
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '2') {
                 let textHtml = instructionHtml;
-                if (qData.spag_sentence) textHtml += `<div class="question-text" style="text-align: left; font-size: 1.4rem;">${qData.spag_sentence}</div>`;
-                if (qData.cloze_sentence) textHtml += `<div class="question-text" style="text-align: left; font-size: 1.4rem;">${qData.cloze_sentence}</div>`;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
+                if (qData.spag_sentence) textHtml += `<div class="question-text" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.spag_sentence}</div>`;
+                if (qData.cloze_sentence) textHtml += `<div class="question-text" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.cloze_sentence}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${formatText(qData.question_text)}</div>`;
                 if (qData.question_image_url) textHtml += `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
@@ -570,14 +567,14 @@
                 container.querySelector('.graph-box').innerHTML = `<img src="${getSafeImageUrl(qData.side_image_url)}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
                 
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '4') {
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const diagramBox = container.querySelector('.diagram-box');
@@ -610,22 +607,22 @@
             else if (layoutId === '5') {
                 let textHtml = '';
                 if (qData.instruction_text || qData.reference_text) {
-                    textHtml += `<div class="content-box" style="text-align: left;">`;
+                    textHtml += `<div class="content-box">`;
                     if (qData.instruction_text) textHtml += `<div style="margin-bottom: ${qData.reference_text ? '24px' : '0'}; color: var(--wl-text-muted);">${qData.instruction_text}</div>`;
                     if (qData.reference_text) {
                         const refText = qData.reference_text.replace(/\n/g, '<br>');
-                        textHtml += `<div style="font-family: monospace; font-size: 1.3rem; font-weight: 600; letter-spacing: 1px; color: var(--wl-black);">${refText}</div>`;
+                        textHtml += `<div style="font-family: monospace; font-size: 1.3rem; font-weight: 600; letter-spacing: 1px; color: var(--wl-black); text-align: left;">${refText}</div>`;
                     }
                     textHtml += `</div>`;
                 }
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '6') {
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${qData.question_text}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
                 container.querySelector('.question-box').innerHTML = textHtml;
                 
                 const msContainer = container.querySelector('.multi-select-container');
