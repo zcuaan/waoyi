@@ -13,10 +13,11 @@
             --wl-blue-hover: #004b87;
             --wl-soft-blue: #e5f0f9;
             --wl-yellow: #ffcb05;
+            --wl-soft-yellow: #fff9e6;
             --wl-black: #1f2227; 
-            --wl-text-main: #2c3e50; 
+            --wl-text-main: #334155; 
             --wl-text-muted: #64748b;
-            --wl-bg-main: #f1f5f9; 
+            --wl-bg-main: #f8fafc; 
             --wl-white: #ffffff;
             --wl-border: #e2e8f0;
             
@@ -28,9 +29,9 @@
             --test-timer-danger-text: #dc2626;
             
             /* Selection Colors */
-            --option-hover: #f8fafc;
-            --option-selected-bg: var(--wl-soft-blue);
-            --option-selected-border: var(--wl-blue);
+            --option-hover: #f1f5f9;
+            --option-selected-bg: #f0fdfa;
+            --option-selected-border: var(--wl-teal);
 
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
@@ -62,7 +63,7 @@
         }
         .splash-content h1 { font-size: 2.2rem; margin-bottom: 24px; color: var(--wl-black); }
         
-        .rules-box { background: var(--wl-bg-main); padding: 24px; border-radius: 8px; text-align: left; margin-bottom: 32px; border: 2px solid var(--wl-border); }
+        .rules-box { background: var(--wl-bg-main); padding: 24px; border-radius: 8px; text-align: left; margin-bottom: 32px; border: 1px solid var(--wl-border); }
         .rules-box li { margin-bottom: 16px; font-weight: 500; font-size: 1.05rem; color: var(--wl-text-main); display: flex; gap: 12px; align-items: flex-start; }
         .rules-box li:last-child { margin-bottom: 0; }
         .rules-box li b { color: var(--wl-black); font-weight: 800; }
@@ -75,15 +76,15 @@
         .exam-container {
             background-color: var(--wl-white); width: 100%; max-width: 1280px; height: calc(100vh - 40px);
             border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: none; 
-            flex-direction: column; overflow: hidden; border: 1px solid var(--wl-border); position: relative;
+            flex-direction: column; overflow: hidden; border: 1px solid #cbd5e1; position: relative;
         }
 
         /* --- HEADER --- */
-        .exam-header { padding: 16px 32px; border-bottom: 2px solid var(--wl-border); display: flex; justify-content: space-between; align-items: center; background: var(--wl-white); z-index: 10; }
+        .exam-header { padding: 16px 32px; border-bottom: 1px solid var(--wl-border); display: flex; justify-content: space-between; align-items: center; background: var(--wl-white); z-index: 10; }
         .header-left { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.2rem; width: 250px; }
         .header-left img { height: 28px; width: auto; }
         .header-center { text-align: center; flex: 1; }
-        .exam-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 2px;}
+        .exam-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 2px; color: var(--wl-black);}
         .question-selector { display: inline-flex; align-items: center; gap: 6px; font-size: 0.95rem; font-weight: 600; color: var(--wl-text-muted); cursor: pointer; padding: 4px 12px; border-radius: 20px; transition: background 0.2s; }
         .question-selector:hover { background-color: var(--wl-bg-main); color: var(--wl-black); }
         .header-right { display: flex; justify-content: flex-end; width: 250px; }
@@ -103,48 +104,50 @@
         .layout-wrapper.active { display: flex; }
 
         /* SPLIT LAYOUT */
-        .panel-left { flex: 1; background-color: var(--test-paper-bg); border-right: 2px solid var(--wl-border); padding: 40px; overflow-y: auto; }
-        .passage-content { max-width: 600px; margin: 0 auto; }
+        .panel-left { flex: 1; background-color: var(--test-paper-bg); border-right: 1px solid var(--wl-border); padding: 40px; overflow-y: auto; }
+        .passage-content { max-width: 600px; margin: 0 auto; text-align: left; }
         .passage-title { font-size: 2rem; margin-bottom: 8px; color: #111; }
         .passage-author { font-size: 1.2rem; color: #555; margin-bottom: 24px; font-style: italic;}
         .passage-text { font-size: 1.1rem; line-height: 1.8; color: #333; }
         .passage-text p { margin-bottom: 20px; }
+        mark { background-color: var(--wl-yellow); padding: 0 4px; border-radius: 2px; }
 
         .panel-right { flex: 1; padding: 40px 60px; overflow-y: auto; display: flex; flex-direction: column; background-color: var(--wl-white); }
-        .question-content-split { max-width: 600px; margin: 0 auto; width: 100%; }
+        .question-content-split { max-width: 600px; margin: 0 auto; width: 100%; text-align: left; }
 
         /* SINGLE LAYOUT */
         .panel-single { flex: 1; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; background-color: var(--wl-white); }
         .question-content-single { max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center;}
 
         /* Common Question Elements */
-        .instruction-box {
-            background-color: var(--wl-soft-blue);
-            border-left: 5px solid var(--wl-blue);
-            color: var(--wl-blue-hover);
-            padding: 16px 24px;
+        
+        /* NEW: CLEAN CONTENT BOX (Replaces the garish blue instruction box & grey alphabet strip) */
+        .content-box {
+            background-color: var(--wl-white);
+            border: 1px solid #cbd5e1;
+            padding: 24px 32px;
             margin-bottom: 32px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            border-radius: 0 8px 8px 0;
+            border-radius: 8px;
             width: 100%;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
             text-align: left;
-            line-height: 1.4;
+            line-height: 1.6;
+            color: var(--wl-text-main);
         }
 
-        .question-box { margin-bottom: 32px; width: 100%; }
-        .question-text { font-size: 1.3rem; font-weight: 600; color: var(--wl-black); line-height: 1.5; text-align: left;}
-        .question-quote { font-size: 1.1rem; color: #555; margin-bottom: 16px; font-style: italic; border-left: 3px solid var(--wl-border); padding-left: 16px; }
-        .question-box.centered { text-align: center; }
-
-        /* Reference Strip */
-        .alphabet-strip {
-            font-family: var(--font-main); font-size: 1.15rem; text-align: center; margin-bottom: 32px;
-            color: var(--wl-text-main); background: var(--wl-bg-main); padding: 24px; border-radius: 8px;
-            font-weight: 600; width: 100%; line-height: 1.6;
+        .question-box { margin-bottom: 40px; width: 100%; text-align: center; }
+        .question-text { font-size: 1.25rem; font-weight: 600; color: var(--wl-black); line-height: 1.6; }
+        
+        .question-quote { 
+            font-size: 1.15rem; 
+            color: var(--wl-black); 
+            margin-bottom: 24px; 
+            font-weight: 600; 
+            background-color: var(--wl-soft-yellow); 
+            border-left: 4px solid var(--wl-yellow); 
+            padding: 16px 20px; 
+            border-radius: 0 8px 8px 0; 
+            line-height: 1.5;
+            text-align: left;
         }
 
         /* Diagrams & Graphs */
@@ -157,22 +160,23 @@
         .multi-select-container { display: flex; gap: 40px; width: 100%; justify-content: center; }
         .options-group { flex: 1; display: flex; flex-direction: column; gap: 12px; max-width: 300px; }
 
-        .option-item { display: flex; align-items: center; padding: 12px 20px 12px 16px; border: 2px solid var(--wl-border); border-radius: 8px; cursor: pointer; transition: all 0.2s; background-color: var(--wl-white); gap: 16px; }
-        .option-item:hover { background-color: var(--option-hover); border-color: #cbd5e1; }
-        .option-item.selected { background-color: var(--option-selected-bg); border-color: var(--option-selected-border); }
+        .option-item { display: flex; align-items: center; padding: 12px 20px 12px 12px; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; transition: all 0.2s; background-color: var(--wl-white); gap: 16px; }
+        .option-item:hover { background-color: var(--option-hover); }
+        .option-item.selected { background-color: var(--option-selected-bg); border-color: var(--option-selected-border); box-shadow: 0 0 0 1px var(--option-selected-border); }
         
-        .option-letter { width: 32px; height: 32px; background-color: var(--wl-bg-main); color: var(--wl-text-main); display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; flex-shrink: 0; border: 1px solid var(--wl-border); transition: all 0.2s; }
-        .option-item.selected .option-letter { background-color: var(--wl-blue); color: var(--wl-white); border-color: var(--wl-blue); }
-        .option-text { font-size: 1.15rem; font-weight: 500; }
+        .option-letter { width: 32px; height: 32px; background-color: var(--wl-bg-main); color: var(--wl-text-muted); display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 700; flex-shrink: 0; transition: all 0.2s; }
+        .option-item.selected .option-letter { background-color: var(--wl-teal); color: var(--wl-white); }
+        .option-text { font-size: 1.15rem; font-weight: 500; text-align: left; color: var(--wl-black);}
 
-        /* NVR specific */
-        .option-item.nvr-box { flex-direction: column; padding: 16px; gap: 12px; min-width: 120px; }
-        .nvr-img-placeholder { width: 80px; height: 80px; background: var(--wl-white); display: flex; align-items: center; justify-content: center; color: #999;}
+        /* NVR specific (Clean corner letters) */
+        .option-item.nvr-box { flex-direction: column; padding: 24px; min-width: 140px; align-items: center; justify-content: center; position: relative;}
+        .option-item.nvr-box .option-letter { position: absolute; top: 12px; left: 12px; width: 26px; height: 26px; font-size: 0.85rem; }
+        .nvr-img-placeholder { width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; margin-top: 12px;}
 
         /* --- FOOTER --- */
-        .exam-footer { padding: 20px 32px; border-top: 2px solid var(--wl-border); background: var(--wl-white); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+        .exam-footer { padding: 20px 32px; border-top: 1px solid var(--wl-border); background: var(--wl-white); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
         .btn { padding: 12px 24px; font-weight: 700; font-size: 1.05rem; cursor: pointer; border-radius: 6px; border: none; font-family: var(--font-main); min-width: 120px; transition: 0.2s; }
-        .btn-back { background-color: var(--wl-bg-main); color: var(--wl-text-main); border: 2px solid var(--wl-border); }
+        .btn-back { background-color: var(--wl-bg-main); color: var(--wl-text-main); border: 1px solid #cbd5e1; }
         .btn-back:hover { background-color: #e2e8f0; }
         .btn-next { background-color: var(--wl-blue); color: var(--wl-white); }
         .btn-next:hover { background-color: var(--wl-blue-hover); }
@@ -186,7 +190,7 @@
         .question-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 12px; width: 100%; max-width: 800px; }
         .grid-item { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; font-weight: 700; cursor: pointer; color: var(--wl-text-muted); }
         .grid-item:hover { border-color: var(--wl-text-main); color: var(--wl-text-main); }
-        .grid-item.answered { background-color: var(--option-selected-bg); border-color: var(--option-selected-border); color: var(--wl-blue); }
+        .grid-item.answered { background-color: var(--option-selected-bg); border-color: var(--option-selected-border); color: var(--wl-teal-dark); }
         .grid-item.current { background-color: var(--wl-blue); border-color: var(--wl-blue); color: var(--wl-white); }
 
         @media (max-width: 900px) {
@@ -239,6 +243,7 @@
 
         <div class="exam-body">
             
+            <!-- LAYOUT 1: Split Screen Reading Comprehension -->
             <div class="layout-wrapper" id="layout-1">
                 <div class="panel-left">
                     <div class="passage-content">
@@ -252,24 +257,23 @@
                 </div>
                 <div class="panel-right">
                     <div class="question-content-split">
-                        <div class="question-box">
-                            <div class="question-quote"></div>
-                            <div class="question-text"></div>
-                        </div>
+                        <div class="question-box"></div>
                         <div class="options-vertical"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 2: Standard Single View -->
             <div class="layout-wrapper" id="layout-2">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="question-box centered" style="margin-bottom: 48px;"></div>
+                        <div class="question-box"></div>
                         <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 3: Split Screen (Image Left) -->
             <div class="layout-wrapper" id="layout-3">
                 <div class="panel-left" style="background: var(--wl-bg-main);">
                     <div class="graph-box"></div>
@@ -282,30 +286,32 @@
                 </div>
             </div>
 
+            <!-- LAYOUT 4: Single View (NVR Image Options) -->
             <div class="layout-wrapper" id="layout-4">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="question-box centered" style="margin-bottom: 16px;"></div>
+                        <div class="question-box"></div>
                         <div class="diagram-box"></div>
                         <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 5: Single View (Reference String) -->
             <div class="layout-wrapper" id="layout-5">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="alphabet-strip"></div>
-                        <div class="question-box centered" style="margin-bottom: 40px;"></div>
+                        <div class="question-box"></div>
                         <div class="options-horizontal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- LAYOUT 6: Single View (Compound Groups) -->
             <div class="layout-wrapper" id="layout-6">
                 <div class="panel-single">
                     <div class="question-content-single">
-                        <div class="question-box centered" style="margin-bottom: 40px;"></div>
+                        <div class="question-box"></div>
                         <div class="multi-select-container"></div>
                     </div>
                 </div>
@@ -362,24 +368,21 @@
         let totalQuestions = 0; 
         let answersTracker = {}; 
 
-        // Subject Detection Helper
         function getSubject(topicTag) {
             const tag = String(topicTag || '').toLowerCase();
 
-            if (tag.includes('english') || tag.includes('spag') || tag.includes('grammar')) {
-                return 'English';
-            }
-            if (tag.includes('maths') || tag.includes('math')) {
-                return 'Maths';
-            }
-            // IMPORTANT: check NVR before VR
-            if (tag.includes('non-verbal') || tag.includes('non verbal') || tag.includes('nvr')) {
-                return 'NVR';
-            }
-            if (tag.includes('verbal reasoning') || tag.includes('vr')) {
-                return 'VR';
-            }
+            if (tag.includes('english') || tag.includes('spag') || tag.includes('grammar')) return 'English';
+            if (tag.includes('maths') || tag.includes('math')) return 'Maths';
+            if (tag.includes('non-verbal') || tag.includes('non verbal') || tag.includes('nvr')) return 'NVR';
+            if (tag.includes('verbal reasoning') || tag.includes('vr')) return 'VR';
             return 'Other';
+        }
+
+        function getSafeImageUrl(url) {
+            if (!url) return '';
+            if (url.startsWith('http')) return url.replace(/YOUR_PROJECT_REF|PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
+            const cleanPath = url.startsWith('/') ? url.substring(1) : url;
+            return `https://tggbqpfkqwmrrtzngaqw.supabase.co/storage/v1/object/public/${cleanPath}`;
         }
 
         async function fetchQuestions() {
@@ -497,7 +500,6 @@
             const layoutId = currentData.layout_template; 
             
             let qDataStr = JSON.stringify(currentData.question_data || {});
-            // Catch both possible placeholder variables
             qDataStr = qDataStr.replace(/YOUR_PROJECT_REF|PROJECT_REF/g, 'tggbqpfkqwmrrtzngaqw');
             const qData = JSON.parse(qDataStr);
             
@@ -505,12 +507,13 @@
             if (!container) return console.error("Missing layout template: " + layoutId);
             container.classList.add('active');
 
-            const instructionHtml = qData.instruction_text 
-                ? `<div class="instruction-box">
-                       <span style="font-size: 1.2rem;">ℹ️</span> 
-                       <span>${qData.instruction_text}</span>
-                   </div>` 
-                : '';
+            const formatText = (text) => text ? text.replace(/([.?!])\s+(?=[A-Z])/g, "$1<br><br>") : '';
+
+            // Clean unified content box replacing old heavy instruction elements
+            let instructionHtml = '';
+            if (layoutId !== '5' && qData.instruction_text) {
+                instructionHtml = `<div class="content-box">${qData.instruction_text}</div>`;
+            }
 
             if (layoutId === '1') {
                 let pTitle = qData.passage_title || '';
@@ -528,44 +531,28 @@
                 container.querySelector('.passage-author').innerHTML = pAuthor;
                 container.querySelector('.passage-text').innerHTML = pText;
                 
-                const qQuoteEl = container.querySelector('.question-quote');
-                qQuoteEl.innerHTML = qData.question_quote || '';
-                qQuoteEl.style.display = qData.question_quote ? 'block' : 'none';
-                
                 let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text">${qData.question_text}</div>`;
-                const qTextEl = container.querySelector('.question-text');
+                if (qData.question_quote) textHtml += `<div class="question-quote">${qData.question_quote}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
                 
-                if(qTextEl) {
-                    container.querySelector('.question-box').innerHTML = textHtml;
-                    if(qData.question_quote) {
-                       container.querySelector('.question-box').prepend(qQuoteEl); 
-                    }
-                }
-                
+                container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
             }
             else if (layoutId === '2') {
                 let textHtml = instructionHtml;
-                if (qData.spag_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black); text-align: center;">${qData.spag_sentence}</div>`;
-                if (qData.cloze_sentence) textHtml += `<div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black); text-align: center;">${qData.cloze_sentence}</div>`;
-                if (qData.question_text) {
-                    let formattedText = qData.question_text.replace(/([.?!])\s+(?=[A-Z])/g, "$1<br><br>");
-                    textHtml += `<div class="question-text" style="text-align: center;">${formattedText}</div>`;
-                }
-                if (qData.question_image_url) textHtml += `<img src="${qData.question_image_url}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
+                if (qData.spag_sentence) textHtml += `<div class="question-text" style="text-align: center; font-size: 1.4rem;">${qData.spag_sentence}</div>`;
+                if (qData.cloze_sentence) textHtml += `<div class="question-text" style="text-align: center; font-size: 1.4rem;">${qData.cloze_sentence}</div>`;
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${formatText(qData.question_text)}</div>`;
+                if (qData.question_image_url) textHtml += `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
             }
             else if (layoutId === '3') {
-                container.querySelector('.graph-box').innerHTML = `<img src="${qData.side_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                container.querySelector('.graph-box').innerHTML = `<img src="${getSafeImageUrl(qData.side_image_url)}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
                 
                 let textHtml = instructionHtml;
-                if (qData.question_text) {
-                    let formattedText = qData.question_text.replace(/([.?!])\s+(?=[A-Z])/g, "$1<br><br>");
-                    textHtml += `<div class="question-text">${formattedText}</div>`;
-                }
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: left;">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-vertical');
@@ -577,7 +564,7 @@
                 
                 const diagramBox = container.querySelector('.diagram-box');
                 if (qData.question_image_url) {
-                    diagramBox.innerHTML = `<img src="${qData.question_image_url}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                    diagramBox.innerHTML = `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
                     diagramBox.style.display = 'flex';
                 } else {
                     diagramBox.style.display = 'none';
@@ -588,19 +575,32 @@
                 if(qData.options) {
                     qData.options.forEach(opt => {
                         const isSelected = checkIsSelected(opt.letter) ? 'selected' : '';
+                        
+                        let imgHtml = '';
+                        if (opt.image_url) {
+                            imgHtml = `<div class="nvr-img-placeholder"><img src="${getSafeImageUrl(opt.image_url)}" alt="Option ${opt.letter}" style="max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply;"></div>`;
+                        }
+
                         optionsContainer.innerHTML += `
                             <div class="option-item nvr-box ${isSelected}" onclick="selectOption(this, '${layoutId}', '${opt.letter}', 1)">
-                                <div class="nvr-img-placeholder" style="background: url('${opt.image_url}') center/contain no-repeat; background-color: var(--wl-white);"></div>
+                                ${imgHtml}
                                 <div class="option-letter">${opt.letter}</div>
                             </div>`;
                     });
                 }
             }
             else if (layoutId === '5') {
-                container.querySelector('.alphabet-strip').innerHTML = qData.reference_text || '';
-                
-                let textHtml = instructionHtml;
-                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${qData.question_text}</div>`;
+                let textHtml = '';
+                if (qData.instruction_text || qData.reference_text) {
+                    textHtml += `<div class="content-box" style="text-align: center;">`;
+                    if (qData.instruction_text) textHtml += `<div style="margin-bottom: ${qData.reference_text ? '24px' : '0'}; color: var(--wl-text-muted);">${qData.instruction_text}</div>`;
+                    if (qData.reference_text) {
+                        const refText = qData.reference_text.replace(/\n/g, '<br>');
+                        textHtml += `<div style="font-family: monospace; font-size: 1.3rem; font-weight: 600; letter-spacing: 1px; color: var(--wl-black);">${refText}</div>`;
+                    }
+                    textHtml += `</div>`;
+                }
+                if (qData.question_text) textHtml += `<div class="question-text" style="text-align: center;">${formatText(qData.question_text)}</div>`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
@@ -762,7 +762,6 @@
                 const userAns = answersTracker[i + 1]; 
                 const correctAns = questionRecord.correct_answer;
                 
-                // Use strict subject parser
                 const subj = getSubject(questionRecord.topic_tag);
 
                 if (!userAns) continue; 
