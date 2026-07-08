@@ -76,20 +76,24 @@
         .detail-card { background: var(--wl-white); padding: 24px; border-radius: 8px; border: 1px solid var(--wl-border); display: flex; flex-direction: column; }
         .detail-card h4 { font-size: 0.95rem; color: var(--wl-text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--wl-border); padding-bottom: 8px; font-weight: 800;}
         .detail-val { font-size: 1.8rem; font-weight: 800; color: var(--wl-black); margin-bottom: 4px; line-height: 1.1; }
-        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 500; flex-grow: 1; }
+        .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 500; flex-grow: 1; margin-bottom: 16px; }
 
         /* --- UPGRADES --- */
         .bundle-wrapper { background-color: var(--wl-black); margin-bottom: 0; }
         .bundle-card { background-color: var(--wl-white); }
         .bundle-card h3 { color: var(--wl-black); margin-bottom: 12px; font-size: 1.5rem; }
 
-        /* --- MODALS --- */
+        /* --- MODALS & FORMS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 34, 39, 0.8); backdrop-filter: blur(4px); z-index: 100; display: none; justify-content: center; align-items: center; padding: 20px; overflow-y: auto;}
         .modal-overlay.active { display: flex; }
-        .modal-upgrade { background: var(--wl-white); width: 100%; padding: 32px; position: relative; }
+        .modal-upgrade { background: var(--wl-white); width: 100%; padding: 32px; position: relative; border-radius: 8px;}
         .modal-upgrade h2 { font-size: 1.8rem; margin-bottom: 8px; }
         .modal-upgrade .price { font-size: 1.3rem; color: var(--wl-blue); font-weight: 800; margin-bottom: 20px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--wl-text-muted); font-weight: bold;}
+        
+        .form-control { width: 100%; padding: 16px; border: 2px solid var(--wl-border); border-radius: 6px; font-family: inherit; font-size: 1rem; margin-bottom: 24px; resize: none;}
+        .file-upload-box { border: 2px dashed var(--wl-blue); padding: 32px; text-align: center; border-radius: 8px; background: var(--wl-soft-blue); cursor: pointer; margin-bottom: 24px; font-weight: 600; color: var(--wl-blue); display: block; transition: all 0.2s;}
+        .file-upload-box:hover { background: #dbeafe; border-color: #1e3a8a; }
 
         .modal-report { background: var(--wl-bg-main); width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; position: relative;}
         .report-header { background: var(--wl-white); padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;}
@@ -160,7 +164,6 @@
             </div>
         </div>
 
-        <!-- HERO ACTIVE MOCK CARD -->
         <div class="angled-wrapper" style="background-color: var(--wl-black);">
             <div class="angled-inner active-week-card" style="background-color: var(--wl-teal); padding: 32px;">
                 <div class="active-info">
@@ -176,22 +179,18 @@
             </div>
         </div>
 
-        <!-- THE 6-WEEK PATHWAY -->
         <div class="angled-wrapper">
             <div class="angled-inner" style="padding: 32px;">
                 <div class="path-grid" id="path-grid">
-                    <!-- Tiles injected by JS -->
-                </div>
+                    </div>
 
                 <div class="detail-panel active" id="detail-panel">
-                    <!-- Detail content injected by JS -->
-                </div>
+                    </div>
             </div>
         </div>
 
         <h2 class="section-title">Want the full summer unlocked?</h2>
         <div class="grid-2">
-            <!-- Upgrades: White boxes with yellow buttons -->
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Rank Pass (£19.99)</h3>
@@ -212,7 +211,6 @@
         </div>
     </div>
 
-    <!-- UPGRADE MODAL -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -233,7 +231,50 @@
         </div>
     </div>
 
-    <!-- REPORT MODAL -->
+    <div class="modal-overlay" id="writing-task-modal">
+        <div class="angled-wrapper" style="width: 100%; max-width: 600px; margin: 0;">
+            <div class="angled-inner modal-upgrade" style="padding: 40px;">
+                <button class="modal-close" onclick="closeModal('writing-task-modal')">&times;</button>
+                <h2 style="margin-bottom: 16px;">Week <span id="writingTaskWeekNum">X</span> Writing Challenge</h2>
+                <p style="font-weight: 500; margin-bottom: 24px;">Read the task below. Complete your answer on paper, then upload a clear photo or scan.</p>
+                
+                <div style="background: var(--wl-bg-main); padding: 24px; border-radius: 8px; border: 1px solid var(--wl-border); margin-bottom: 24px;">
+                    <h4 style="color: var(--wl-text-muted); text-transform: uppercase; font-size: 0.85rem; margin-bottom: 12px; letter-spacing: 0.5px;">Writing Prompt</h4>
+                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--wl-black); margin-bottom: 24px; font-style: italic;">"Write a short story about a character who discovers a hidden door in their house. The story should focus on building suspense."</p>
+                    
+                    <div style="display: flex; gap: 24px; font-size: 0.9rem; font-weight: 500;">
+                        <div><span style="color: var(--wl-text-muted); display: block; font-size: 0.8rem; text-transform: uppercase;">Time</span>⏱ 25–30 mins</div>
+                        <div><span style="color: var(--wl-text-muted); display: block; font-size: 0.8rem; text-transform: uppercase;">Formats</span>📸 Photo, PDF, Scan</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-outline btn-square" style="flex: 1; min-width: 150px;">Download Task</button>
+                    <button class="btn btn-primary btn-square" id="btnTaskUpload" style="flex: 1; min-width: 150px;">Upload Script</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="writing-upload-modal">
+        <div class="angled-wrapper" style="width: 100%; max-width: 500px; margin: 0;">
+            <div class="angled-inner modal-upgrade" style="padding: 40px;">
+                <button class="modal-close" onclick="closeModal('writing-upload-modal')">&times;</button>
+                <h2 style="margin-bottom: 16px;">Upload Writing Script</h2>
+                <p style="font-weight: 500; margin-bottom: 24px;">Upload a clear photo, scan or PDF of your child’s handwritten answer.</p>
+                
+                <label class="file-upload-box">
+                    <input type="file" style="display: none;" />
+                    <span style="font-size: 1.2rem;">📄 Click to choose file</span>
+                </label>
+                
+                <textarea class="form-control" rows="3" placeholder="Optional note for the marker..."></textarea>
+                
+                <button class="btn btn-primary btn-square btn-full" id="btnSubmitUpload">Submit Script</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
@@ -247,7 +288,6 @@
                     </div>
                 </div>
 
-                <!-- DYNAMIC ACCESS BANNER -->
                 <div id="modalAccessBanner" class="access-banner">
                     You’re viewing the free score summary. Reveal the league rank or unlock the detailed review to see more.
                 </div>
@@ -260,13 +300,11 @@
                     <div class="tab" id="nav-nvr" onclick="switchTab('tab-nvr', this)">NVR</div>
                 </div>
 
-                <!-- SUMMARY TAB -->
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         
                         <div style="text-align: center; margin-bottom: 40px;" id="summaryBenchmarkContainer">
-                            <!-- Injected by JS based on access -->
-                        </div>
+                            </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
                             <div style="text-align: center;"><span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span><strong id="modalSummaryScore" style="font-size: 1.6rem; color: var(--wl-black);">0/0</strong></div>
@@ -276,19 +314,18 @@
 
                         <div style="background: var(--wl-white); border: 2px solid var(--wl-border); border-radius: 8px; padding: 24px;">
                             <h3 style="margin-bottom: 16px; font-size: 1.2rem; text-align: center;">Subject Breakdown</h3>
-                            <div class="subject-row"><span>English</span><strong id="modalEngScore">0/10</strong></div>
-                            <div class="subject-row"><span>Maths</span><strong id="modalMathScore">0/10</strong></div>
-                            <div class="subject-row"><span>Verbal Reasoning</span><strong id="modalVrScore">0/10</strong></div>
-                            <div class="subject-row"><span>Non-Verbal Reasoning</span><strong id="modalNvrScore">0/10</strong></div>
+                            <div class="subject-row"><span>English</span><strong id="modalEngScore">0/8</strong></div>
+                            <div class="subject-row"><span>Maths</span><strong id="modalMathScore">0/8</strong></div>
+                            <div class="subject-row"><span>Verbal Reasoning</span><strong id="modalVrScore">0/8</strong></div>
+                            <div class="subject-row"><span>Non-Verbal Reasoning</span><strong id="modalNvrScore">0/8</strong></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ENGLISH TAB -->
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                        <div class="stat-card"><span>Raw Score</span><strong id="tabEngRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabEngRaw">0/8</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabEngAcc">0%</strong></div>
                         <div class="stat-card"><span>Subject Rank</span><strong id="tabEngRankStr" style="font-size: 1.6rem;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabEngPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
@@ -298,11 +335,10 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusEng" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
-                <!-- MATHS TAB -->
                 <div class="report-content" id="tab-maths">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                        <div class="stat-card"><span>Raw Score</span><strong id="tabMathRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabMathRaw">0/8</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabMathAcc">0%</strong></div>
                         <div class="stat-card"><span>Subject Rank</span><strong id="tabMathRankStr" style="font-size: 1.6rem;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabMathPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
@@ -312,11 +348,10 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusMath" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
-                <!-- VR TAB -->
                 <div class="report-content" id="tab-vr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                        <div class="stat-card"><span>Raw Score</span><strong id="tabVrRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabVrRaw">0/8</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabVrAcc">0%</strong></div>
                         <div class="stat-card"><span>Subject Rank</span><strong id="tabVrRankStr" style="font-size: 1.6rem;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabVrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
@@ -326,11 +361,10 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusVr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
-                <!-- NVR TAB -->
                 <div class="report-content" id="tab-nvr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                        <div class="stat-card"><span>Raw Score</span><strong id="tabNvrRaw">0/10</strong></div>
+                        <div class="stat-card"><span>Raw Score</span><strong id="tabNvrRaw">0/8</strong></div>
                         <div class="stat-card"><span>Accuracy</span><strong id="tabNvrAcc">0%</strong></div>
                         <div class="stat-card"><span>Subject Rank</span><strong id="tabNvrRankStr" style="font-size: 1.6rem;">TBD</strong></div>
                         <div class="stat-card" style="border-color: var(--wl-teal); background: var(--wl-soft-teal);"><span style="color: var(--wl-teal);">Percentile</span><strong id="tabNvrPerc" style="color: var(--wl-teal);">Top TBD%</strong></div>
@@ -344,7 +378,6 @@
         </div>
     </div>
 
-    <!-- Script: UI Toggles -->
     <script>
         function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
         function closeModal(modalId) {
@@ -361,7 +394,6 @@
         window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
     </script>
 
-    <!-- Script: Supabase & App Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
@@ -372,6 +404,13 @@
         let userProfile = null;
         let activeWeekSelection = 1;
         const COHORT_SIZE = 512; 
+        
+        // PROTOTYPE WRITING STATE TRACKER
+        let mockWritingState = {
+            1: { joined: false, uploaded: false, feedbackReady: false },
+            2: { joined: true, uploaded: true, feedbackReady: true }, // Demo past feedback
+            3: { joined: false, uploaded: false, feedbackReady: false }
+        };
 
         document.getElementById('logoutBtn').addEventListener('click', async function(e) {
             e.preventDefault(); await supabaseClient.auth.signOut(); window.location.href = 'index.html'; 
@@ -392,6 +431,44 @@
         // UI SAFETY HELPER
         const setTxt = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
         const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+        // DYNAMIC SUBJECT DETECTOR
+        function getSubject(topicTag) {
+            const tag = String(topicTag || '').toLowerCase();
+
+            if (
+                tag.includes('english') ||
+                tag.includes('spag') ||
+                tag.includes('grammar') ||
+                tag.includes('comprehension') ||
+                tag.includes('spelling') ||
+                tag.includes('cloze')
+            ) {
+                return 'English';
+            }
+
+            if (tag.includes('maths') || tag.includes('math')) {
+                return 'Maths';
+            }
+
+            // IMPORTANT: NVR must come before VR
+            if (
+                tag.includes('non-verbal') ||
+                tag.includes('non verbal') ||
+                tag.includes('nvr')
+            ) {
+                return 'NVR';
+            }
+
+            if (
+                tag.includes('verbal reasoning') ||
+                tag.includes('vr')
+            ) {
+                return 'VR';
+            }
+
+            return 'Other';
+        }
 
         function calculateAgeString(bMonth, bYear, examDate) {
             if (!bMonth || !bYear) return "10Y 5M"; 
@@ -436,7 +513,7 @@
                 if(btnEl) {
                     btnEl.innerText = `Start Week ${cW} Mock`;
                     btnEl.disabled = false; btnEl.style.opacity = "1"; btnEl.style.cursor = "pointer";
-                    btnEl.onclick = function() { window.location.href = 'mock-test.html'; };
+                    btnEl.onclick = function() { window.location.href = `mock-test.html?exam=week-${cW}`; };
                 }
             } else {
                 if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⏳</span> Week ${cW} opens Friday at 4 PM`;
@@ -529,8 +606,46 @@
             const state = getWeekState(weekNum);
             const score = userScores.find(s => s.week_number === weekNum);
             const sched = schedule[weekNum - 1];
+            const wState = mockWritingState[weekNum] || { joined: false, uploaded: false, feedbackReady: false };
 
             let html = '';
+            let writingBox = '';
+
+            // Render Writing Box Logic
+            if (state === 'future') {
+                if (wState.joined) {
+                    writingBox = `<div class="detail-val" style="color: var(--wl-blue); font-size: 1.4rem; padding-top: 5px;">Joined</div><div class="detail-desc">Waiting for test window</div>`;
+                } else {
+                    writingBox = `<div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.4rem; padding-top: 5px;">Not joined</div><div class="detail-desc">Optional tutor-marked task.</div>`;
+                }
+            } else if (state === 'current') {
+                if (wState.feedbackReady) {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-teal); font-size: 1.4rem; padding-top: 5px;">Feedback ready</div><div class="detail-desc">Report available</div><button class="btn btn-outline btn-square btn-full" onclick="alert('Downloading Writing Report...')">Download Writing Report</button>`;
+                } else if (wState.uploaded) {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-black); font-size: 1.4rem; padding-top: 5px;">Script uploaded</div><div class="detail-desc">Feedback pending</div>`;
+                } else if (wState.joined) {
+                     writingBox = `
+                        <div class="detail-val" style="color: var(--wl-blue); font-size: 1.4rem; padding-top: 5px;">Joined</div>
+                        <div class="detail-desc" style="margin-bottom: 12px;">Task available</div>
+                        <div style="display:flex; flex-direction:column; gap:8px; width: 100%; margin-top: auto;">
+                            <button class="btn btn-outline btn-square" style="width:100%; padding: 8px 0; font-size:0.85rem;" onclick="openWritingTask(${weekNum})">View Writing Task</button>
+                            <button class="btn btn-primary btn-square" style="width:100%; padding: 8px 0; font-size:0.85rem;" onclick="openWritingUpload(${weekNum})">Upload Script</button>
+                        </div>`;
+                } else {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.4rem; padding-top: 5px;">Not joined</div><div class="detail-desc">Optional tutor-marked task for this week.</div><button class="btn btn-outline btn-square btn-full" onclick="joinWriting(${weekNum})">Join Writing Challenge — £29.99</button>`;
+                }
+            } else if (state === 'past') {
+                if (wState.feedbackReady) {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-teal); font-size: 1.4rem; padding-top: 5px;">Feedback ready</div><div class="detail-desc">Report available</div><button class="btn btn-outline btn-square btn-full" onclick="alert('Downloading Writing Report...')">Download Writing Report</button>`;
+                } else if (wState.uploaded) {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-black); font-size: 1.4rem; padding-top: 5px;">Script uploaded</div><div class="detail-desc">Feedback pending</div>`;
+                } else if (wState.joined) {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-nyoro-pink-text); font-size: 1.4rem; padding-top: 5px;">Missed</div><div class="detail-desc">Window closed</div>`;
+                } else {
+                     writingBox = `<div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.4rem; padding-top: 5px;">Not joined</div><div class="detail-desc">Window closed</div>`;
+                }
+            }
+
 
             if (state === 'future') {
                 const mNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -544,12 +659,12 @@
                     <div class="detail-header"><h2>Week ${weekNum} Mock Exam</h2><p style="color: var(--wl-teal);">Open now</p></div>
                     <div class="detail-grid">
                         <div class="detail-card">
-                            <h4>Main Mock</h4><div class="detail-desc">Core league path. 40 questions spanning all subjects.</div>
-                            ${score ? `<button class="btn btn-locked btn-square btn-full" disabled>Submitted</button>` : `<button class="btn btn-action btn-square btn-full" onclick="window.location.href='mock-test.html'">Start Week ${weekNum} Mock</button>`}
+                            <h4>Main Mock</h4><div class="detail-desc">Core league path. 32 questions across English, VR, Maths and NVR.</div>
+                            ${score ? `<button class="btn btn-locked btn-square btn-full" disabled>Submitted</button>` : `<button class="btn btn-action btn-square btn-full" onclick="window.location.href='mock-test.html?exam=week-${weekNum}'">Start Week ${weekNum} Mock</button>`}
                         </div>
                         <div class="detail-card">
-                            <h4>Writing Challenge</h4><div class="detail-desc">Optional tutor-marked task. Download prompt & upload response.</div>
-                            <button class="btn btn-outline btn-square btn-full">Join Writing Challenge — £29.99</button>
+                            <h4>Writing Challenge</h4>
+                            ${writingBox}
                         </div>
                     </div>
                 `;
@@ -588,8 +703,7 @@
                         </div>
                         <div class="detail-card">
                             <h4>Writing Challenge</h4>
-                            <div class="detail-val" style="color: var(--wl-text-muted); font-size: 1.2rem; padding-top: 10px;">—</div>
-                            <div class="detail-desc">Not joined</div>
+                            ${writingBox}
                         </div>
                     </div>
                     
@@ -601,6 +715,35 @@
                 `;
             }
             panel.innerHTML = html;
+        }
+
+        // --- WRITING MOCK ACTIONS ---
+        function joinWriting(weekNum) {
+            if (!mockWritingState[weekNum]) mockWritingState[weekNum] = {};
+            mockWritingState[weekNum].joined = true;
+            renderDetailPanel(weekNum);
+        }
+
+        function openWritingTask(weekNum) {
+            setTxt('writingTaskWeekNum', weekNum);
+            document.getElementById('btnTaskUpload').onclick = () => {
+                closeModal('writing-task-modal');
+                openWritingUpload(weekNum);
+            };
+            openModal('writing-task-modal');
+        }
+
+        function openWritingUpload(weekNum) {
+            document.getElementById('btnSubmitUpload').onclick = () => submitWriting(weekNum);
+            openModal('writing-upload-modal');
+        }
+
+        function submitWriting(weekNum) {
+            if (!mockWritingState[weekNum]) mockWritingState[weekNum] = {};
+            mockWritingState[weekNum].uploaded = true;
+            closeModal('writing-upload-modal');
+            renderDetailPanel(weekNum);
+            alert("Script uploaded successfully! Feedback will appear here once marked.");
         }
 
         // --- UPGRADE MODAL TRIGGER ---
@@ -703,46 +846,79 @@
             // Fetch Question Data
             const { data: qData } = await supabaseClient.from('questions').select('question_number, topic_tag, correct_answer').eq('exam_id', `week-${weekNum}`).order('question_number', { ascending: true });
 
-            let engTot=0, mathTot=0, vrTot=0, nvrTot=0;
-            let engWrong=[], mathWrong=[], vrWrong=[], nvrWrong=[];
+            let subjectTotals = { English: 0, Maths: 0, VR: 0, NVR: 0 };
+            let wrongTopics = { English: [], Maths: [], VR: [], NVR: [] };
+            let rows = { English: '', Maths: '', VR: '', NVR: '' };
 
             if (qData) {
                 const userAns = scoreData.user_answers || {};
-                let engRows = '', mathRows = '', vrRows = '', nvrRows = '';
 
                 qData.forEach(q => {
-                    const qNum = q.question_number; const topic = q.topic_tag || 'General'; const correctAns = q.correct_answer;
+                    const qNum = q.question_number;
+                    const topic = q.topic_tag || 'General';
+                    const correctAns = q.correct_answer || '';
+                    const subj = getSubject(topic);
+
+                    if (!subjectTotals.hasOwnProperty(subj)) return;
+
+                    subjectTotals[subj]++;
+
                     const rawUser = userAns[qNum];
-                    const userStr = Array.isArray(rawUser) ? rawUser.sort().join(', ') : (rawUser || '-');
-                    const correctStr = correctAns.split(',').map(s=>s.trim()).sort().join(', ');
+
+                    const userStr = Array.isArray(rawUser)
+                        ? rawUser.map(String).sort().join(', ')
+                        : (rawUser || '-');
+
+                    const correctStr = correctAns
+                        .split(',')
+                        .map(s => s.trim())
+                        .sort()
+                        .join(', ');
 
                     const isCorrect = userStr === correctStr;
-                    const resultText = isCorrect ? '✓ Correct' : (userStr === '-' ? '– Skipped' : '✗ Incorrect');
-                    const resultStyle = isCorrect ? 'color: var(--wl-teal); font-weight: 800;' : (userStr === '-' ? 'color: var(--wl-text-muted);' : 'color: var(--wl-nyoro-pink-text); font-weight: 800;');
+
+                    if (!isCorrect) {
+                        wrongTopics[subj].push(topic);
+                    }
+
+                    const resultText = isCorrect
+                        ? '✓ Correct'
+                        : (userStr === '-' ? '– Skipped' : '✗ Incorrect');
+
+                    const resultStyle = isCorrect
+                        ? 'color: var(--wl-teal); font-weight: 800;'
+                        : (userStr === '-'
+                            ? 'color: var(--wl-text-muted);'
+                            : 'color: var(--wl-nyoro-pink-text); font-weight: 800;');
+
                     const rowStyle = isCorrect ? '' : 'background-color: var(--wl-soft-pink);';
 
-                    const rowHtml = `<tr style="${rowStyle}"><td style="font-weight: 800;">${qNum}</td><td>${topic}</td><td style="text-align: center;">${userStr}</td><td style="text-align: center; font-weight: 800;">${correctStr}</td><td style="${resultStyle}">${resultText}</td></tr>`;
+                    const rowHtml = `
+                        <tr style="${rowStyle}">
+                            <td style="font-weight: 800;">${qNum}</td>
+                            <td>${topic}</td>
+                            <td style="text-align: center;">${userStr}</td>
+                            <td style="text-align: center; font-weight: 800;">${correctStr}</td>
+                            <td style="${resultStyle}">${resultText}</td>
+                        </tr>
+                    `;
 
-                    const tLower = topic.toLowerCase();
-                    if (tLower.includes('english') || tLower.includes('spag') || tLower.includes('comprehension') || tLower.includes('spelling') || tLower.includes('grammar') || tLower.includes('cloze')) {
-                        engTot++; engRows += rowHtml; if(!isCorrect) engWrong.push(topic);
-                    } else if (tLower.includes('math')) {
-                        mathTot++; mathRows += rowHtml; if(!isCorrect) mathWrong.push(topic);
-                    } else if (tLower.includes('non') || tLower.includes('nvr')) {
-                        nvrTot++; nvrRows += rowHtml; if(!isCorrect) nvrWrong.push(topic);
-                    } else if (tLower.includes('verbal') || tLower.includes('vr')) {
-                        vrTot++; vrRows += rowHtml; if(!isCorrect) vrWrong.push(topic);
-                    }
+                    rows[subj] += rowHtml;
                 });
 
-                setHtml('body-english', engRows);
-                setHtml('body-maths', mathRows);
-                setHtml('body-vr', vrRows);
-                setHtml('body-nvr', nvrRows);
+                setHtml('body-english', rows.English);
+                setHtml('body-maths', rows.Maths);
+                setHtml('body-vr', rows.VR);
+                setHtml('body-nvr', rows.NVR);
             }
 
-            engTot = engTot || 10; mathTot = mathTot || 10; vrTot = vrTot || 10; nvrTot = nvrTot || 10;
-            const overallAcc = (scoreData.raw_score || 0) / (scoreData.total_questions || 40);
+            const engTot = subjectTotals.English;
+            const mathTot = subjectTotals.Maths;
+            const vrTot = subjectTotals.VR;
+            const nvrTot = subjectTotals.NVR;
+
+            const totalQs = scoreData.total_questions || (engTot + mathTot + vrTot + nvrTot) || 32;
+            const overallAcc = (scoreData.raw_score || 0) / totalQs;
 
             const eM = calculateSubjectMetrics(scoreData.english_score || 0, engTot, overallAcc, rankPercentile);
             const mM = calculateSubjectMetrics(scoreData.maths_score || 0, mathTot, overallAcc, rankPercentile);
@@ -759,28 +935,28 @@
             setTxt('tabEngAcc', `${eM.acc}%`);
             setTxt('tabEngPerc', `Top ${eM.rankP}%`);
             setHtml('tabEngRankStr', `${eM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
-            setTxt('focusEng', calculateModeFocus(engWrong));
+            setTxt('focusEng', calculateModeFocus(wrongTopics.English));
 
             // Maths Insights
             setTxt('tabMathRaw', `${scoreData.maths_score || 0}/${mathTot}`);
             setTxt('tabMathAcc', `${mM.acc}%`);
             setTxt('tabMathPerc', `Top ${mM.rankP}%`);
             setHtml('tabMathRankStr', `${mM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
-            setTxt('focusMath', calculateModeFocus(mathWrong));
+            setTxt('focusMath', calculateModeFocus(wrongTopics.Maths));
 
             // VR Insights
             setTxt('tabVrRaw', `${scoreData.vr_score || 0}/${vrTot}`);
             setTxt('tabVrAcc', `${vM.acc}%`);
             setTxt('tabVrPerc', `Top ${vM.rankP}%`);
             setHtml('tabVrRankStr', `${vM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
-            setTxt('focusVr', calculateModeFocus(vrWrong));
+            setTxt('focusVr', calculateModeFocus(wrongTopics.VR));
 
             // NVR Insights
             setTxt('tabNvrRaw', `${scoreData.nvr_score || 0}/${nvrTot}`);
             setTxt('tabNvrAcc', `${nM.acc}%`);
             setTxt('tabNvrPerc', `Top ${nM.rankP}%`);
             setHtml('tabNvrRankStr', `${nM.rankNum} <span style="display: inline; font-size: 1.1rem; color: var(--wl-text-muted); font-weight: 600; text-transform: none;">/ ${COHORT_SIZE}</span>`);
-            setTxt('focusNvr', calculateModeFocus(nvrWrong));
+            setTxt('focusNvr', calculateModeFocus(wrongTopics.NVR));
 
             openModal('report-modal');
         }
