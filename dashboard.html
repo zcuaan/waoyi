@@ -164,6 +164,7 @@
             </div>
         </div>
 
+        <!-- HERO ACTIVE MOCK CARD -->
         <div class="angled-wrapper" style="background-color: var(--wl-black);">
             <div class="angled-inner active-week-card" style="background-color: var(--wl-teal); padding: 32px;">
                 <div class="active-info">
@@ -179,13 +180,16 @@
             </div>
         </div>
 
+        <!-- THE 6-WEEK PATHWAY -->
         <div class="angled-wrapper">
             <div class="angled-inner" style="padding: 32px;">
                 <div class="path-grid" id="path-grid">
-                    </div>
+                    <!-- Tiles injected by JS -->
+                </div>
 
                 <div class="detail-panel active" id="detail-panel">
-                    </div>
+                    <!-- Detail content injected by JS -->
+                </div>
             </div>
         </div>
 
@@ -211,6 +215,7 @@
         </div>
     </div>
 
+    <!-- UPGRADE MODAL -->
     <div class="modal-overlay" id="upgrade-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 480px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -231,6 +236,7 @@
         </div>
     </div>
 
+    <!-- WRITING TASK MODAL -->
     <div class="modal-overlay" id="writing-task-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 600px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -256,6 +262,7 @@
         </div>
     </div>
 
+    <!-- WRITING UPLOAD MODAL -->
     <div class="modal-overlay" id="writing-upload-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 500px; margin: 0;">
             <div class="angled-inner modal-upgrade" style="padding: 40px;">
@@ -275,6 +282,7 @@
         </div>
     </div>
 
+    <!-- REPORT MODAL -->
     <div class="modal-overlay" id="report-modal">
         <div class="angled-wrapper" style="width: 100%; max-width: 950px; margin: 0;">
             <div class="angled-inner modal-report" style="padding: 0;">
@@ -288,6 +296,7 @@
                     </div>
                 </div>
 
+                <!-- DYNAMIC ACCESS BANNER -->
                 <div id="modalAccessBanner" class="access-banner">
                     You’re viewing the free score summary. Reveal the league rank or unlock the detailed review to see more.
                 </div>
@@ -300,11 +309,12 @@
                     <div class="tab" id="nav-nvr" onclick="switchTab('tab-nvr', this)">NVR</div>
                 </div>
 
+                <!-- SUMMARY TAB -->
                 <div class="report-content active" id="tab-summary">
                     <div style="max-width: 650px; margin: 0 auto;">
                         
                         <div style="text-align: center; margin-bottom: 40px;" id="summaryBenchmarkContainer">
-                            </div>
+                        </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
                             <div style="text-align: center;"><span style="display: block; font-size: 0.85rem; color: var(--wl-text-muted); font-weight: 700; text-transform: uppercase;">Raw Score</span><strong id="modalSummaryScore" style="font-size: 1.6rem; color: var(--wl-black);">0/0</strong></div>
@@ -322,6 +332,7 @@
                     </div>
                 </div>
 
+                <!-- ENGLISH TAB -->
                 <div class="report-content" id="tab-english">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">English Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -335,6 +346,7 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusEng" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
+                <!-- MATHS TAB -->
                 <div class="report-content" id="tab-maths">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Maths Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -348,6 +360,7 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusMath" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
+                <!-- VR TAB -->
                 <div class="report-content" id="tab-vr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Verbal Reasoning Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -361,6 +374,7 @@
                     <div class="focus-area"><strong style="color: var(--wl-blue); font-size: 1.1rem;">Main Focus Area:</strong> <span id="focusVr" style="font-weight: 600; font-size: 1.1rem; margin-left: 6px;">None</span></div>
                 </div>
 
+                <!-- NVR TAB -->
                 <div class="report-content" id="tab-nvr">
                     <h3 style="margin-bottom: 16px; font-size: 1.4rem;">Non-Verbal Reasoning Insights</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -378,6 +392,7 @@
         </div>
     </div>
 
+    <!-- Script: UI Toggles -->
     <script>
         function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
         function closeModal(modalId) {
@@ -394,6 +409,7 @@
         window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
     </script>
 
+    <!-- Script: Supabase & App Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://tggbqpfkqwmrrtzngaqw.supabase.co';
@@ -405,24 +421,21 @@
         let activeWeekSelection = 1;
         const COHORT_SIZE = 512; 
         
-        // PROTOTYPE WRITING STATE TRACKER
-        let mockWritingState = {
-            1: { joined: false, uploaded: false, feedbackReady: false },
-            2: { joined: true, uploaded: true, feedbackReady: true }, // Demo past feedback
-            3: { joined: false, uploaded: false, feedbackReady: false }
-        };
+        // CLEAN WRITING STATE TRACKER
+        let mockWritingState = {};
 
         document.getElementById('logoutBtn').addEventListener('click', async function(e) {
             e.preventDefault(); await supabaseClient.auth.signOut(); window.location.href = 'index.html'; 
         });
 
         const schedule = [
-            { week: 1, start: new Date(2026, 4, 1), end: new Date(2026, 4, 3) },
-            { week: 2, start: new Date(2026, 4, 8), end: new Date(2026, 4, 10) },
-            { week: 3, start: new Date(2026, 4, 15), end: new Date(2026, 4, 17) },
-            { week: 4, start: new Date(2026, 5, 26, 16, 0), end: new Date(2026, 5, 28, 22, 0) },
-            { week: 5, start: new Date(2026, 6, 3, 16, 0), end: new Date(2026, 6, 5, 22, 0) },
-            { week: 6, start: new Date(2026, 6, 10, 16, 0), end: new Date(2026, 6, 12, 22, 0) }
+            // Week 1 actively set to encompass right now for testing
+            { week: 1, start: new Date(2026, 6, 1), end: new Date(2026, 6, 15) },
+            { week: 2, start: new Date(2026, 6, 17), end: new Date(2026, 6, 19) },
+            { week: 3, start: new Date(2026, 6, 24), end: new Date(2026, 6, 26) },
+            { week: 4, start: new Date(2026, 6, 31), end: new Date(2026, 7, 2) },
+            { week: 5, start: new Date(2026, 7, 7), end: new Date(2026, 7, 9) },
+            { week: 6, start: new Date(2026, 7, 14), end: new Date(2026, 7, 16) }
         ];
 
         const ageAdjustments = {"6Y 2M": 0.25, "6Y 3M": 0.25, "6Y 4M": 0.24, "6Y 5M": 0.24, "6Y 6M": 0.23, "6Y 7M": 0.23, "6Y 8M": 0.22, "6Y 9M": 0.22, "6Y 10M": 0.21, "6Y 11M": 0.21, "7Y 0M": 0.2, "7Y 1M": 0.2, "7Y 2M": 0.19, "7Y 3M": 0.19, "7Y 4M": 0.19, "7Y 5M": 0.18, "7Y 6M": 0.18, "7Y 7M": 0.17, "7Y 8M": 0.17, "7Y 9M": 0.16, "7Y 10M": 0.16, "7Y 11M": 0.15, "8Y 0M": 0.15, "8Y 1M": 0.14, "8Y 2M": 0.14, "8Y 3M": 0.13, "8Y 4M": 0.13, "8Y 5M": 0.12, "8Y 6M": 0.12, "8Y 7M": 0.11, "8Y 8M": 0.11, "8Y 9M": 0.1, "8Y 10M": 0.1, "8Y 11M": 0.09, "9Y 0M": 0.09, "9Y 1M": 0.08, "9Y 2M": 0.08, "9Y 3M": 0.07, "9Y 4M": 0.07, "9Y 5M": 0.06, "9Y 6M": 0.06, "9Y 7M": 0.05, "9Y 8M": 0.05, "9Y 9M": 0.04, "9Y 10M": 0.04, "9Y 11M": 0.03, "10Y 0M": 0.03, "10Y 1M": 0.02, "10Y 2M": 0.02, "10Y 3M": 0.01, "10Y 4M": 0.01, "10Y 5M": 0.0, "10Y 6M": 0.0, "10Y 7M": -0.01, "10Y 8M": -0.01, "10Y 9M": -0.02, "10Y 10M": -0.02, "10Y 11M": -0.03, "11Y 0M": -0.03, "11Y 1M": -0.04, "11Y 2M": -0.05, "11Y 3M": -0.05, "11Y 4M": -0.06, "11Y 5M": -0.06, "11Y 6M": -0.07, "11Y 7M": -0.07, "11Y 8M": -0.08, "11Y 9M": -0.08, "11Y 10M": -0.09, "11Y 11M": -0.09, "12Y 0M": -0.1, "12Y 1M": -0.1, "12Y 2M": -0.11, "12Y 3M": -0.11, "12Y 4M": -0.12, "12Y 5M": -0.12, "12Y 6M": -0.13, "12Y 7M": -0.13, "12Y 8M": -0.13, "12Y 9M": -0.14, "12Y 10M": -0.14, "12Y 11M": -0.15, "13Y 0M": -0.15, "13Y 1M": -0.16, "13Y 2M": -0.16, "13Y 3M": -0.17, "13Y 4M": -0.17, "13Y 5M": -0.18, "13Y 6M": -0.18, "13Y 7M": -0.19, "13Y 8M": -0.19, "13Y 9M": -0.2, "13Y 10M": -0.2, "13Y 11M": -0.21, "14Y 0M": -0.21, "14Y 1M": -0.22, "14Y 2M": -0.22, "14Y 3M": -0.23, "14Y 4M": -0.23, "14Y 5M": -0.24, "14Y 6M": -0.24, "14Y 7M": -0.25};
