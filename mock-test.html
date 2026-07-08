@@ -116,7 +116,7 @@
         .question-content-split { max-width: 600px; margin: 0 auto; width: 100%; text-align: left; }
 
         /* SINGLE LAYOUT */
-        .panel-single { flex: 1; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: flex-start; background-color: var(--wl-white); }
+        .panel-single { flex: 1; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; background-color: var(--wl-white); }
         .question-content-single { max-width: 800px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start;}
 
         /* Common Question Elements */
@@ -149,7 +149,7 @@
         }
 
         /* Diagrams & Graphs */
-        .diagram-box { width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: flex-start; margin-bottom: 40px;}
+        .diagram-box { width: 100%; display: flex; align-items: center; justify-content: flex-start; margin-bottom: 40px;}
         .graph-box { width: 100%; height: 100%; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; background-color: var(--wl-white); color: var(--wl-text-muted); font-weight: 600;}
 
         /* Options */
@@ -558,7 +558,9 @@
                 if (qData.spag_sentence) textHtml += `<div class="question-text" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.spag_sentence}</div>`;
                 if (qData.cloze_sentence) textHtml += `<div class="question-text" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; color: var(--wl-black);">${qData.cloze_sentence}</div>`;
                 if (qData.question_text) textHtml += `<div class="question-text">${formatText(qData.question_text)}</div>`;
-                if (qData.question_image_url) textHtml += `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; margin-top: 24px; border-radius: 8px;">`;
+                
+                // STRICT MAX-HEIGHT to prevent images pushing off screen
+                if (qData.question_image_url) textHtml += `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; max-height: 280px; margin-top: 24px; border-radius: 8px; object-fit: contain;">`;
                 
                 container.querySelector('.question-box').innerHTML = textHtml;
                 renderStandardOptions(container, qData, layoutId, 'options-horizontal');
@@ -579,7 +581,8 @@
                 
                 const diagramBox = container.querySelector('.diagram-box');
                 if (qData.question_image_url) {
-                    diagramBox.innerHTML = `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
+                    // STRICT MAX-HEIGHT to prevent NVR images from taking over the screen
+                    diagramBox.innerHTML = `<img src="${getSafeImageUrl(qData.question_image_url)}" style="max-width: 100%; max-height: 280px; object-fit: contain;">`;
                     diagramBox.style.display = 'flex';
                 } else {
                     diagramBox.style.display = 'none';
