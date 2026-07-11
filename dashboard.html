@@ -195,6 +195,7 @@
 
         <h2 class="section-title">Want the full summer unlocked?</h2>
         <div class="grid-2">
+            <!-- Upgrades: White boxes with yellow buttons -->
             <div class="angled-wrapper bundle-wrapper">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Rank Pass (£19.99)</h3>
@@ -314,6 +315,7 @@
                     <div style="max-width: 650px; margin: 0 auto;">
                         
                         <div style="text-align: center; margin-bottom: 40px;" id="summaryBenchmarkContainer">
+                            <!-- Injected by JS based on access -->
                         </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; border-top: 1px solid var(--wl-border); border-bottom: 1px solid var(--wl-border); padding: 24px 0;">
@@ -521,12 +523,23 @@
                 else if (i === 5) { cW = 6; isOpen = false; }
             }
 
+            const score = userScores.find(s => s.week_number === cW);
+
             if (isOpen) {
-                if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⚡</span> Week ${cW} 11+ Mock Exam is open`;
-                if(btnEl) {
-                    btnEl.innerText = `Start Week ${cW} Mock`;
-                    btnEl.disabled = false; btnEl.style.opacity = "1"; btnEl.style.cursor = "pointer";
-                    btnEl.onclick = function() { window.location.href = `mock-test.html?exam=week-${cW}`; };
+                if (score) {
+                    if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">✓</span> Week ${cW} Mock Submitted`;
+                    if(btnEl) {
+                        btnEl.innerText = `View Results`;
+                        btnEl.disabled = false; btnEl.style.opacity = "1"; btnEl.style.cursor = "pointer";
+                        btnEl.onclick = function() { selectWeek(cW); document.getElementById('detail-panel').scrollIntoView({behavior: 'smooth'}); };
+                    }
+                } else {
+                    if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⚡</span> Week ${cW} 11+ Mock Exam is open`;
+                    if(btnEl) {
+                        btnEl.innerText = `Start Week ${cW} Mock`;
+                        btnEl.disabled = false; btnEl.style.opacity = "1"; btnEl.style.cursor = "pointer";
+                        btnEl.onclick = function() { window.location.href = `mock-test.html?exam=week-${cW}`; };
+                    }
                 }
             } else {
                 if(titleEl) titleEl.innerHTML = `<span style="color: var(--wl-yellow);">⏳</span> Week ${cW} opens Friday at 4 PM`;
@@ -560,15 +573,38 @@
             const { data: scoreData } = await supabaseClient.from('scores').select('*').eq('user_id', session.user.id);
             userScores = scoreData || [];
             
+            // Check for Auto-Popup URL Parameter!
+            const urlParams = new URLSearchParams(window.location.search);
+            const reportTarget = urlParams.get('report');
+            let autoOpenWeek = null;
+            if (reportTarget) {
+                const numMatch = reportTarget.match(/\d+/);
+                if (numMatch) autoOpenWeek = parseInt(numMatch[0]);
+            }
+
             let foundCurrent = false;
             for (let i = 1; i <= 6; i++) {
                 if (getWeekState(i) === 'current') { activeWeekSelection = i; foundCurrent = true; break; }
             }
             if(!foundCurrent) activeWeekSelection = Math.min(6, (userScores.length + 1) || 1);
 
+            // If a URL parameter commanded us to open a specific week, jump to that week panel!
+            if (autoOpenWeek && userScores.find(s => s.week_number === autoOpenWeek)) {
+                activeWeekSelection = autoOpenWeek;
+            }
+
             updateScheduleHero();
             renderPath();
             renderDetailPanel(activeWeekSelection);
+
+            // Auto-open the Modal Report
+            if (autoOpenWeek && userScores.find(s => s.week_number === autoOpenWeek)) {
+                const sData = userScores.find(s => s.week_number === autoOpenWeek);
+                const rank = calculateRankPercentile(sData.raw_score, sData.total_questions, schedule[autoOpenWeek-1].start);
+                openReportModal(autoOpenWeek, rank);
+                // Clean the URL so the popup doesn't keep happening on page refresh
+                window.history.replaceState({}, document.title, "dashboard.html");
+            }
         }
 
         // --- PATHWAY & DETAIL RENDERING ---
@@ -584,7 +620,8 @@
                 let tileClass = (i === activeWeekSelection) ? 'week-tile active-tile' : 'week-tile';
                 let icon = ''; let title = `Week ${i}`; let b1 = ''; let b2 = '';
 
-                if (state === 'past' && score) {
+                // NEW LOGIC: Always prioritize score viewing over timeline states
+                if (score) {
                     icon = '✓'; 
                     b1 = `<span class="tile-score">Score ${score.raw_score}/${score.total_questions}</span>`;
                     const hasRank = userProfile?.has_rank_pass || score.rank_unlocked;
@@ -592,10 +629,10 @@
                         const r = calculateRankPercentile(score.raw_score, score.total_questions, schedule[i-1].start);
                         b2 = `<span class="tile-rank">Top ${r}%</span>`;
                     } else { b2 = `Rank locked`; }
-                } else if (state === 'past' && !score) {
+                } else if (state === 'past') {
                     icon = '✗'; b1 = `Missed`; b2 = ``;
                 } else if (state === 'current') {
-                    icon = '⚡'; b1 = `Open now`; b2 = score ? `Submitted` : `Start mock`;
+                    icon = '⚡'; b1 = `Open now`; b2 = `Start mock`;
                 } else {
                     icon = '🔒'; 
                     const mNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -659,33 +696,8 @@
                 }
             }
 
-
-            if (state === 'future') {
-                const mNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                html = `
-                    <div class="detail-header"><h2>Week ${weekNum}</h2><p>Opens ${mNames[sched.start.getMonth()]} ${sched.start.getDate()}</p></div>
-                    <p style="color: var(--wl-text-muted); font-size: 1.1rem; font-weight: 500;">This week's mock will appear here when the test window opens.</p>
-                `;
-            } 
-            else if (state === 'current') {
-                html = `
-                    <div class="detail-header"><h2>Week ${weekNum} Mock Exam</h2><p style="color: var(--wl-teal);">Open now</p></div>
-                    <div class="detail-grid">
-                        <div class="detail-card">
-                            <h4>Main Mock</h4><div class="detail-desc">Core league path. 32 questions across English, VR, Maths and NVR.</div>
-                            ${score ? `<button class="btn btn-locked btn-square btn-full" disabled>Submitted</button>` : `<button class="btn btn-action btn-square btn-full" onclick="window.location.href='mock-test.html?exam=week-${weekNum}'">Start Week ${weekNum} Mock</button>`}
-                        </div>
-                        <div class="detail-card">
-                            <h4>Writing Challenge</h4>
-                            ${writingBox}
-                        </div>
-                    </div>
-                `;
-            }
-            else if (state === 'past' && !score) {
-                html = `<div class="detail-header"><h2>Week ${weekNum} Results</h2><p>Missed</p></div><p style="color: var(--wl-text-muted); font-size: 1.1rem; font-weight: 500;">You did not submit an entry for this week.</p>`;
-            }
-            else if (state === 'past' && score) {
+            // NEW LOGIC: ALWAYS render the 4-box layout with upgrade buttons if a score exists!
+            if (score) {
                 const hasRank = userProfile?.has_rank_pass || score.rank_unlocked;
                 const hasReview = userProfile?.has_review_pass || score.report_unlocked;
                 const rank = calculateRankPercentile(score.raw_score, score.total_questions, sched.start);
@@ -727,6 +739,32 @@
                     </div>
                 `;
             }
+            else if (state === 'future') {
+                const mNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                html = `
+                    <div class="detail-header"><h2>Week ${weekNum}</h2><p>Opens ${mNames[sched.start.getMonth()]} ${sched.start.getDate()}</p></div>
+                    <p style="color: var(--wl-text-muted); font-size: 1.1rem; font-weight: 500;">This week's mock will appear here when the test window opens.</p>
+                `;
+            } 
+            else if (state === 'current') {
+                html = `
+                    <div class="detail-header"><h2>Week ${weekNum} Mock Exam</h2><p style="color: var(--wl-teal);">Open now</p></div>
+                    <div class="detail-grid">
+                        <div class="detail-card">
+                            <h4>Main Mock</h4><div class="detail-desc">Core league path. 32 questions across English, VR, Maths and NVR.</div>
+                            <button class="btn btn-action btn-square btn-full" onclick="window.location.href='mock-test.html?exam=week-${weekNum}'">Start Week ${weekNum} Mock</button>
+                        </div>
+                        <div class="detail-card">
+                            <h4>Writing Challenge</h4>
+                            ${writingBox}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (state === 'past' && !score) {
+                html = `<div class="detail-header"><h2>Week ${weekNum} Results</h2><p>Missed</p></div><p style="color: var(--wl-text-muted); font-size: 1.1rem; font-weight: 500;">You did not submit an entry for this week.</p>`;
+            }
+            
             panel.innerHTML = html;
         }
 
