@@ -54,7 +54,7 @@
         .active-info .sub-info { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px;}
 
         .section-title { font-size: 1.6rem; margin: 40px 0 16px; color: var(--wl-black); }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; transition: all 0.3s;}
         
         /* --- PATHWAY UI --- */
         .path-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 32px; }
@@ -79,7 +79,7 @@
         .detail-desc { font-size: 0.9rem; color: var(--wl-text-muted); font-weight: 500; flex-grow: 1; margin-bottom: 16px; }
 
         /* --- UPGRADES --- */
-        .bundle-wrapper { background-color: var(--wl-black); margin-bottom: 0; }
+        .bundle-wrapper { background-color: var(--wl-black); margin-bottom: 0; transition: all 0.3s;}
         .bundle-card { background-color: var(--wl-white); }
         .bundle-card h3 { color: var(--wl-black); margin-bottom: 12px; font-size: 1.5rem; }
 
@@ -193,10 +193,10 @@
             </div>
         </div>
 
-        <h2 class="section-title">Want the full summer unlocked?</h2>
-        <div class="grid-2">
+        <h2 class="section-title" id="bundle-section-title">Want the full summer unlocked?</h2>
+        <div class="grid-2" id="bundle-section-grid">
             <!-- Upgrades: White boxes with yellow buttons -->
-            <div class="angled-wrapper bundle-wrapper">
+            <div class="angled-wrapper bundle-wrapper" id="bundle-rank">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Rank Pass (£19.99)</h3>
                     <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Reveal all 6 weekly league rankings. Best if you want to track your child’s position across the summer.</p>
@@ -205,7 +205,7 @@
                 </div>
             </div>
 
-            <div class="angled-wrapper bundle-wrapper">
+            <div class="angled-wrapper bundle-wrapper" id="bundle-review">
                 <div class="angled-inner bundle-card" style="padding: 32px; display: flex; flex-direction: column;">
                     <h3>Review Pass (£99)</h3>
                     <p style="font-size: 0.95rem; color: var(--wl-text-main); margin-bottom: 8px; font-weight: 500;">Get all 6 detailed review packs, including papers, answers and explanations.</p>
@@ -568,6 +568,23 @@
                         badge.innerText = 'RANK PASS ACTIVE'; badge.style.backgroundColor = 'var(--wl-teal)'; badge.style.color = 'var(--wl-white)';
                     }
                 }
+
+                // NEW: Hide upgrade bundles if already purchased
+                const bTitle = document.getElementById('bundle-section-title');
+                const bGrid = document.getElementById('bundle-section-grid');
+                const bRank = document.getElementById('bundle-rank');
+                
+                if (profileData.has_review_pass) {
+                    // Hide everything
+                    if(bTitle) bTitle.style.display = 'none';
+                    if(bGrid) bGrid.style.display = 'none';
+                } else if (profileData.has_rank_pass) {
+                    // Hide just the rank pass
+                    if(bRank) bRank.style.display = 'none';
+                    // Optional: change grid to 1 column so the remaining box isn't weirdly positioned
+                    if(bGrid) bGrid.style.gridTemplateColumns = '1fr'; 
+                    if(bGrid) bGrid.style.maxWidth = '500px'; 
+                }
             }
 
             const { data: scoreData } = await supabaseClient.from('scores').select('*').eq('user_id', session.user.id);
@@ -603,7 +620,7 @@
                 const rank = calculateRankPercentile(sData.raw_score, sData.total_questions, schedule[autoOpenWeek-1].start);
                 openReportModal(autoOpenWeek, rank);
                 // Clean the URL so the popup doesn't keep happening on page refresh
-                window.history.replaceState({}, document.title, "dashboard.html");
+                window.history.replaceState({}, document.title, window.location.pathname);
             }
         }
 
@@ -624,7 +641,11 @@
                 if (score) {
                     icon = '✓'; 
                     b1 = `<span class="tile-score">Score ${score.raw_score}/${score.total_questions}</span>`;
-                    const hasRank = userProfile?.has_rank_pass || score.rank_unlocked;
+                    
+                    // REVIEW PASS > RANK PASS LOGIC
+                    const hasReview = userProfile?.has_review_pass || score?.report_unlocked;
+                    const hasRank = userProfile?.has_rank_pass || score?.rank_unlocked || hasReview;
+                    
                     if (hasRank) {
                         const r = calculateRankPercentile(score.raw_score, score.total_questions, schedule[i-1].start);
                         b2 = `<span class="tile-rank">Top ${r}%</span>`;
@@ -698,8 +719,11 @@
 
             // NEW LOGIC: ALWAYS render the 4-box layout with upgrade buttons if a score exists!
             if (score) {
-                const hasRank = userProfile?.has_rank_pass || score.rank_unlocked;
-                const hasReview = userProfile?.has_review_pass || score.report_unlocked;
+                
+                // REVIEW PASS > RANK PASS LOGIC
+                const hasReview = userProfile?.has_review_pass || score?.report_unlocked;
+                const hasRank = userProfile?.has_rank_pass || score?.rank_unlocked || hasReview;
+                
                 const rank = calculateRankPercentile(score.raw_score, score.total_questions, sched.start);
 
                 let rankBox = hasRank 
@@ -834,8 +858,9 @@
             const scoreData = userScores.find(s => s.week_number === weekNum);
             if (!scoreData) return;
 
-            const hasRank = userProfile?.has_rank_pass || scoreData.rank_unlocked;
-            const hasReview = userProfile?.has_review_pass || scoreData.report_unlocked;
+            // REVIEW PASS > RANK PASS LOGIC
+            const hasReview = userProfile?.has_review_pass || scoreData?.report_unlocked;
+            const hasRank = userProfile?.has_rank_pass || scoreData?.rank_unlocked || hasReview;
 
             // Handle Banner Text
             const banner = document.getElementById('modalAccessBanner');
