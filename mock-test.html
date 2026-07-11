@@ -864,7 +864,7 @@
             localStorage.removeItem(`exam_state_${CURRENT_EXAM_ID}`);
 
             alert(`Exam submitted successfully!`);
-            window.location.href = 'dashboard.html';
+            window.location.href = 'dashboard.html?report=' + CURRENT_EXAM_ID;
         }
 
         function toggleGrid() { 
